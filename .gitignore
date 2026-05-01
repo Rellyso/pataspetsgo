@@ -1,0 +1,16 @@
+.next/
+node_modules/
+
+# local env files
+.env*
+!.env.example
+
+# macOS
+.DS_Store
+
+# logs
+*.log
+
+# build
+out/
+coverage/
