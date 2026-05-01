@@ -93,6 +93,15 @@ When creating new features, include:
 - responsive layout;
 - accessible UI when possible.
 
+Current foundation decisions:
+
+- Use `pnpm` as the package manager.
+- Use `Biome` for formatting and linting instead of ESLint/Prettier.
+- Tailwind CSS v4 tokens should be defined in `app/globals.css` with `@theme inline` when mapping existing CSS variables to Tailwind utilities.
+- Prefer semantic Tailwind utilities like `bg-background`, `text-foreground`, `border-border`, and `font-display` instead of arbitrary `var(...)` classes when a token exists.
+- Typography should follow `DESIGN.md` from the start: `General Sans` for display, `Plus Jakarta Sans` for body/UI, and `IBM Plex Mono` for operational/code moments.
+- `app/globals.css` is temporarily excluded from Biome checks because the current parser setup does not yet handle the Tailwind `@theme` directive cleanly.
+
 ---
 
 ## Language Rules
