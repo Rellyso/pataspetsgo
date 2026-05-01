@@ -55,7 +55,7 @@ Configurações iniciais
 
 - TypeScript com `tsconfig` base e paths alias (`@/components`, `@/lib`, `@/types`).
 - Tailwind v4: configurar tokens de tema conforme paleta.
-- ESLint + Prettier integrados (configs compartilhadas).
+- Biome integrado (lint + format).
 - `.env.example` com variáveis Supabase e NEXT*PUBLIC*\* necessárias.
 - Validar variáveis obrigatórias no boot do servidor para falhar cedo em ambiente mal configurado.
 - Preferir `pnpm` como gerenciador padrão do projeto.
@@ -66,7 +66,7 @@ Configurações iniciais
 
 Regras de build e runtime
 
-- Variáveis sensíveis só no servidor; `NEXT_PUBLIC_SUPABASE_URL` e `NEXT_PUBLIC_SUPABASE_ANON_KEY` para cliente.
+- Variáveis sensíveis só no servidor; `NEXT_PUBLIC_SUPABASE_URL` e `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` para cliente.
 - O fluxo de criação de pedido será server-only desde o início, usando Route Handler ou Server Action executada no runtime do servidor.
 - `SUPABASE_SERVICE_ROLE_KEY` não deve ser a opção padrão da fundação. Só pode ser introduzida se aparecer uma limitação real de RLS/Storage que não possa ser resolvida com boundary mais estreita.
 

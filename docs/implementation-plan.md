@@ -45,7 +45,7 @@ Objetivo:
 Implementar:
 - bootstrap do app com Next.js, TypeScript e Tailwind v4
 - aliases de import
-- ESLint e Prettier
+- Biome (lint + format)
 - `pnpm`
 - `.env.example`
 - validação de env no servidor
