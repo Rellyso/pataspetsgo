@@ -9,6 +9,7 @@ Contexto
 - Visual pet-friendly, limpo e mobile-first. Paleta centrada em azul/turquesa, amarelo/laranja e neutros.
 - A experiência deve transmitir confiança, agilidade e simpatia, sem cair em estética infantil ou visual genérico de marketplace.
 - `DESIGN.md` deve funcionar como fonte de verdade visual do projeto quando existir.
+- Em caso de conflito entre esta spec e `DESIGN.md`, prevalece `DESIGN.md`.
 
 Tese visual
 
@@ -39,6 +40,8 @@ Estados
 - Success: `#22C55E`
 - Warning: `#F59E0B`
 - Danger: `#EF4444`
+- Info: `#0EA5E9`
+- Dark mode não faz parte da fundação atual.
 
 Tokens de espaçamento e radius
 
@@ -50,12 +53,18 @@ Tipografia
 
 - Direção tipográfica alvo: `General Sans` para display, `Plus Jakarta Sans` para corpo/UI e `IBM Plex Mono` para detalhes operacionais seletivos.
 - `Inter` pode existir apenas como fallback temporario de implementação na fundação inicial.
-- Scale: h1(2rem), h2(1.5rem), h3(1.125rem), base(1rem), small(0.875rem)
+- Carregamento preferencial via `next/font/google` durante a implementação inicial, enquanto a stack final de fontes alvo é conectada.
+- Scale: h1(2.25rem), h2(1.75rem), h3(1.25rem), h4(1.125rem), base(1rem), small(0.875rem), caption(0.75rem)
 
 Tailwind v4 theme (resumo)
 
 - Configurar via CSS-first em `app/globals.css` com `@theme` e variáveis CSS.
-- Expor utilitários e variantes semânticas para badges (`promo`, `dog`, `cat`) e superfícies comuns.
+- Expor aliases semânticos mínimos para a fundação, evitando hex hardcoded nos componentes.
+- Conjunto mínimo esperado de tokens/utilitários semânticos:
+- superfícies: `bg-background`, `bg-surface`, `text-foreground`, `text-muted`, `border-default`
+- ações e destaque: `bg-primary`, `bg-primary-dark`, `bg-secondary`, `bg-accent`, `bg-success`
+- badges e chips: `badge-promo`, `badge-pet-dog`, `badge-pet-cat`, `chip-category`
+- Componentes base devem consumir tokens semânticos e variáveis de tema, não valores hexadecimais inline.
 
 Regras de uso de cor
 
@@ -68,17 +77,21 @@ Regras de uso de cor
 
 Componentes base (descrição curta)
 
+- Fundação imediata:
 - `AppHeader`: logo, busca, acesso/admin, botão WhatsApp fixo
 - `AppFooter`: informações da loja e links
 - `Container`: wrapper com paddings responsivos
 - `SectionTitle`: título + subtítulo opcional
+- `EmptyState`: mensagem e CTA
+- `SearchInput` e `FilterChip`
+- `WhatsappButton`
+- `PriceDisplay`: lógica para promotional_price + original riscado
+
+- Componentes que entram junto com as features correspondentes:
 - `ProductCard`: imagem, nome, badge, preço, ação
 - `CategoryCard`: ícone + nome
 - `BrandBadge`: logo pequeno
 - `PromoBadge`: estilo para promoções
-- `PriceDisplay`: lógica para promotional_price + original riscado
-- `EmptyState`: mensagem e CTA
-- `SearchInput` e `FilterChip`
 - `QuantitySelector` e `WhatsappButton`
 - `AdminSidebar`: navegação principal da área protegida
 - `AdminPageHeader`: título, contexto e ação primária
@@ -90,12 +103,17 @@ Acessibilidade
 - Contraste mínimo para texto e botões.
 - Foco visível para elementos interativos.
 - Botões com área de toque ~44x44px no mobile.
+- Estados interativos principais devem prever pelo menos `default`, `hover`, `focus-visible`, `pressed` e `disabled`.
 
 Responsividade
 
 - Mobile-first; breakpoints: sm, md, lg (padrões Tailwind).
 - Cards empilhados no mobile; grid 2–4 cols em desktop.
 - Header, filtros e CTAs devem privilegiar uso com uma mão no mobile.
+- O CTA principal de WhatsApp não deve ser sticky globalmente no site inteiro.
+- Recomendação da fundação: usar CTA sticky no mobile apenas em superfícies de decisão ou conversão, como detalhe de produto, carrinho e resumo de pedido.
+- Em home e catálogo, priorizar CTA visível sem barra sticky permanente para evitar ruído visual.
+- Filtros no mobile devem favorecer leitura rápida, toque confortável e comportamento horizontal ou em bottom sheet simples quando a feature exigir expansão.
 
 Diretrizes de UX visual
 
@@ -115,14 +133,14 @@ Tokens de branding e exemplos de uso
 Guia rápido de implementação
 
 - Declarar tokens CSS em `app/globals.css` e expor via `@theme`.
-- Criar componente `ThemeProvider` opcional para alternância futura.
 - Implementar página `/design` com exemplos de componentes, estados e variações público/admin.
 - Ler e seguir `DESIGN.md` antes de tomar decisões de tipografia, densidade, hierarquia e tom visual.
+- Não introduzir `ThemeProvider` nesta fundação sem necessidade concreta; CSS variables + Tailwind v4 são suficientes para o escopo atual.
 
 Critérios de aceite
 
 - Tailwind v4 configurado com tokens.
-- Componentes base criados com props tipadas e story/demo.
+- Componentes base criados com props tipadas e demonstração na rota `/design`.
 - Paleta aplicada ao layout público e admin.
 - A página `/design` demonstra tokens, botões, cards, formulário, tabela admin e estados vazios/erro/loading.
 
