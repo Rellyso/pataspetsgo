@@ -63,12 +63,15 @@ Tabelas principais
 - `age_group` text (puppy|adult|senior|all)
 - `size_group` text (small|medium|large|all)
 - `image_url` text (imagem principal)
+- `sort_order` integer
 - `is_active` boolean
 - `is_featured` boolean
 - `is_promotion` boolean
 - `created_at`, `updated_at`
 - Um produto pode existir sem aparecer na vitrine pública.
 - Para aparecer no catálogo público, ele também precisa estar ligado a categoria e marca válidas quando aplicável e ter ao menos uma variante exibível para pedido.
+- `sort_order` define prioridade operacional simples de exibição no catálogo e em listas administrativas quando aplicável.
+- `is_promotion` funciona como flag editorial/comercial do produto, mas só deve produzir efeito público real quando existir ao menos uma variante válida com `promotional_price` coerente.
 
 5. `product_variants`
 
@@ -117,6 +120,8 @@ Tabelas principais
 - `orders` não recebe escrita pública direta do client.
 - A criação de pedidos acontece apenas por boundary server-only da aplicação, alinhada com a arquitetura definida na spec 01.
 - `order_number` é identificador de negócio e deve ser gerado de forma consistente no servidor/banco.
+- No MVP, o status inicial do pedido persistido deve ser `pending`.
+- `sent_to_whatsapp` permanece disponível no domínio, mas não precisa ser atualizado automaticamente pelo cliente nesta primeira versão.
 
 8. `order_items`
 
