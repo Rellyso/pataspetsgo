@@ -78,6 +78,11 @@ Product and UI priorities:
 - avoid generic full e-commerce assumptions unless a future spec explicitly requires them;
 - keep the admin area operational and efficient, not overly decorative.
 
+Visual source of truth:
+
+- always read `DESIGN.md` before making UI, styling, layout, spacing, typography or visual hierarchy decisions;
+- if `DESIGN.md` and a local assumption conflict, follow `DESIGN.md` unless the user explicitly asks to revise it.
+
 When creating new features, include:
 
 - typed data models;

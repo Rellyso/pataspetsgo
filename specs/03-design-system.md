@@ -8,12 +8,14 @@ Contexto
 
 - Visual pet-friendly, limpo e mobile-first. Paleta centrada em azul/turquesa, amarelo/laranja e neutros.
 - A experiência deve transmitir confiança, agilidade e simpatia, sem cair em estética infantil ou visual genérico de marketplace.
+- `DESIGN.md` deve funcionar como fonte de verdade visual do projeto quando existir.
 
 Tese visual
 
 - O produto deve parecer um catálogo digital confiável e rápido para pedido por WhatsApp.
 - A vitrine pública deve ser acolhedora e objetiva.
 - O admin deve compartilhar a mesma base visual, mas com densidade maior e menos elementos decorativos.
+- A memória desejada é: `Aqui eu resolvo rapido, com confianca, e parece que alguem do pet shop ja separou o caminho certo para mim.`
 
 Paleta de cores (tokens)
 
@@ -46,8 +48,8 @@ Tokens de espaçamento e radius
 
 Tipografia
 
-- Fonte base inicial: Inter
-- Fonte futura opcional de apoio para branding/editorial: Plus Jakarta Sans
+- Direção tipográfica alvo: `General Sans` para display, `Plus Jakarta Sans` para corpo/UI e `IBM Plex Mono` para detalhes operacionais seletivos.
+- `Inter` pode existir apenas como fallback temporario de implementação na fundação inicial.
 - Scale: h1(2rem), h2(1.5rem), h3(1.125rem), base(1rem), small(0.875rem)
 
 Tailwind v4 theme (resumo)
@@ -62,6 +64,7 @@ Regras de uso de cor
 - `secondary` deve apoiar filtros, destaques leves e categorias.
 - `accent` deve ser reservado para promoção, urgência e pontos de atenção comercial.
 - `success` deve ser a base visual do CTA de WhatsApp.
+- A maior parte da interface deve permanecer neutra, com cor concentrada em navegação, categorias, promoções e CTA principal.
 
 Componentes base (descrição curta)
 
@@ -101,6 +104,7 @@ Diretrizes de UX visual
 - `promotional_price` deve dominar a hierarquia visual do preço quando existir.
 - Variações de produto devem parecer simples de escolher, não técnicas.
 - A área admin deve priorizar leitura, tabela e formulário, evitando ornamentos desnecessários.
+- O produto não deve herdar a densidade visual de grandes marketplaces pet, nem migrar para uma estética fashion-first que prejudique utilidade.
 
 Tokens de branding e exemplos de uso
 
@@ -113,6 +117,7 @@ Guia rápido de implementação
 - Declarar tokens CSS em `app/globals.css` e expor via `@theme`.
 - Criar componente `ThemeProvider` opcional para alternância futura.
 - Implementar página `/design` com exemplos de componentes, estados e variações público/admin.
+- Ler e seguir `DESIGN.md` antes de tomar decisões de tipografia, densidade, hierarquia e tom visual.
 
 Critérios de aceite
 

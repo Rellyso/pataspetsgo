@@ -53,6 +53,7 @@ Configurações iniciais
 - Preferir `pnpm` como gerenciador padrão do projeto.
 - Usar route groups para separar shells público e admin sem poluir a URL.
 - Preparar uma página `/design` como contrato visual inicial em vez de Storybook nesta fase.
+- Ler `DESIGN.md` antes de implementar qualquer layout, componente visual ou escolha tipográfica.
 
 Regras de build e runtime
 
