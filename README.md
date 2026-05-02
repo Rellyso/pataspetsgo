@@ -65,7 +65,21 @@ pnpm db:reset
 pnpm dev
 ```
 
-## Testes de banco
+## Bootstrap do primeiro admin
+
+Com o Supabase local em pe e `.env.local` preenchido:
+
+```bash
+pnpm admin:bootstrap admin@pataspets.com.br secret123
+```
+
+Isso cria o usuario no Auth local, garante a linha em `profiles` e promove a conta para `role = admin`.
+
+Observacoes:
+- o signup publico local foi desabilitado em `supabase/config.toml`
+- para acessar o admin, use `/auth/login`
+
+## Testes
 
 Depois de subir o Supabase local e aplicar o reset:
 
@@ -73,12 +87,21 @@ Depois de subir o Supabase local e aplicar o reset:
 pnpm test
 ```
 
-Cobertura atual dos testes de banco:
+Smoke E2E do fluxo de auth admin:
+
+```bash
+pnpm test:e2e
+```
+
+Cobertura atual:
 - constraints de preco e promocao
 - geracao de `order_number`
 - RLS deny-by-default
 - singleton de `store_settings`
 - seed minima
+- `profiles` + RLS do proprio perfil
+- validacao e submit do login admin
+- redirect anonimo, acesso admin e bloqueio sem role no browser
 
 ## Scripts uteis
 
@@ -87,7 +110,9 @@ pnpm dev
 pnpm build
 pnpm check
 pnpm test
+pnpm test:e2e
 pnpm db:reset
+pnpm admin:bootstrap <email> <senha>
 ```
 
 ## Referencias do projeto
