@@ -1,17 +1,18 @@
 export default function AdminHomePage() {
   return (
-    <section className="grid gap-4 md:grid-cols-3">
-      <article className="rounded-3xl border border-border bg-surface p-6 shadow-sm md:col-span-2">
-        <h2 className="text-xl font-semibold">Auth core pronto</h2>
-        <p className="mt-2 text-muted">
-          Esta rota agora valida sessao e role `admin` no servidor antes de renderizar.
+    <section className="grid gap-4 lg:grid-cols-[minmax(0,1.7fr)_minmax(0,1fr)]">
+      <article className="rounded-card border border-default bg-surface p-6 shadow-soft">
+        <h2 className="font-display text-xl font-semibold text-foreground">Auth core pronto</h2>
+        <p className="mt-2 text-sm leading-6 text-muted">
+          Layout protegido segue validando sessao e role `admin` no servidor antes de qualquer
+          render.
         </p>
       </article>
 
-      <article className="rounded-3xl border border-border bg-surface p-6 shadow-sm">
-        <h2 className="text-xl font-semibold">Proxima fase</h2>
-        <p className="mt-2 text-muted">
-          O shell operacional real, navegacao e modulos administrativos entram na Fase 7.
+      <article className="rounded-card border border-default bg-surface p-6 shadow-soft">
+        <h2 className="font-display text-xl font-semibold text-foreground">Próxima fase</h2>
+        <p className="mt-2 text-sm leading-6 text-muted">
+          Navegação lateral, headers operacionais, tabelas e cards administrativos entram na Fase 7.
         </p>
       </article>
     </section>

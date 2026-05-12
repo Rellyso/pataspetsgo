@@ -14,10 +14,10 @@ type LoginFormProps = {
 
 function getLoginErrorMessage(message: string) {
   if (message.toLowerCase().includes("invalid login credentials")) {
-    return "Email ou senha invalidos.";
+    return "Email ou senha inválidos.";
   }
 
-  return "Nao foi possivel entrar agora. Tente novamente.";
+  return "Não foi possível entrar agora. Tente novamente.";
 }
 
 export function LoginForm({ nextPath }: LoginFormProps) {
@@ -61,7 +61,7 @@ export function LoginForm({ nextPath }: LoginFormProps) {
         </label>
         <input
           autoComplete="email"
-          className="rounded-md border border-border bg-surface px-3 py-2 text-base outline-none ring-0 transition focus:border-primary"
+          className="rounded-card border border-default bg-surface px-4 py-3 text-base outline-none transition focus:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
           id="email"
           placeholder="admin@pataspets.com.br"
           type="email"
@@ -76,7 +76,7 @@ export function LoginForm({ nextPath }: LoginFormProps) {
         </label>
         <input
           autoComplete="current-password"
-          className="rounded-md border border-border bg-surface px-3 py-2 text-base outline-none ring-0 transition focus:border-primary"
+          className="rounded-card border border-default bg-surface px-4 py-3 text-base outline-none transition focus:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
           id="password"
           placeholder="Sua senha"
           type="password"
@@ -88,7 +88,7 @@ export function LoginForm({ nextPath }: LoginFormProps) {
       {authError ? <p className="text-sm text-error">{authError}</p> : null}
 
       <button
-        className="rounded-md bg-primary px-4 py-3 text-sm font-semibold text-white transition hover:bg-primary-dark disabled:cursor-not-allowed disabled:opacity-70"
+        className="min-h-11 rounded-full bg-primary px-4 py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-primary-dark disabled:cursor-not-allowed disabled:opacity-70"
         disabled={isSubmitting}
         type="submit"
       >

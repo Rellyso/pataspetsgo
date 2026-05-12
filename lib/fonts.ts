@@ -2,13 +2,13 @@ import { IBM_Plex_Mono, Plus_Jakarta_Sans } from "next/font/google";
 
 export const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  variable: "--font-body",
+  variable: "--font-plus-jakarta-sans",
   display: "swap",
 });
 
 export const ibmPlexMono = IBM_Plex_Mono({
   subsets: ["latin"],
-  variable: "--font-mono",
+  variable: "--font-ibm-plex-mono",
   weight: ["400", "500", "600"],
   display: "swap",
 });

@@ -6,7 +6,7 @@ import "@/lib/server/env";
 
 export const metadata: Metadata = {
   title: "PatasGo",
-  description: "Catalogo digital mobile-first para pedidos via WhatsApp da Patas Pets.",
+  description: "Catálogo digital mobile-first para pedidos via WhatsApp da Patas Pets.",
 };
 
 export default function RootLayout({
@@ -15,15 +15,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR">
-      <body
-        className={`${plusJakartaSans.variable} ${ibmPlexMono.variable} bg-background text-foreground antialiased`}
-        style={{
-          fontFamily: "var(--font-body)",
-        }}
-      >
-        {children}
-      </body>
+    <html
+      className={`${plusJakartaSans.variable} ${ibmPlexMono.variable} antialiased`}
+      lang="pt-BR"
+    >
+      <body className="bg-background font-sans text-foreground">{children}</body>
     </html>
   );
 }
