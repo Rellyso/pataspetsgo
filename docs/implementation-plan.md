@@ -1,3 +1,4 @@
+<!-- /autoplan restore point: /Users/rellysondouglas/.gstack/projects/Rellyso-pataspetsgo/main-autoplan-restore-20260511-205707.md -->
 # PatasGo — Implementation Plan
 
 ## Objetivo
@@ -85,15 +86,23 @@ Checkpoint:
 
 ## Fase 2 — Auth e autorização admin
 
+Status:
+- concluída
+
 Objetivo:
 - fechar acesso seguro à área protegida antes de construir os módulos administrativos.
+- esta fase assume a base visual mínima já existente no repositório, sem antecipar o shell operacional completo do admin.
 
 Implementar:
 - Supabase Auth por email/senha
 - tabela `profiles` com `role = admin`
-- middleware para sessão em `/admin`
+- clients Supabase SSR para browser/server/proxy
+- proxy para sessão em `/admin`
 - checagem server-side de role
+- helper central `requireAdmin()` para autorização server-only
 - fluxo de login/logout
+- estado dedicado de acesso negado para usuário autenticado sem role `admin`
+- bootstrap explícito do primeiro admin
 
 Specs principais:
 - `01`
@@ -101,35 +110,52 @@ Specs principais:
 
 Entregáveis:
 - rota de login admin
-- shell protegido do admin acessível apenas para `admin`
+- rota `/auth/access-denied`
+- shell protegido mínimo do admin acessível apenas para `admin`
+- script `pnpm admin:bootstrap <email> <senha>`
+- testes de banco, UI e smoke E2E para auth admin
 
 Checkpoint:
 - sem sessão redireciona para login
-- usuário autenticado sem role não entra
+- usuário autenticado sem role vê acesso negado e não entra
 - usuário admin entra no shell
+- logout remove acesso às rotas protegidas
+- bootstrap do primeiro admin é reproduzível em ambiente local
 
-## Fase 3 — Design system e layout base
+## Fase 3 — Design system, tokens e shells base
 
 Objetivo:
-- construir a base visual e estrutural que será reutilizada no público e no admin.
+- fechar o contrato visual inicial do produto e montar os shells compartilhados do público e do admin, sem antecipar componentes que dependem das features finais.
 
 Implementar:
-- tokens em `globals.css`
-- tipografia e cores conforme `DESIGN.md`
-- componentes base da fundação imediata
-- layouts raiz público e admin
-- rota `/design`
+- tokens semânticos em `app/globals.css` via `@theme inline`
+- tipografia base conforme `DESIGN.md`, formalizando a estratégia de carregamento de fontes desta fase para evitar mistura acidental de abordagens
+- primitives e wrappers da fundação imediata
+- shell público base e shell admin base com a mesma família visual e ritmos diferentes
+- extração visual do `AdminShell` sem alterar a boundary atual de autenticação/autorização do layout admin
+- rota `/design` como contrato visual vivo da fundação
+- estados base de loading, vazio e erro para reutilização nas próximas fases
 
 Specs principais:
+- `01`
 - `03`
+- `06`
 
 Entregáveis:
+- tokens mínimos nomeados e expostos semanticamente no tema: superfícies, ações, tipografia, feedback, foco, spacing e radius
 - `AppHeader`, `AppFooter`, `Container`, `SectionTitle`, `EmptyState`, `SearchInput`, `FilterChip`, `WhatsappButton`, `PriceDisplay`
-- página `/design`
+- `PublicShell` e `AdminShell` reutilizáveis
+- página `/design` demonstrando tokens, tipografia, ações, inputs, shells e estados base
+
+Não entra nesta fase:
+- lógica de busca, filtro, navegação de catálogo ou bindings de dados reais em `SearchInput` e `FilterChip`, que nesta fase são apenas componentes fundacionais/presentacionais
+- `ProductCard`, `CategoryCard`, `BrandBadge`, `PromoBadge` e `QuantitySelector`, que entram junto da navegação pública
+- `AdminSidebar`, `AdminPageHeader`, `StatCard` e `DataTableShell` finais, que entram junto do shell operacional do admin
 
 Checkpoint:
-- visual base alinhado ao design system
-- público e admin compartilham a mesma família visual
+- visual base alinhado a `DESIGN.md`
+- público e admin compartilham a mesma família visual com densidades distintas
+- `/design` já funciona como referência confiável para iniciar catálogo e admin sem reabrir decisões de fundação
 
 ## Fase 4 — Contrato público do catálogo
 

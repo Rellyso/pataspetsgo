@@ -11,6 +11,12 @@ Contexto
 - `DESIGN.md` deve funcionar como fonte de verdade visual do projeto quando existir.
 - Em caso de conflito entre esta spec e `DESIGN.md`, prevalece `DESIGN.md`.
 
+Escopo desta spec
+
+- Definir a fundação visual do MVP.
+- Delimitar o que precisa existir na Fase 3 e o que pode entrar junto das features posteriores.
+- Evitar que a implementação do design system antecipe cards, tabelas e shells finais antes de existir contexto real de uso.
+
 Tese visual
 
 - O produto deve parecer um catálogo digital confiável e rápido para pedido por WhatsApp.
@@ -54,6 +60,7 @@ Tipografia
 - Direção tipográfica alvo: `General Sans` para display, `Plus Jakarta Sans` para corpo/UI e `IBM Plex Mono` para detalhes operacionais seletivos.
 - `Inter` pode existir apenas como fallback temporario de implementação na fundação inicial.
 - Carregamento preferencial via `next/font/google` durante a implementação inicial, enquanto a stack final de fontes alvo é conectada.
+- A Fase 3 deve escolher e documentar uma única estratégia operacional de carregamento por família tipográfica, evitando fundação híbrida implícita ou mistura acidental sem decisão explícita.
 - Scale: h1(2.25rem), h2(1.75rem), h3(1.25rem), h4(1.125rem), base(1rem), small(0.875rem), caption(0.75rem)
 
 Tailwind v4 theme (resumo)
@@ -64,6 +71,9 @@ Tailwind v4 theme (resumo)
 - superfícies: `bg-background`, `bg-surface`, `text-foreground`, `text-muted`, `border-default`
 - ações e destaque: `bg-primary`, `bg-primary-dark`, `bg-secondary`, `bg-accent`, `bg-success`
 - badges e chips: `badge-promo`, `badge-pet-dog`, `badge-pet-cat`, `chip-category`
+- tipografia: `font-display`, `font-sans`, `font-mono`
+- foco e feedback: tokens para `ring`, `success`, `warning`, `danger` e `info`
+- spacing/radius: aliases mínimos para a escala base e para `card`, `button` e containers principais
 - Componentes base devem consumir tokens semânticos e variáveis de tema, não valores hexadecimais inline.
 
 Regras de uso de cor
@@ -78,12 +88,12 @@ Regras de uso de cor
 Componentes base (descrição curta)
 
 - Fundação imediata:
-- `AppHeader`: logo, busca, acesso/admin, botão WhatsApp fixo
+- `AppHeader`: logo, busca, acesso/admin e espaço para CTA contextual sem barra sticky global
 - `AppFooter`: informações da loja e links
 - `Container`: wrapper com paddings responsivos
 - `SectionTitle`: título + subtítulo opcional
 - `EmptyState`: mensagem e CTA
-- `SearchInput` e `FilterChip`
+- `SearchInput` e `FilterChip`, nesta fase apenas como componentes fundacionais/presentacionais, sem acoplamento a regras reais de busca ou filtro
 - `WhatsappButton`
 - `PriceDisplay`: lógica para promotional_price + original riscado
 
@@ -98,6 +108,27 @@ Componentes base (descrição curta)
 - `StatCard`: bloco simples para visão operacional
 - `DataTableShell`: estrutura base de listas administrativas
 
+Faseamento recomendado
+
+1. Fase 3: fundação visual e estrutural
+
+- tokens globais em `app/globals.css`
+- fontes e aliases tipográficos
+- `AppHeader`, `AppFooter`, `Container`, `SectionTitle`, `EmptyState`, `SearchInput`, `FilterChip`, `WhatsappButton`, `PriceDisplay`
+- `PublicShell` e `AdminShell` base
+- `AdminShell` nesta fase significa somente extração visual/estrutural reutilizável, preservando a boundary atual de auth no layout admin
+- `/design` com demonstração de tokens, tipografia, estados e shells
+
+2. Fase 5: navegação pública
+
+- `ProductCard`, `CategoryCard`, `BrandBadge`, `PromoBadge`, `QuantitySelector`
+- exemplos de home, catálogo e detalhe na `/design` quando esses componentes existirem
+
+3. Fase 7 em diante: operação administrativa
+
+- `AdminSidebar`, `AdminPageHeader`, `StatCard`, `DataTableShell`
+- demonstrações operacionais mais fiéis na `/design` conforme os módulos reais entrarem
+
 Acessibilidade
 
 - Contraste mínimo para texto e botões.
@@ -111,6 +142,7 @@ Responsividade
 - Cards empilhados no mobile; grid 2–4 cols em desktop.
 - Header, filtros e CTAs devem privilegiar uso com uma mão no mobile.
 - O CTA principal de WhatsApp não deve ser sticky globalmente no site inteiro.
+- O header não deve carregar uma barra fixa de WhatsApp como elemento persistente em todas as telas.
 - Recomendação da fundação: usar CTA sticky no mobile apenas em superfícies de decisão ou conversão, como detalhe de produto, carrinho e resumo de pedido.
 - Em home e catálogo, priorizar CTA visível sem barra sticky permanente para evitar ruído visual.
 - Filtros no mobile devem favorecer leitura rápida, toque confortável e comportamento horizontal ou em bottom sheet simples quando a feature exigir expansão.
@@ -133,7 +165,9 @@ Tokens de branding e exemplos de uso
 Guia rápido de implementação
 
 - Declarar tokens CSS em `app/globals.css` e expor via `@theme`.
-- Implementar página `/design` com exemplos de componentes, estados e variações público/admin.
+- Implementar página `/design` primeiro como contrato da fundação, não como galeria completa de todas as features futuras.
+- Demonstrar na `/design`, na Fase 3, pelo menos: tokens, tipografia, botões, inputs, chips, estados de feedback, shell público e shell admin base.
+- Acrescentar cards, tabelas e composições mais específicas apenas quando os componentes reais entrarem nas fases correspondentes.
 - Ler e seguir `DESIGN.md` antes de tomar decisões de tipografia, densidade, hierarquia e tom visual.
 - Não introduzir `ThemeProvider` nesta fundação sem necessidade concreta; CSS variables + Tailwind v4 são suficientes para o escopo atual.
 
@@ -142,7 +176,8 @@ Critérios de aceite
 - Tailwind v4 configurado com tokens.
 - Componentes base criados com props tipadas e demonstração na rota `/design`.
 - Paleta aplicada ao layout público e admin.
-- A página `/design` demonstra tokens, botões, cards, formulário, tabela admin e estados vazios/erro/loading.
+- A página `/design`, ao final da Fase 3, demonstra tokens, tipografia, botões, inputs, chips, shells público/admin e estados vazios/erro/loading.
+- Componentes como cards de catálogo, tabela admin e composições mais completas podem ser adicionados depois, quando as respectivas features forem implementadas.
 
 Fora de escopo
 
