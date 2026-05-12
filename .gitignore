@@ -1,6 +1,11 @@
 .next/
 node_modules/
 
+# agents
+skills-lock.json
+SKILL.md
+.agents/
+
 # opencode
 /.opencode/
 
