@@ -25,9 +25,31 @@ export default function DesignPage() {
     <Container className="flex flex-col gap-8">
       <section className="rounded-card border border-default bg-surface p-6 shadow-soft sm:p-8">
         <SectionTitle
+          as="h1"
           subtitle="Contrato visual vivo da fundação. Catálogo e admin final entram depois, sem reabrir tokens ou hierarquia base."
           title="Design system base"
         />
+      </section>
+
+      <section className="rounded-card border border-default bg-surface p-6 shadow-soft">
+        <SectionTitle
+          subtitle="Use esta página para validar decisões de base antes de entrar em catálogo real ou superfície operacional final."
+          title="Mapa da fundação"
+        />
+        <div className="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
+          {[
+            ["Fundações", "Tokens, tipografia e ritmo."],
+            ["Inputs e ações", "Busca, chips, CTA e preço."],
+            ["Feedback", "Loading, vazio, erro e sucesso."],
+            ["Shell público", "Leitura leve para descoberta."],
+            ["Shell admin", "Base densa para operação futura."],
+          ].map(([title, description]) => (
+            <div key={title} className="rounded-card border border-default bg-background p-4">
+              <p className="text-sm font-semibold text-foreground">{title}</p>
+              <p className="mt-2 text-sm leading-6 text-muted">{description}</p>
+            </div>
+          ))}
+        </div>
       </section>
 
       <section className="grid gap-4 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)]">
@@ -150,41 +172,50 @@ export default function DesignPage() {
           subtitle="Shell público já está ativo nesta rota. Bloco abaixo mostra leitura do shell admin sem puxar sidebar nem dashboard final."
           title="Shells"
         />
-        <div className="mt-6 rounded-card border border-default bg-background p-3">
-          <AdminShell
-            actions={
-              <button
-                className="min-h-11 rounded-full border border-default px-4 py-3 text-sm font-semibold text-foreground"
-                type="button"
-              >
-                Sair
-              </button>
-            }
-            description="Preview visual. Auth real continua no layout admin."
-            embedded
-            eyebrow="Admin base"
-            meta="Ritmo mais denso, mais quieto, mais operacional."
-            title="AdminShell"
-          >
-            <section className="grid gap-4 lg:grid-cols-2">
-              <article className="rounded-card border border-default bg-surface p-5 shadow-soft">
-                <h3 className="font-display text-lg font-semibold text-foreground">
-                  Leitura operacional
-                </h3>
-                <p className="mt-2 text-sm leading-6 text-muted">
-                  Sem sidebar agora. Sem tabela agora. Só base estrutural compartilhável.
-                </p>
-              </article>
-              <article className="rounded-card border border-default bg-surface p-5 shadow-soft">
-                <h3 className="font-display text-lg font-semibold text-foreground">
-                  Pronto para Fase 7
-                </h3>
-                <p className="mt-2 text-sm leading-6 text-muted">
-                  Módulos operacionais entram depois sobre mesmo shell, sem refazer visual base.
-                </p>
-              </article>
-            </section>
-          </AdminShell>
+        <div className="mt-6 grid gap-4 xl:grid-cols-2">
+          <article className="rounded-card border border-default bg-background p-5 shadow-soft">
+            <h3 className="font-display text-lg font-semibold text-foreground">Shell público</h3>
+            <p className="mt-2 text-sm leading-6 text-muted">
+              Header, busca, CTA e footer com leitura leve. Base para home, catálogo e pedido.
+            </p>
+          </article>
+
+          <div className="rounded-card border border-default bg-background p-3">
+            <AdminShell
+              actions={
+                <button
+                  className="min-h-11 rounded-full border border-default px-4 py-3 text-sm font-semibold text-foreground"
+                  type="button"
+                >
+                  Sair
+                </button>
+              }
+              description="Preview visual. Auth real continua no layout admin."
+              embedded
+              eyebrow="Admin base"
+              meta="Ritmo mais denso, mais quieto, mais operacional."
+              title="AdminShell"
+            >
+              <section className="grid gap-4 lg:grid-cols-2">
+                <article className="rounded-card border border-default bg-surface p-5 shadow-soft">
+                  <h3 className="font-display text-lg font-semibold text-foreground">
+                    Leitura operacional
+                  </h3>
+                  <p className="mt-2 text-sm leading-6 text-muted">
+                    Sem sidebar agora. Sem tabela agora. Só base estrutural compartilhável.
+                  </p>
+                </article>
+                <article className="rounded-card border border-default bg-surface p-5 shadow-soft">
+                  <h3 className="font-display text-lg font-semibold text-foreground">
+                    Pronto para Fase 7
+                  </h3>
+                  <p className="mt-2 text-sm leading-6 text-muted">
+                    Módulos operacionais entram depois sobre mesmo shell, sem refazer visual base.
+                  </p>
+                </article>
+              </section>
+            </AdminShell>
+          </div>
         </div>
       </section>
     </Container>

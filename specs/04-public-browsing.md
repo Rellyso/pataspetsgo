@@ -38,12 +38,58 @@ Contrato de dados públicos
 
 - A navegação pública só deve consumir o contrato de catálogo público definido na arquitetura.
 - Não ler tabelas base diretamente em componentes públicos quando isso duplicar regras de visibilidade.
+- Na prática do MVP, esse contrato deve ser servido por queries server-side centralizadas em `features/catalog` ou por views SQL equivalentes, nunca por filtros soltos reimplementados em cada rota.
+- A Fase 4 fecha esse contrato de leitura. A Fase 5 só consome esse contrato para montar a experiência visual.
 - Só devem aparecer produtos realmente exibíveis:
 - produto ativo
 - categoria ativa quando aplicável
 - marca ativa quando aplicável
 - pelo menos uma variante ativa e válida para pedido
 - banners ativos com destino válido
+
+Fatiamento recomendado do contrato
+
+1. Home pública
+
+- Deve retornar apenas os blocos necessários para a home:
+- `storeSummary` com dados institucionais mínimos da loja quando aplicável
+- `activeBanners`
+- `featuredProducts`
+- `promotionProducts`
+- `featuredCategories` ou conjunto equivalente para atalhos iniciais
+- Cada bloco pode ser omitido quando não houver dados válidos, sem quebrar a home.
+
+2. Catálogo público
+
+- Deve retornar um payload orientado a listagem:
+- `items`
+- `availableFilters`
+- `appliedFilters`
+- `sort`
+- metadados mínimos de paginação/contagem quando a implementação precisar
+- `availableFilters` devem ser derivados apenas de opções públicas válidas dentro do universo realmente exibível.
+
+3. Detalhe de produto público
+
+- Deve retornar:
+- dados do produto já prontos para renderização pública
+- variantes públicas válidas ordenadas
+- contexto mínimo de preço, disponibilidade e atributos de apoio
+- Se o produto não for público ou não tiver variante pública válida, a rota deve se comportar como produto não encontrado.
+
+Critério de variante pública válida
+
+- `is_active = true`
+- `price` válido para pedido
+- `stock_status` em `available` ou `consult`
+- `promotional_price`, quando existir, deve continuar coerente com `price`
+- A ordenação recomendada de variantes públicas é `sort_order` ascendente com fallback estável por `name`.
+
+Boundary entre Fase 4 e Fase 5
+
+- Fase 4 define contrato, regras de visibilidade, ordenação e shape de dados.
+- Fase 5 implementa a UI final de home, catálogo e detalhe usando esse contrato.
+- Busca, filtros e hero visual pertencem à experiência da Fase 5, mas sua fonte de dados e suas regras de validade precisam estar fechadas na Fase 4.
 
 Rotas públicas
 
@@ -105,6 +151,7 @@ Busca pública
 - Pode incluir apoio em `short_description` se isso não aumentar complexidade cedo demais.
 - No MVP, não é necessário autocomplete avançado.
 - A busca deve ser tolerante ao uso comum, mas sem exigir search engine externo.
+- A recomendação da fundação é que a busca seja resolvida no servidor dentro da camada `features/catalog`, para manter consistência com o mesmo contrato público das listagens.
 
 Filtros públicos
 
@@ -120,6 +167,7 @@ Filtros públicos
 - Produtos sem variante válida não devem aparecer em resultados, mesmo que o filtro coincida.
 - O filtro de promoção deve retornar produtos com condição comercial promocional de forma consistente com `promotional_price` e/ou marcação de promoção adotada na implementação.
 - Regra do MVP: um produto só entra em contextos públicos de promoção quando `is_promotion = true` e houver pelo menos uma variante pública válida com `promotional_price` coerente.
+- A lista de opções de filtro não deve ser montada a partir de tabelas base completas; ela deve refletir apenas o universo público realmente navegável naquele momento.
 
 Ordenação
 
@@ -182,6 +230,7 @@ Regras de negócio da navegação pública
 - Produto indisponível não deve ser adicionado ao carrinho.
 - Produto com status `consult` deve sinalizar confirmação posterior pela loja.
 - O carrinho é local ao navegador e a navegação pública deve tratá-lo como estado local do cliente.
+- A mesma regra de exibibilidade precisa valer para home, catálogo, detalhe e opções de filtro, sem duplicação divergente entre rotas.
 
 Responsividade
 

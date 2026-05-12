@@ -22,8 +22,10 @@ export function AppHeader({ showSearch = true }: AppHeaderProps) {
                 PatasGo
               </span>
             </Link>
+          </div>
 
-            <div className="flex items-center gap-3 lg:hidden">
+          <div className="flex flex-1 flex-col gap-4 lg:max-w-3xl lg:flex-row lg:items-center lg:justify-end">
+            <div className="flex items-center justify-between gap-3 lg:hidden">
               <Link
                 className="text-sm font-medium text-muted transition-colors hover:text-foreground"
                 href="/auth/login"
@@ -32,9 +34,7 @@ export function AppHeader({ showSearch = true }: AppHeaderProps) {
               </Link>
               <WhatsappButton>WhatsApp</WhatsappButton>
             </div>
-          </div>
 
-          <div className="flex flex-1 flex-col gap-4 lg:max-w-3xl lg:flex-row lg:items-center lg:justify-end">
             {showSearch ? (
               <div className="w-full lg:max-w-md">
                 <SearchInput

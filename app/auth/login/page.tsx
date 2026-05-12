@@ -27,6 +27,7 @@ export default async function AdminLoginPage({ searchParams }: AdminLoginPagePro
     <Container className="py-16" size="narrow">
       <div className="flex flex-col gap-6 rounded-card border border-default bg-surface p-8 shadow-soft">
         <SectionTitle
+          as="h1"
           subtitle="Use usuário autorizado para acessar módulos internos da loja."
           title="Entrar no admin"
         />

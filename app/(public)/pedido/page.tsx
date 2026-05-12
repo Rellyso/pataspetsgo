@@ -6,6 +6,7 @@ export default function OrderPage() {
     <Container>
       <section className="rounded-card border border-default bg-surface p-6 shadow-soft sm:p-8">
         <SectionTitle
+          as="h1"
           subtitle="Carrinho, formulário e persistência entram na Fase 6. Aqui, página já herda mesma base visual do resto."
           title="Pedido"
         />

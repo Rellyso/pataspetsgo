@@ -12,6 +12,7 @@ export default async function AdminAccessDeniedPage() {
     <Container className="py-16" size="narrow">
       <div className="flex flex-col gap-6 rounded-card border border-default bg-surface p-8 shadow-soft">
         <SectionTitle
+          as="h1"
           subtitle={
             accessState.user?.email
               ? `Você entrou como ${accessState.user.email}, mas essa conta ainda não foi promovida.`
