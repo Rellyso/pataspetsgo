@@ -111,6 +111,25 @@
 - Mobile use with one hand should shape header, sticky actions, and filter behavior.
 - The admin should prioritize clarity, list scanning, and form efficiency over visual personality.
 
+## Interaction Rules
+- Show clear loading feedback for operations that take more than roughly 300ms.
+- Primary action buttons should expose a loading state and prevent double submission while work is in flight.
+- Hover states can shift color, border, shadow, or opacity, but should not move layout or feel jumpy.
+- Focus states must stay visible across public and admin surfaces.
+- Use motion only to clarify state change or hierarchy. Do not add decorative continuous animation.
+
+## Responsive Rules
+- Treat mobile as the default reading mode, not a compressed desktop layout.
+- Prefer consistent responsive padding rhythms such as `px-4 sm:px-6 lg:px-8` for major shells and sections.
+- Avoid separate mobile/desktop content structures unless the interaction model truly changes.
+- Keep primary actions reachable with one hand on mobile, especially in search, filter, product, cart, and order flows.
+
+## Accessibility Rules
+- Heading levels should remain sequential so assistive tech can navigate the page structure.
+- Color cannot be the only indicator for state, selection, or validation.
+- Touch targets should stay comfortable on mobile, especially chips, inputs, and CTA buttons.
+- Font loading should avoid invisible text and minimize layout shift through `font-display: swap` and sensible fallbacks.
+
 ## Public vs Admin Rhythm
 - **Public:** Warmer, more breathable, stronger category and promo storytelling.
 - **Admin:** Tighter, quieter, more operational. Fewer decorative moments, more emphasis on hierarchy, labels, and task completion.
@@ -140,6 +159,10 @@
 - Do not infantilize the brand with cartoon-heavy styling.
 - Do not copy the density and campaign overload of large pet marketplaces.
 - Do not push lifestyle-brand aesthetics so far that utility becomes secondary.
+- Do not use emoji as interface icons.
+- Do not leave async actions without visible feedback.
+- Do not rely on hover transforms that make cards or buttons jump and shift surrounding layout.
+- Do not create frozen-looking loading moments, especially in mobile-first flows.
 
 ## Implementation Notes
 - `DESIGN.md` is the visual source of truth for future implementation.

@@ -135,6 +135,9 @@ Acessibilidade
 - Foco visível para elementos interativos.
 - Botões com área de toque ~44x44px no mobile.
 - Estados interativos principais devem prever pelo menos `default`, `hover`, `focus-visible`, `pressed` e `disabled`.
+- Hierarquia de headings deve permanecer sequencial.
+- Cor não deve ser o único indicador de estado, seleção ou validação.
+- Carregamento de fontes deve evitar texto invisível e reduzir layout shift com fallback compatível.
 
 Responsividade
 
@@ -146,6 +149,8 @@ Responsividade
 - Recomendação da fundação: usar CTA sticky no mobile apenas em superfícies de decisão ou conversão, como detalhe de produto, carrinho e resumo de pedido.
 - Em home e catálogo, priorizar CTA visível sem barra sticky permanente para evitar ruído visual.
 - Filtros no mobile devem favorecer leitura rápida, toque confortável e comportamento horizontal ou em bottom sheet simples quando a feature exigir expansão.
+- Preferir ritmo de padding responsivo consistente nos shells e seções principais, evitando compressão abrupta entre breakpoints.
+- Evitar duplicar conteúdo em versões separadas para mobile e desktop quando o mesmo layout pode apenas se adaptar.
 
 Diretrizes de UX visual
 
@@ -155,6 +160,10 @@ Diretrizes de UX visual
 - Variações de produto devem parecer simples de escolher, não técnicas.
 - A área admin deve priorizar leitura, tabela e formulário, evitando ornamentos desnecessários.
 - O produto não deve herdar a densidade visual de grandes marketplaces pet, nem migrar para uma estética fashion-first que prejudique utilidade.
+- Operações com espera perceptível devem mostrar loading explícito, não congelamento silencioso da interface.
+- Botões primários assíncronos devem impedir duplo clique durante processamento.
+- Hover deve reforçar affordance sem deslocar layout.
+- Motion deve ser funcional e curta, não contínua e decorativa.
 
 Tokens de branding e exemplos de uso
 
@@ -178,6 +187,8 @@ Critérios de aceite
 - Paleta aplicada ao layout público e admin.
 - A página `/design`, ao final da Fase 3, demonstra tokens, tipografia, botões, inputs, chips, shells público/admin e estados vazios/erro/loading.
 - Componentes como cards de catálogo, tabela admin e composições mais completas podem ser adicionados depois, quando as respectivas features forem implementadas.
+- Estados de loading e disabled ficam visíveis em ações assíncronas demonstradas na fundação.
+- Navegação e demonstrações da `/design` mantêm heading hierarchy e foco visível coerentes.
 
 Fora de escopo
 
