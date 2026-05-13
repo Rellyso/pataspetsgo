@@ -6,7 +6,8 @@ import "@/lib/server/env";
 
 export const metadata: Metadata = {
   title: "PatasGo",
-  description: "Catálogo digital mobile-first para pedidos via WhatsApp da Patas Pets.",
+  description:
+    "Catálogo digital mobile-first para pedidos via WhatsApp da Patas Pets.",
 };
 
 export default function RootLayout({
@@ -20,7 +21,9 @@ export default function RootLayout({
       data-scroll-behavior="smooth"
       lang="pt-BR"
     >
-      <body className="bg-background font-sans text-foreground">{children}</body>
+      <body className="bg-background font-sans text-foreground">
+        {children}
+      </body>
     </html>
   );
 }
