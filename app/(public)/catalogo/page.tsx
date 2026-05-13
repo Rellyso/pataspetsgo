@@ -36,7 +36,7 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
           </form>
         </section>
 
-        <section className="grid gap-4 xl:grid-cols-[minmax(0,1.3fr)_minmax(0,0.7fr)]">
+        <section className="grid gap-4 xl:grid-cols-[minmax(0,1.25fr)_minmax(0,0.75fr)]">
           <article className="rounded-card border border-default bg-surface p-6 shadow-soft">
             <h2 className="font-display text-xl font-semibold text-foreground">Itens públicos</h2>
             <p className="mt-2 text-sm text-muted">
@@ -64,7 +64,7 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
             </div>
           </article>
 
-          <article className="rounded-card border border-default bg-surface p-6 shadow-soft">
+          <article className="rounded-card border border-default bg-surface p-6 shadow-soft xl:sticky xl:top-6">
             <h2 className="font-display text-xl font-semibold text-foreground">
               Filtros disponíveis
             </h2>
@@ -99,12 +99,15 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
               ) : null}
 
               <div>
-                <p className="font-medium text-foreground">Categorias</p>
-                <div className="mt-2 flex flex-wrap gap-2">
+                <div className="flex items-center justify-between gap-2">
+                  <p className="font-medium text-foreground">Categorias</p>
+                  <span className="text-xs font-medium text-muted">Deslize</span>
+                </div>
+                <div className="mt-3 flex snap-x snap-mandatory gap-2 overflow-x-auto pb-1">
                   {catalogData.availableFilters.categories.map((option) => (
                     <Link
                       key={option.value}
-                      className="chip-category"
+                      className="chip-category shrink-0 snap-start whitespace-nowrap"
                       href={buildCatalogHref(filters, { category: option.value })}
                     >
                       {option.label}
@@ -115,7 +118,7 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
 
               <div>
                 <p className="font-medium text-foreground">Marcas</p>
-                <div className="mt-2 flex flex-wrap gap-2">
+                <div className="mt-3 flex flex-wrap gap-2">
                   {catalogData.availableFilters.brands.map((option) => (
                     <Link
                       key={option.value}

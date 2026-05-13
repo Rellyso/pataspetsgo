@@ -1,12 +1,13 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { PriceDisplay } from "@/components/shared/price-display";
 import { useCart } from "@/features/cart/cart-context";
 import type { PublicProductDetail } from "@/features/catalog/types";
 import { BrandBadge } from "./brand-badge";
 import { PromoBadge } from "./promo-badge";
 import { QuantitySelector } from "./quantity-selector";
+import Image from "next/image";
 
 type ProductDetailViewProps = {
   product: PublicProductDetail;
@@ -14,8 +15,12 @@ type ProductDetailViewProps = {
 
 export function ProductDetailView({ product }: ProductDetailViewProps) {
   const { addItem } = useCart();
-  const [selectedVariantId, setSelectedVariantId] = useState(product.primaryVariant.id);
+  const [selectedVariantId, setSelectedVariantId] = useState(
+    product.primaryVariant.id,
+  );
   const [quantity, setQuantity] = useState(1);
+  const [justAdded, setJustAdded] = useState(false);
+  const resetTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const selectedVariant = useMemo(
     () =>
@@ -24,13 +29,43 @@ export function ProductDetailView({ product }: ProductDetailViewProps) {
     [product, selectedVariantId],
   );
 
+  useEffect(() => {
+    return () => {
+      if (resetTimer.current) {
+        clearTimeout(resetTimer.current);
+      }
+    };
+  }, []);
+
+  const handleAdd = () => {
+    addItem({
+      productId: product.id,
+      productVariantId: selectedVariant.id,
+      productSlug: product.slug,
+      productName: product.name,
+      variantName: selectedVariant.name,
+      unitPriceSnapshot: selectedVariant.price,
+      promotionalPriceSnapshot: selectedVariant.promotionalPrice,
+      quantity,
+      stockStatusSnapshot: selectedVariant.stockStatus,
+      imageUrl: product.imageUrl,
+    });
+
+    setJustAdded(true);
+    if (resetTimer.current) {
+      clearTimeout(resetTimer.current);
+    }
+    resetTimer.current = setTimeout(() => {
+      setJustAdded(false);
+    }, 1600);
+  };
+
   return (
     <div className="grid gap-4 xl:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)]">
       <article className="rounded-card border border-default bg-surface p-6 shadow-soft">
-        <div className="flex aspect-[4/3] items-center justify-center rounded-card bg-background text-sm text-muted">
+        <div className="flex aspect-4/3 items-center justify-center rounded-card bg-background text-sm text-muted">
           {product.imageUrl ? (
-            // biome-ignore lint/performance/noImgElement: simple Phase 5 fallback image usage
-            <img
+            <Image
               alt={product.name}
               className="h-full w-full rounded-card object-cover"
               src={product.imageUrl}
@@ -77,7 +112,9 @@ export function ProductDetailView({ product }: ProductDetailViewProps) {
         />
 
         <div className="mt-6 space-y-3">
-          <p className="text-sm font-medium text-foreground">Escolha a variante</p>
+          <p className="text-sm font-medium text-foreground">
+            Escolha a variante
+          </p>
           <div className="flex flex-col gap-3">
             {product.variants.map((variant) => {
               const isSelected = variant.id === selectedVariant.id;
@@ -95,7 +132,9 @@ export function ProductDetailView({ product }: ProductDetailViewProps) {
                   type="button"
                 >
                   <p className="font-medium text-foreground">{variant.name}</p>
-                  <p className="mt-1 text-sm text-muted">Status: {variant.stockStatus}</p>
+                  <p className="mt-1 text-sm text-muted">
+                    Status: {variant.stockStatus}
+                  </p>
                 </button>
               );
             })}
@@ -109,33 +148,36 @@ export function ProductDetailView({ product }: ProductDetailViewProps) {
 
         {selectedVariant.stockStatus === "consult" ? (
           <p className="mt-4 rounded-card border border-warning/30 bg-warning/10 px-4 py-3 text-sm leading-6 text-foreground">
-            Este item pode ser pedido, mas a confirmação final de disponibilidade será feita pela
-            loja.
+            Este item pode ser pedido, mas a confirmação final de
+            disponibilidade será feita pela loja.
           </p>
         ) : null}
 
         <button
-          className="mt-6 inline-flex min-h-12 w-full items-center justify-center rounded-full bg-primary px-4 py-3 text-base font-semibold text-white transition-colors duration-200 hover:bg-primary-dark"
-          onClick={() =>
-            addItem({
-              productId: product.id,
-              productVariantId: selectedVariant.id,
-              productSlug: product.slug,
-              productName: product.name,
-              variantName: selectedVariant.name,
-              unitPriceSnapshot: selectedVariant.price,
-              promotionalPriceSnapshot: selectedVariant.promotionalPrice,
-              quantity,
-              stockStatusSnapshot: selectedVariant.stockStatus,
-              imageUrl: product.imageUrl,
-            })
-          }
+          className={[
+            "mt-6 inline-flex min-h-12 w-full items-center justify-center rounded-full px-4 py-3 text-base font-semibold text-white transition-colors duration-200",
+            justAdded
+              ? "bg-success hover:bg-success/90"
+              : "bg-primary hover:bg-primary-dark",
+          ].join(" ")}
+          onClick={handleAdd}
           type="button"
         >
-          {selectedVariant.stockStatus === "consult"
-            ? "Adicionar com confirmação"
-            : "Adicionar ao pedido"}
+          {justAdded
+            ? "Adicionado"
+            : selectedVariant.stockStatus === "consult"
+              ? "Adicionar com confirmação"
+              : "Adicionar ao pedido"}
         </button>
+
+        {justAdded ? (
+          <p
+            aria-live="polite"
+            className="mt-2 text-sm font-medium text-success"
+          >
+            Item adicionado ao pedido.
+          </p>
+        ) : null}
       </article>
     </div>
   );

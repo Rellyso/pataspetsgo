@@ -15,7 +15,7 @@ export function OrderPageClient() {
     return (
       <EmptyState
         title="Seu pedido ainda está vazio"
-        description="Adicione produtos no catálogo para começar a montar o pedido."
+          description="Adicione produtos no catálogo para começar a montar o pedido."
         action={
           <Link
             className="inline-flex min-h-11 items-center justify-center rounded-full bg-primary px-4 py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-primary-dark"
@@ -73,10 +73,10 @@ export function OrderPageClient() {
         <div className="mt-5">
           <PriceDisplay price={estimatedTotal} size="large" />
         </div>
-        <p className="mt-3 text-sm leading-6 text-muted">
-          Checkout completo e envio ao WhatsApp entram na Fase 6. Nesta etapa, o carrinho local ja
-          valida a montagem do pedido.
-        </p>
+          <p className="mt-3 text-sm leading-6 text-muted">
+            Checkout completo e envio ao WhatsApp entram na Fase 6. Nesta etapa, o carrinho local já
+            valida a montagem do pedido.
+          </p>
       </aside>
     </div>
   );

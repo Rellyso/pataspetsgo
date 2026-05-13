@@ -15,7 +15,7 @@ export default async function PublicHomePage() {
             as="h1"
             subtitle={
               homeData.storeSummary?.description ??
-              "Seu pet shop de bairro com pedido rapido pelo WhatsApp."
+              "Seu pet shop de bairro com pedido rápido pelo WhatsApp."
             }
             title={homeData.storeSummary?.storeName ?? "Patas Pets"}
             actions={

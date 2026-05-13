@@ -24,9 +24,15 @@ export function AppHeader({ showSearch = true }: AppHeaderProps) {
             </Link>
           </div>
 
-          <div className="flex flex-1 flex-col gap-4 lg:max-w-3xl lg:flex-row lg:items-center lg:justify-end">
+            <div className="flex flex-1 flex-col gap-4 lg:max-w-3xl lg:flex-row lg:items-center lg:justify-end">
             <div className="flex items-center justify-between gap-3 lg:hidden">
               <div className="flex items-center gap-3">
+                <Link
+                  className="text-sm font-semibold text-primary transition-colors hover:text-primary-dark"
+                  href="/catalogo"
+                >
+                  Ver catálogo
+                </Link>
                 <CartLink />
                 <Link
                   className="text-sm font-medium text-muted transition-colors hover:text-foreground"
