@@ -1,8 +1,8 @@
 import Link from "next/link";
-
 import { Container } from "@/components/layout/container";
 import { SearchInput } from "@/components/shared/search-input";
 import { WhatsappButton } from "@/components/shared/whatsapp-button";
+import { CartLink } from "@/features/cart/cart-link";
 
 type AppHeaderProps = {
   showSearch?: boolean;
@@ -26,12 +26,15 @@ export function AppHeader({ showSearch = true }: AppHeaderProps) {
 
           <div className="flex flex-1 flex-col gap-4 lg:max-w-3xl lg:flex-row lg:items-center lg:justify-end">
             <div className="flex items-center justify-between gap-3 lg:hidden">
-              <Link
-                className="text-sm font-medium text-muted transition-colors hover:text-foreground"
-                href="/auth/login"
-              >
-                Admin
-              </Link>
+              <div className="flex items-center gap-3">
+                <CartLink />
+                <Link
+                  className="text-sm font-medium text-muted transition-colors hover:text-foreground"
+                  href="/auth/login"
+                >
+                  Admin
+                </Link>
+              </div>
               <WhatsappButton>WhatsApp</WhatsappButton>
             </div>
 
@@ -54,16 +57,11 @@ export function AppHeader({ showSearch = true }: AppHeaderProps) {
               </Link>
               <Link
                 className="text-sm font-medium text-muted transition-colors hover:text-foreground"
-                href="/pedido"
-              >
-                Pedido
-              </Link>
-              <Link
-                className="text-sm font-medium text-muted transition-colors hover:text-foreground"
                 href="/auth/login"
               >
                 Admin
               </Link>
+              <CartLink />
               <WhatsappButton>Falar no WhatsApp</WhatsappButton>
             </nav>
           </div>

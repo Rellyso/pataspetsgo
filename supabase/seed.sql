@@ -22,14 +22,42 @@ insert into public.store_settings (
 
 insert into public.categories (name, slug, description, icon, color, sort_order, is_active)
 values
-  ('Racao', 'racao', 'Racoes para diferentes fases e portes.', 'bowl', '#00A9C8', 1, true),
-  ('Higiene', 'higiene', 'Shampoos, tapetes e cuidados diarios.', 'sparkles', '#F6B800', 2, true),
-  ('Saude', 'saude', 'Medicacoes e cuidados basicos.', 'shield', '#FF7A00', 3, true);
+  ('Racoes', 'racoes', 'Racoes para caes e gatos em diferentes fases e portes.', 'bowl', '#00A9C8', 1, true),
+  ('Saches', 'saches', 'Saches praticos para refeicoes e agrados diarios.', 'package', '#F6B800', 2, true),
+  ('Petiscos', 'petiscos', 'Agrados, recompensas e snacks de apoio.', 'bone', '#FF7A00', 3, true),
+  ('Areias', 'areias', 'Areias sanitarias para rotina dos gatos.', 'sparkles', '#8B5CF6', 4, true),
+  ('Tapetes Higienicos', 'tapetes-higienicos', 'Tapetes para rotina higienica dos pets.', 'grid', '#0EA5E9', 5, true),
+  ('Higiene', 'higiene', 'Cuidados de limpeza e bem-estar no dia a dia.', 'shield', '#22C55E', 6, true),
+  ('Medicacoes', 'medicacoes', 'Itens de suporte veterinario e protecao.', 'pill', '#EF4444', 7, true),
+  ('Comedouros e Bebedouros', 'comedouros-e-bebedouros', 'Acessorios para alimentacao e hidratacao.', 'cup-soda', '#64748B', 8, true);
 
 insert into public.brands (name, slug, logo_url, is_active)
 values
-  ('PetNutri', 'petnutri', null, true),
-  ('BichoSano', 'bichosano', null, true);
+  ('Snow Cat', 'snow-cat', null, true),
+  ('GranPlus', 'granplus', null, true),
+  ('Excellence', 'excellence', null, true),
+  ('Raca Dog', 'raca-dog', null, true),
+  ('Bono Cat', 'bono-cat', null, true),
+  ('Finotrato', 'finotrato', null, true),
+  ('Whiskas', 'whiskas', null, true),
+  ('Cat Chow', 'cat-chow', null, true),
+  ('Dog Chow', 'dog-chow', null, true),
+  ('Optimum', 'optimum', null, true),
+  ('Sheba', 'sheba', null, true),
+  ('Pedigree', 'pedigree', null, true),
+  ('Kets', 'kets', null, true),
+  ('Bemicats', 'bemicats', null, true),
+  ('Pipicat', 'pipicat', null, true),
+  ('Durapads', 'durapads', null, true),
+  ('Goodpad', 'goodpad', null, true),
+  ('Pet Clean', 'pet-clean', null, true),
+  ('Clorexidina', 'clorexidina', null, true),
+  ('Pelo e Derme', 'pelo-e-derme', null, true),
+  ('Doxitec', 'doxitec', null, true),
+  ('Simparic', 'simparic', null, true),
+  ('Bravecto', 'bravecto', null, true),
+  ('Drontal', 'drontal', null, true),
+  ('Gen Brasil', 'gen-brasil', null, true);
 
 insert into public.products (
   name,
@@ -47,38 +75,36 @@ insert into public.products (
   is_featured,
   is_promotion
 ) values
-(
-  'Racao PetNutri Premium 10kg',
-  'racao-petnutri-premium-10kg',
-  'Racao premium para caes adultos com alta digestibilidade.',
-  'Racao premium para caes adultos.',
-  (select id from public.categories where slug = 'racao'),
-  (select id from public.brands where slug = 'petnutri'),
-  'dog',
-  'adult',
-  'medium',
-  null,
-  1,
-  true,
-  true,
-  true
-),
-(
-  'Shampoo BichoSano Neutro 500ml',
-  'shampoo-bichosano-neutro-500ml',
-  'Shampoo suave para banho semanal.',
-  'Shampoo neutro para pets.',
-  (select id from public.categories where slug = 'higiene'),
-  (select id from public.brands where slug = 'bichosano'),
-  'both',
-  'all',
-  'all',
-  null,
-  2,
-  true,
-  false,
-  false
-);
+  ('Snow Cat', 'snow-cat', 'Racao seca para gatos adultos com foco em rotina alimentar basica.', 'Racao seca para gatos adultos.', (select id from public.categories where slug = 'racoes'), (select id from public.brands where slug = 'snow-cat'), 'cat', 'adult', 'all', null, 1, true, false, false),
+  ('GranPlus Adulto', 'granplus-adulto', 'Racao seca para caes adultos com embalagem de alto giro.', 'Racao para caes adultos.', (select id from public.categories where slug = 'racoes'), (select id from public.brands where slug = 'granplus'), 'dog', 'adult', 'all', null, 2, true, true, true),
+  ('Excellence Light', 'excellence-light', 'Racao seca light para manutencao de rotina alimentar.', 'Racao light para caes.', (select id from public.categories where slug = 'racoes'), (select id from public.brands where slug = 'excellence'), 'dog', 'adult', 'all', null, 3, true, false, true),
+  ('Raca Dog Filhote', 'raca-dog-filhote', 'Racao seca para fase inicial de crescimento.', 'Racao para filhotes.', (select id from public.categories where slug = 'racoes'), (select id from public.brands where slug = 'raca-dog'), 'dog', 'puppy', 'all', null, 4, true, true, false),
+  ('Bono Cat', 'bono-cat', 'Racao seca para gatos com versao compacta de entrada.', 'Racao seca para gatos.', (select id from public.categories where slug = 'racoes'), (select id from public.brands where slug = 'bono-cat'), 'cat', 'adult', 'all', null, 5, true, false, false),
+  ('Finotrato Active Adulto', 'finotrato-active-adulto', 'Racao seca para caes adultos com apelo premium.', 'Racao premium para caes adultos.', (select id from public.categories where slug = 'racoes'), (select id from public.brands where slug = 'finotrato'), 'dog', 'adult', 'all', null, 6, true, true, true),
+  ('Whiskas Carne', 'whiskas-carne', 'Racao seca para gatos adultos com sabor carne.', 'Racao para gatos adultos.', (select id from public.categories where slug = 'racoes'), (select id from public.brands where slug = 'whiskas'), 'cat', 'adult', 'all', null, 7, true, true, true),
+  ('Cat Chow Frango Castrado', 'cat-chow-frango-castrado', 'Racao seca para gatos adultos castrados.', 'Racao para gatos castrados.', (select id from public.categories where slug = 'racoes'), (select id from public.brands where slug = 'cat-chow'), 'cat', 'adult', 'all', null, 8, true, false, true),
+  ('Dog Chow Filhote', 'dog-chow-filhote', 'Racao seca para filhotes em embalagem compacta.', 'Racao para filhotes.', (select id from public.categories where slug = 'racoes'), (select id from public.brands where slug = 'dog-chow'), 'dog', 'puppy', 'all', null, 9, true, false, false),
+  ('GranPlus Sache Cachorro', 'granplus-sache-cachorro', 'Sache umido para rotina de refeicao dos caes.', 'Sache para caes.', (select id from public.categories where slug = 'saches'), (select id from public.brands where slug = 'granplus'), 'dog', 'adult', 'all', null, 10, true, false, false),
+  ('Whiskas Sache', 'whiskas-sache', 'Sache umido para gatos com sabores variados.', 'Sache para gatos.', (select id from public.categories where slug = 'saches'), (select id from public.brands where slug = 'whiskas'), 'cat', 'adult', 'all', null, 11, true, true, false),
+  ('Optimum Sache Caes Racas Pequenas', 'optimum-sache-caes-racas-pequenas', 'Sache umido para caes de pequeno porte.', 'Sache para caes pequenos.', (select id from public.categories where slug = 'saches'), (select id from public.brands where slug = 'optimum'), 'dog', 'adult', 'small', null, 12, true, false, false),
+  ('Sheba Sache', 'sheba-sache', 'Sache premium para gatos adultos.', 'Sache premium para gatos.', (select id from public.categories where slug = 'saches'), (select id from public.brands where slug = 'sheba'), 'cat', 'adult', 'all', null, 13, true, false, false),
+  ('Tasty Bites Pedigree', 'tasty-bites-pedigree', 'Petisco para recompensas e treino.', 'Petisco para caes.', (select id from public.categories where slug = 'petiscos'), (select id from public.brands where slug = 'pedigree'), 'dog', 'adult', 'all', null, 14, true, false, false),
+  ('Whiskas Anti Bola de Pelo', 'whiskas-anti-bola-de-pelo', 'Petisco funcional para gatos.', 'Petisco funcional para gatos.', (select id from public.categories where slug = 'petiscos'), (select id from public.brands where slug = 'whiskas'), 'cat', 'adult', 'all', null, 15, true, false, true),
+  ('Optimum Anti Bola de Pelo', 'optimum-anti-bola-de-pelo', 'Petisco funcional para gatos adultos.', 'Petisco funcional para gatos.', (select id from public.categories where slug = 'petiscos'), (select id from public.brands where slug = 'optimum'), 'cat', 'adult', 'all', null, 16, true, false, false),
+  ('Kets Talco', 'kets-talco', 'Areia sanitaria com fragrancia suave.', 'Areia sanitaria para gatos.', (select id from public.categories where slug = 'areias'), (select id from public.brands where slug = 'kets'), 'cat', 'all', 'all', null, 17, true, true, false),
+  ('Bemicats', 'bemicats', 'Areia sanitaria para rotina diaria dos gatos.', 'Areia sanitaria para gatos.', (select id from public.categories where slug = 'areias'), (select id from public.brands where slug = 'bemicats'), 'cat', 'all', 'all', null, 18, true, false, false),
+  ('Pipicat Floral e Multi', 'pipicat-floral-e-multi', 'Areia sanitaria com foco em controle de odor.', 'Areia sanitaria com controle de odor.', (select id from public.categories where slug = 'areias'), (select id from public.brands where slug = 'pipicat'), 'cat', 'all', 'all', null, 19, true, false, true),
+  ('Durapads', 'durapads', 'Tapete higienico para rotina de limpeza dos pets.', 'Tapete higienico para pets.', (select id from public.categories where slug = 'tapetes-higienicos'), (select id from public.brands where slug = 'durapads'), 'both', 'all', 'all', null, 20, true, false, true),
+  ('Goodpad', 'goodpad', 'Tapete higienico para uso residencial.', 'Tapete higienico para pets.', (select id from public.categories where slug = 'tapetes-higienicos'), (select id from public.brands where slug = 'goodpad'), 'both', 'all', 'all', null, 21, true, false, false),
+  ('Pet Clean', 'pet-clean', 'Item de higiene para limpeza recorrente.', 'Higiene para rotina dos pets.', (select id from public.categories where slug = 'higiene'), (select id from public.brands where slug = 'pet-clean'), 'both', 'all', 'all', null, 22, true, true, false),
+  ('Clorexidina', 'clorexidina', 'Higienizador de apoio para cuidados basicos.', 'Higienizador de apoio.', (select id from public.categories where slug = 'higiene'), (select id from public.brands where slug = 'clorexidina'), 'both', 'all', 'all', null, 23, true, false, false),
+  ('Pelo e Derme', 'pelo-e-derme', 'Higiene de suporte para pele e pelagem.', 'Higiene para pele e pelagem.', (select id from public.categories where slug = 'higiene'), (select id from public.brands where slug = 'pelo-e-derme'), 'both', 'all', 'all', null, 24, true, false, false),
+  ('Doxitec', 'doxitec', 'Medicacao de apoio veterinario.', 'Medicacao de apoio.', (select id from public.categories where slug = 'medicacoes'), (select id from public.brands where slug = 'doxitec'), 'both', 'all', 'all', null, 25, true, false, false),
+  ('Simparic', 'simparic', 'Antiparasitario sujeito a confirmacao da loja.', 'Antiparasitario com confirmacao da loja.', (select id from public.categories where slug = 'medicacoes'), (select id from public.brands where slug = 'simparic'), 'dog', 'adult', 'small', null, 26, true, true, true),
+  ('Bravecto', 'bravecto', 'Antiparasitario para caes de pequeno porte.', 'Antiparasitario para caes.', (select id from public.categories where slug = 'medicacoes'), (select id from public.brands where slug = 'bravecto'), 'dog', 'adult', 'small', null, 27, true, false, false),
+  ('Drontal Gatos', 'drontal-gatos', 'Medicacao de apoio para gatos.', 'Medicacao para gatos.', (select id from public.categories where slug = 'medicacoes'), (select id from public.brands where slug = 'drontal'), 'cat', 'adult', 'all', null, 28, true, false, false),
+  ('Comedouro Duplo', 'comedouro-duplo', 'Comedouro basico para agua e alimento.', 'Comedouro para agua e alimento.', (select id from public.categories where slug = 'comedouros-e-bebedouros'), (select id from public.brands where slug = 'gen-brasil'), 'both', 'all', 'all', null, 29, true, false, false),
+  ('Fonte', 'fonte', 'Fonte para hidratacao continua dos pets.', 'Fonte para hidratacao.', (select id from public.categories where slug = 'comedouros-e-bebedouros'), (select id from public.brands where slug = 'gen-brasil'), 'both', 'all', 'all', null, 30, true, false, true);
 
 insert into public.product_variants (
   product_id,
@@ -92,42 +118,36 @@ insert into public.product_variants (
   sort_order,
   is_active
 ) values
-(
-  (select id from public.products where slug = 'racao-petnutri-premium-10kg'),
-  'Pacote 10kg',
-  'PN-10KG',
-  '10kg',
-  'Frango',
-  189.9,
-  169.9,
-  'available',
-  1,
-  true
-),
-(
-  (select id from public.products where slug = 'shampoo-bichosano-neutro-500ml'),
-  'Frasco 500ml',
-  null,
-  '500ml',
-  null,
-  39.9,
-  null,
-  'available',
-  1,
-  true
-),
-(
-  (select id from public.products where slug = 'racao-petnutri-premium-10kg'),
-  'Pacote 10kg (indisponivel)',
-  'PN-10KG-IND',
-  '10kg',
-  'Frango',
-  189.9,
-  null,
-  'unavailable',
-  2,
-  false
-);
+  ((select id from public.products where slug = 'snow-cat'), 'Pacote 10kg', 'SNOW-CAT-10KG', '10kg', null, 65.50, null, 'available', 1, true),
+  ((select id from public.products where slug = 'granplus-adulto'), 'Pacote 20kg', 'GRANPLUS-ADULTO-20KG', '20kg', null, 167.05, 154.90, 'available', 1, true),
+  ((select id from public.products where slug = 'excellence-light'), 'Pacote 15kg', 'EXCELLENCE-LIGHT-15KG', '15kg', null, 171.05, 159.90, 'available', 1, true),
+  ((select id from public.products where slug = 'raca-dog-filhote'), 'Pacote 15kg', 'RACA-DOG-FILHOTE-15KG', '15kg', null, 134.00, null, 'available', 1, true),
+  ((select id from public.products where slug = 'bono-cat'), 'Peixe 500g', 'BONO-CAT-PEIXE-500G', '500g', 'Peixe', 4.25, null, 'available', 1, true),
+  ((select id from public.products where slug = 'finotrato-active-adulto'), 'Pacote 15kg', 'FINOTRATO-ACTIVE-ADULTO-15KG', '15kg', null, 195.43, 182.90, 'available', 1, true),
+  ((select id from public.products where slug = 'whiskas-carne'), 'Pacote 15kg', 'WHISKAS-CARNE-15KG', '15kg', 'Carne', 178.98, 169.90, 'available', 1, true),
+  ((select id from public.products where slug = 'cat-chow-frango-castrado'), 'Pacote 2,7kg', 'CAT-CHOW-FRANGO-CASTRADO-27KG', '2,7kg', 'Frango', 40.00, 36.90, 'available', 1, true),
+  ((select id from public.products where slug = 'dog-chow-filhote'), 'Pacote 1kg', 'DOG-CHOW-FILHOTE-1KG', '1kg', null, 16.50, null, 'available', 1, true),
+  ((select id from public.products where slug = 'granplus-sache-cachorro'), 'Carne', 'GRANPLUS-SACHE-CACHORRO-CARNE', null, 'Carne', 2.35, null, 'available', 1, true),
+  ((select id from public.products where slug = 'whiskas-sache'), 'Sabores variados', 'WHISKAS-SACHE-VARIADOS', null, 'Mix', 2.40, null, 'available', 1, true),
+  ((select id from public.products where slug = 'optimum-sache-caes-racas-pequenas'), 'Unidade', 'OPTIMUM-SACHE-CAES-RACAS-PEQUENAS', null, null, 2.31, null, 'available', 1, true),
+  ((select id from public.products where slug = 'sheba-sache'), 'Unidade', 'SHEBA-SACHE', null, null, 2.60, null, 'available', 1, true),
+  ((select id from public.products where slug = 'tasty-bites-pedigree'), 'Unidade', 'TASTY-BITES-PEDIGREE', null, null, 2.94, null, 'available', 1, true),
+  ((select id from public.products where slug = 'whiskas-anti-bola-de-pelo'), 'Unidade', 'WHISKAS-ANTI-BOLA-DE-PELO', null, null, 5.85, 5.29, 'available', 1, true),
+  ((select id from public.products where slug = 'optimum-anti-bola-de-pelo'), 'Unidade', 'OPTIMUM-ANTI-BOLA-DE-PELO', null, null, 5.54, null, 'available', 1, true),
+  ((select id from public.products where slug = 'kets-talco'), 'Unidade', 'KETS-TALCO', null, 'Talco', 5.10, null, 'available', 1, true),
+  ((select id from public.products where slug = 'bemicats'), 'Unidade', 'BEMICATS', null, null, 5.91, null, 'available', 1, true),
+  ((select id from public.products where slug = 'pipicat-floral-e-multi'), 'Unidade', 'PIPICAT-FLORAL-MULTI', null, 'Floral', 10.81, 9.90, 'available', 1, true),
+  ((select id from public.products where slug = 'durapads'), '60x80 (30 unid)', 'DURAPADS-60X80-30', '60x80', null, 60.00, 54.90, 'available', 1, true),
+  ((select id from public.products where slug = 'goodpad'), '60x60 (30 unid)', 'GOODPAD-60X60-30', '60x60', null, 50.00, null, 'available', 1, true),
+  ((select id from public.products where slug = 'pet-clean'), 'Unidade', 'PET-CLEAN', null, null, 17.00, null, 'available', 1, true),
+  ((select id from public.products where slug = 'clorexidina'), 'Unidade', 'CLOREXIDINA', null, null, 16.00, null, 'available', 1, true),
+  ((select id from public.products where slug = 'pelo-e-derme'), 'Unidade', 'PELO-E-DERME', null, null, 60.00, null, 'available', 1, true),
+  ((select id from public.products where slug = 'doxitec'), '50mg', 'DOXITEC-50MG', '50mg', null, 35.46, null, 'available', 1, true),
+  ((select id from public.products where slug = 'simparic'), '2,6-5kg', 'SIMPARIC-26-5KG', '2,6-5kg', null, 156.94, 149.90, 'consult', 1, true),
+  ((select id from public.products where slug = 'bravecto'), '2-4,5kg', 'BRAVECTO-2-45KG', '2-4,5kg', null, 80.00, null, 'available', 1, true),
+  ((select id from public.products where slug = 'drontal-gatos'), 'Unidade', 'DRONTAL-GATOS', null, null, 35.00, null, 'available', 1, true),
+  ((select id from public.products where slug = 'comedouro-duplo'), 'Unidade', 'COMEDOURO-DUPLO', null, null, 12.65, null, 'available', 1, true),
+  ((select id from public.products where slug = 'fonte'), 'Unidade', 'FONTE', null, null, 63.10, 58.90, 'available', 1, true);
 
 insert into public.banners (
   title,
@@ -137,12 +157,6 @@ insert into public.banners (
   cta_url,
   position,
   is_active
-) values (
-  'Entrega rapida no bairro',
-  'Pedidos pelo WhatsApp em minutos.',
-  'https://images.unsplash.com/photo-1507146426996-ef05306b995a',
-  'Falar no WhatsApp',
-  'https://wa.me/5511999999999',
-  1,
-  true
-);
+) values
+  ('Entrega rapida no bairro', 'Monte seu pedido e finalize no WhatsApp.', 'https://images.unsplash.com/photo-1517849845537-4d257902454a', 'Ver catalogo', '/catalogo', 1, true),
+  ('Cuidados e rotina para seu pet', 'Produtos de giro diario, higiene e medicacoes em um so lugar.', 'https://images.unsplash.com/photo-1548199973-03cce0bbc87b', 'Explorar destaques', '/catalogo?sort=relevance', 2, true);

@@ -1,4 +1,8 @@
+import Link from "next/link";
+import { ProductCard } from "@/components/catalog/product-card";
 import { Container } from "@/components/layout/container";
+import { EmptyState } from "@/components/shared/empty-state";
+import { SearchInput } from "@/components/shared/search-input";
 import { SectionTitle } from "@/components/shared/section-title";
 import { getCatalogPageData } from "@/features/catalog/public-catalog";
 import { parseCatalogFilters } from "@/lib/validations/catalog";
@@ -18,9 +22,18 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
         <section className="rounded-card border border-default bg-surface p-6 shadow-soft sm:p-8">
           <SectionTitle
             as="h1"
-            subtitle="Esta rota já usa contrato público centralizado, incluindo busca e filtros válidos do catálogo exibível."
+            subtitle="Busca e filtros públicos já consomem o contrato centralizado de catálogo exibível."
             title="Catálogo"
           />
+
+          <form action="/catalogo" className="mt-6">
+            <SearchInput
+              defaultValue={filters.q ?? ""}
+              label="Buscar no catálogo"
+              name="q"
+              placeholder="Ração, areia, antipulgas..."
+            />
+          </form>
         </section>
 
         <section className="grid gap-4 xl:grid-cols-[minmax(0,1.3fr)_minmax(0,0.7fr)]">
@@ -29,29 +42,100 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
             <p className="mt-2 text-sm text-muted">
               {catalogData.total} produto(s) válido(s) para navegação pública.
             </p>
-            <ul className="mt-5 space-y-3">
-              {catalogData.items.map((item) => (
-                <li key={item.id} className="rounded-card border border-default bg-background p-4">
-                  <p className="font-medium text-foreground">{item.name}</p>
-                  <p className="mt-1 text-sm text-muted">{item.primaryVariant.name}</p>
-                </li>
-              ))}
-            </ul>
+            <div className="mt-5 grid gap-4 md:grid-cols-2">
+              {catalogData.items.length > 0 ? (
+                catalogData.items.map((item) => <ProductCard key={item.id} product={item} />)
+              ) : (
+                <div className="md:col-span-2">
+                  <EmptyState
+                    action={
+                      <Link
+                        className="inline-flex min-h-11 items-center justify-center rounded-full bg-primary px-4 py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-primary-dark"
+                        href="/catalogo"
+                      >
+                        Limpar filtros
+                      </Link>
+                    }
+                    description="Nenhum produto público corresponde aos filtros atuais. Ajuste a busca ou remova filtros ativos."
+                    title="Nenhum resultado encontrado"
+                  />
+                </div>
+              )}
+            </div>
           </article>
 
           <article className="rounded-card border border-default bg-surface p-6 shadow-soft">
             <h2 className="font-display text-xl font-semibold text-foreground">
               Filtros disponíveis
             </h2>
-            <div className="mt-5 space-y-4 text-sm text-muted">
-              <p>Categorias: {catalogData.availableFilters.categories.length}</p>
-              <p>Marcas: {catalogData.availableFilters.brands.length}</p>
-              <p>Tipos de pet: {catalogData.availableFilters.petTypes.length}</p>
-              <p>Faixas etárias: {catalogData.availableFilters.ageGroups.length}</p>
-              <p>Portes: {catalogData.availableFilters.sizeGroups.length}</p>
-              <p>
-                Promoção ativa: {catalogData.availableFilters.promotionAvailable ? "sim" : "não"}
-              </p>
+            <div className="mt-5 space-y-5 text-sm text-muted">
+              {catalogData.appliedFilters.q ||
+              catalogData.appliedFilters.category ||
+              catalogData.appliedFilters.brand ||
+              catalogData.appliedFilters.promotion ? (
+                <div>
+                  <p className="font-medium text-foreground">Filtros ativos</p>
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {catalogData.appliedFilters.q ? (
+                      <span className="chip-category">Busca: {catalogData.appliedFilters.q}</span>
+                    ) : null}
+                    {catalogData.appliedFilters.category ? (
+                      <span className="chip-category">Categoria</span>
+                    ) : null}
+                    {catalogData.appliedFilters.brand ? (
+                      <span className="chip-category">Marca</span>
+                    ) : null}
+                    {catalogData.appliedFilters.promotion ? (
+                      <span className="chip-category">Promoção</span>
+                    ) : null}
+                    <Link
+                      className="text-sm font-medium text-primary hover:text-primary-dark"
+                      href="/catalogo"
+                    >
+                      Limpar tudo
+                    </Link>
+                  </div>
+                </div>
+              ) : null}
+
+              <div>
+                <p className="font-medium text-foreground">Categorias</p>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {catalogData.availableFilters.categories.map((option) => (
+                    <Link
+                      key={option.value}
+                      className="chip-category"
+                      href={buildCatalogHref(filters, { category: option.value })}
+                    >
+                      {option.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <p className="font-medium text-foreground">Marcas</p>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {catalogData.availableFilters.brands.map((option) => (
+                    <Link
+                      key={option.value}
+                      className="chip-category"
+                      href={buildCatalogHref(filters, { brand: option.value })}
+                    >
+                      {option.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              {catalogData.availableFilters.promotionAvailable ? (
+                <Link
+                  className="inline-flex text-sm font-medium text-primary hover:text-primary-dark"
+                  href={buildCatalogHref(filters, { promotion: true })}
+                >
+                  Ver apenas promoções
+                </Link>
+              ) : null}
             </div>
           </article>
         </section>
@@ -70,4 +154,24 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
       </Container>
     );
   }
+}
+
+function buildCatalogHref(
+  filters: ReturnType<typeof parseCatalogFilters>,
+  patch: Partial<ReturnType<typeof parseCatalogFilters>>,
+) {
+  const params = new URLSearchParams();
+  const nextFilters = { ...filters, ...patch };
+
+  if (nextFilters.q) params.set("q", nextFilters.q);
+  if (nextFilters.category) params.set("category", nextFilters.category);
+  if (nextFilters.brand) params.set("brand", nextFilters.brand);
+  if (nextFilters.pet) params.set("pet", nextFilters.pet);
+  if (nextFilters.age) params.set("age", nextFilters.age);
+  if (nextFilters.size) params.set("size", nextFilters.size);
+  if (nextFilters.promotion) params.set("promotion", "true");
+  if (nextFilters.sort && nextFilters.sort !== "relevance") params.set("sort", nextFilters.sort);
+
+  const query = params.toString();
+  return query ? `/catalogo?${query}` : "/catalogo";
 }
