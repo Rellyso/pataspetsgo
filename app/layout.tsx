@@ -17,6 +17,7 @@ export default function RootLayout({
   return (
     <html
       className={`${plusJakartaSans.variable} ${ibmPlexMono.variable} antialiased`}
+      data-scroll-behavior="smooth"
       lang="pt-BR"
     >
       <body className="bg-background font-sans text-foreground">{children}</body>
