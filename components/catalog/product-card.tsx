@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { PriceDisplay } from "@/components/shared/price-display";
@@ -7,7 +8,6 @@ import { useCart } from "@/features/cart/cart-context";
 import type { PublicCatalogItem } from "@/features/catalog/types";
 import { BrandBadge } from "./brand-badge";
 import { PromoBadge } from "./promo-badge";
-import Image from "next/image";
 
 type ProductCardProps = {
   product: PublicCatalogItem;
@@ -21,9 +21,7 @@ export function ProductCard({ product }: ProductCardProps) {
   const resetTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const ctaLabel =
-    primaryVariant.stockStatus === "consult"
-      ? "Adicionar com confirmação"
-      : "Adicionar ao pedido";
+    primaryVariant.stockStatus === "consult" ? "Adicionar com confirmação" : "Adicionar ao pedido";
 
   useEffect(() => {
     return () => {
@@ -76,9 +74,7 @@ export function ProductCard({ product }: ProductCardProps) {
         </div>
 
         <div className="space-y-2">
-          <h3 className="font-display text-lg font-semibold text-foreground">
-            {product.name}
-          </h3>
+          <h3 className="font-display text-lg font-semibold text-foreground">{product.name}</h3>
           <p className="text-sm leading-6 text-muted">
             {product.shortDescription ?? product.description}
           </p>
@@ -94,9 +90,7 @@ export function ProductCard({ product }: ProductCardProps) {
             <button
               className={[
                 "inline-flex min-h-11 items-center justify-center rounded-full px-4 py-3 text-sm font-semibold text-white transition-colors duration-200",
-                justAdded
-                  ? "bg-success hover:bg-success/90"
-                  : "bg-primary hover:bg-primary-dark",
+                justAdded ? "bg-success hover:bg-success/90" : "bg-primary hover:bg-primary-dark",
               ].join(" ")}
               onClick={handleAdd}
               type="button"

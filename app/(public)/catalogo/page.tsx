@@ -64,7 +64,7 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
             </div>
           </article>
 
-          <article className="rounded-card border border-default bg-surface p-6 shadow-soft xl:sticky xl:top-6">
+          <article className="rounded-card border border-default bg-surface p-6 shadow-soft">
             <h2 className="font-display text-xl font-semibold text-foreground">
               Filtros disponíveis
             </h2>
@@ -72,21 +72,76 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
               {catalogData.appliedFilters.q ||
               catalogData.appliedFilters.category ||
               catalogData.appliedFilters.brand ||
+              catalogData.appliedFilters.pet ||
+              catalogData.appliedFilters.age ||
+              catalogData.appliedFilters.size ||
               catalogData.appliedFilters.promotion ? (
                 <div>
                   <p className="font-medium text-foreground">Filtros ativos</p>
                   <div className="mt-2 flex flex-wrap gap-2">
                     {catalogData.appliedFilters.q ? (
-                      <span className="chip-category">Busca: {catalogData.appliedFilters.q}</span>
+                      <Link
+                        className="chip-category"
+                        href={buildCatalogHref(filters, { q: undefined })}
+                      >
+                        Busca: {catalogData.appliedFilters.q}
+                      </Link>
                     ) : null}
                     {catalogData.appliedFilters.category ? (
-                      <span className="chip-category">Categoria</span>
+                      <Link
+                        className="chip-category"
+                        href={buildCatalogHref(filters, { category: undefined })}
+                      >
+                        Categoria:{" "}
+                        {findFilterLabel(
+                          catalogData.availableFilters.categories,
+                          catalogData.appliedFilters.category,
+                        )}
+                      </Link>
                     ) : null}
                     {catalogData.appliedFilters.brand ? (
-                      <span className="chip-category">Marca</span>
+                      <Link
+                        className="chip-category"
+                        href={buildCatalogHref(filters, { brand: undefined })}
+                      >
+                        Marca:{" "}
+                        {findFilterLabel(
+                          catalogData.availableFilters.brands,
+                          catalogData.appliedFilters.brand,
+                        )}
+                      </Link>
+                    ) : null}
+                    {catalogData.appliedFilters.pet ? (
+                      <Link
+                        className="chip-category"
+                        href={buildCatalogHref(filters, { pet: undefined })}
+                      >
+                        Pet: {getPetTypeLabel(catalogData.appliedFilters.pet)}
+                      </Link>
+                    ) : null}
+                    {catalogData.appliedFilters.age ? (
+                      <Link
+                        className="chip-category"
+                        href={buildCatalogHref(filters, { age: undefined })}
+                      >
+                        Idade: {getAgeGroupLabel(catalogData.appliedFilters.age)}
+                      </Link>
+                    ) : null}
+                    {catalogData.appliedFilters.size ? (
+                      <Link
+                        className="chip-category"
+                        href={buildCatalogHref(filters, { size: undefined })}
+                      >
+                        Porte: {getSizeGroupLabel(catalogData.appliedFilters.size)}
+                      </Link>
                     ) : null}
                     {catalogData.appliedFilters.promotion ? (
-                      <span className="chip-category">Promoção</span>
+                      <Link
+                        className="chip-category"
+                        href={buildCatalogHref(filters, { promotion: undefined })}
+                      >
+                        Promoção
+                      </Link>
                     ) : null}
                     <Link
                       className="text-sm font-medium text-primary hover:text-primary-dark"
@@ -99,16 +154,15 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
               ) : null}
 
               <div>
-                <div className="flex items-center justify-between gap-2">
-                  <p className="font-medium text-foreground">Categorias</p>
-                  <span className="text-xs font-medium text-muted">Deslize</span>
-                </div>
-                <div className="mt-3 flex snap-x snap-mandatory gap-2 overflow-x-auto pb-1">
+                <p className="font-medium text-foreground">Categorias</p>
+                <div className="mt-2 flex flex-wrap gap-2">
                   {catalogData.availableFilters.categories.map((option) => (
                     <Link
                       key={option.value}
                       className="chip-category shrink-0 snap-start whitespace-nowrap"
-                      href={buildCatalogHref(filters, { category: option.value })}
+                      href={buildCatalogHref(filters, {
+                        category: option.value,
+                      })}
                     >
                       {option.label}
                     </Link>
@@ -126,6 +180,53 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
                       href={buildCatalogHref(filters, { brand: option.value })}
                     >
                       {option.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <p className="font-medium text-foreground">Pet</p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {catalogData.availableFilters.petTypes.map((option) => (
+                    <Link
+                      key={option.value}
+                      className="chip-category"
+                      href={buildCatalogHref(filters, { pet: option.value as typeof filters.pet })}
+                    >
+                      {getPetTypeLabel(option.value)}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <p className="font-medium text-foreground">Faixa etária</p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {catalogData.availableFilters.ageGroups.map((option) => (
+                    <Link
+                      key={option.value}
+                      className="chip-category"
+                      href={buildCatalogHref(filters, { age: option.value as typeof filters.age })}
+                    >
+                      {getAgeGroupLabel(option.value)}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <p className="font-medium text-foreground">Porte</p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {catalogData.availableFilters.sizeGroups.map((option) => (
+                    <Link
+                      key={option.value}
+                      className="chip-category"
+                      href={buildCatalogHref(filters, {
+                        size: option.value as typeof filters.size,
+                      })}
+                    >
+                      {getSizeGroupLabel(option.value)}
                     </Link>
                   ))}
                 </div>
@@ -177,4 +278,55 @@ function buildCatalogHref(
 
   const query = params.toString();
   return query ? `/catalogo?${query}` : "/catalogo";
+}
+
+function findFilterLabel(options: { label: string; value: string }[], value: string | undefined) {
+  if (!value) {
+    return "";
+  }
+
+  return options.find((option) => option.value === value)?.label ?? value;
+}
+
+function getPetTypeLabel(value: string) {
+  switch (value) {
+    case "dog":
+      return "Cachorro";
+    case "cat":
+      return "Gato";
+    case "both":
+      return "Cachorro e gato";
+    default:
+      return value;
+  }
+}
+
+function getAgeGroupLabel(value: string) {
+  switch (value) {
+    case "puppy":
+      return "Filhote";
+    case "adult":
+      return "Adulto";
+    case "senior":
+      return "Sênior";
+    case "all":
+      return "Todas idades";
+    default:
+      return value;
+  }
+}
+
+function getSizeGroupLabel(value: string) {
+  switch (value) {
+    case "small":
+      return "Pequeno porte";
+    case "medium":
+      return "Médio porte";
+    case "large":
+      return "Grande porte";
+    case "all":
+      return "Todos portes";
+    default:
+      return value;
+  }
 }

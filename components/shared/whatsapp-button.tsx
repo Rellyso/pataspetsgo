@@ -11,9 +11,10 @@ type WhatsappButtonProps = {
 export function WhatsappButton({
   children = "Pedir no WhatsApp",
   disabled = false,
-  href = "https://wa.me/5500000000000",
+  href,
   size = "default",
 }: WhatsappButtonProps) {
+  const isDisabled = disabled || !href;
   const sizeClass = size === "large" ? "min-h-12 px-5 text-base" : "min-h-11 px-4 text-sm";
   const className = [
     "inline-flex items-center justify-center rounded-full bg-success font-semibold text-white shadow-soft transition-colors duration-200",
@@ -22,7 +23,7 @@ export function WhatsappButton({
     sizeClass,
   ].join(" ");
 
-  if (disabled) {
+  if (isDisabled) {
     return (
       <span aria-disabled="true" className={className}>
         {children}

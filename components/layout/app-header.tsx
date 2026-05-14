@@ -6,9 +6,10 @@ import { CartLink } from "@/features/cart/cart-link";
 
 type AppHeaderProps = {
   showSearch?: boolean;
+  whatsappHref?: string;
 };
 
-export function AppHeader({ showSearch = true }: AppHeaderProps) {
+export function AppHeader({ showSearch = true, whatsappHref }: AppHeaderProps) {
   return (
     <header className="border-b border-default bg-background/90 backdrop-blur-sm">
       <Container className="py-4">
@@ -24,7 +25,7 @@ export function AppHeader({ showSearch = true }: AppHeaderProps) {
             </Link>
           </div>
 
-            <div className="flex flex-1 flex-col gap-4 lg:max-w-3xl lg:flex-row lg:items-center lg:justify-end">
+          <div className="flex flex-1 flex-col gap-4 lg:max-w-3xl lg:flex-row lg:items-center lg:justify-end">
             <div className="flex items-center justify-between gap-3 lg:hidden">
               <div className="flex items-center gap-3">
                 <Link
@@ -41,7 +42,7 @@ export function AppHeader({ showSearch = true }: AppHeaderProps) {
                   Admin
                 </Link>
               </div>
-              <WhatsappButton>WhatsApp</WhatsappButton>
+              <WhatsappButton href={whatsappHref}>WhatsApp</WhatsappButton>
             </div>
 
             {showSearch ? (
@@ -68,7 +69,7 @@ export function AppHeader({ showSearch = true }: AppHeaderProps) {
                 Admin
               </Link>
               <CartLink />
-              <WhatsappButton>Falar no WhatsApp</WhatsappButton>
+              <WhatsappButton href={whatsappHref}>Falar no WhatsApp</WhatsappButton>
             </nav>
           </div>
         </div>

@@ -181,7 +181,7 @@ const getPublicProducts = cache(async (): Promise<PublicCatalogItem[]> => {
     .sort(sortPublicProducts);
 });
 
-async function getStoreSummary(): Promise<StoreSummary | null> {
+export const getStoreSummary = cache(async (): Promise<StoreSummary | null> => {
   const supabase = await getSupabaseServerClient();
   const { data, error } = await supabase
     .from("store_settings")
@@ -209,7 +209,7 @@ async function getStoreSummary(): Promise<StoreSummary | null> {
     deliveryEnabled: row.delivery_enabled,
     pickupEnabled: row.pickup_enabled,
   };
-}
+});
 
 async function getActiveBanners(): Promise<PublicBanner[]> {
   const supabase = await getSupabaseServerClient();

@@ -7,6 +7,8 @@ import { SearchInput } from "@/components/shared/search-input";
 import { SectionTitle } from "@/components/shared/section-title";
 import { WhatsappButton } from "@/components/shared/whatsapp-button";
 
+const designWhatsappHref = "https://wa.me/5585000000000";
+
 const colorTokens = [
   { name: "Primary", className: "bg-primary", value: "#00A9C8" },
   { name: "Primary Dark", className: "bg-primary-dark", value: "#0088A3" },
@@ -115,7 +117,9 @@ export default function DesignPage() {
           <SectionTitle subtitle="Mesmo sistema. Ritmos diferentes." title="Ações e inputs" />
           <div className="mt-6 flex flex-col gap-5">
             <div className="flex flex-wrap gap-3">
-              <WhatsappButton size="large">Falar no WhatsApp</WhatsappButton>
+              <WhatsappButton href={designWhatsappHref} size="large">
+                Falar no WhatsApp
+              </WhatsappButton>
               <button
                 className="min-h-11 rounded-full bg-primary px-4 py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-primary-dark"
                 type="button"
@@ -153,7 +157,7 @@ export default function DesignPage() {
           <SectionTitle subtitle="Estados vazios, claros, sem tom técnico." title="Feedback" />
           <div className="mt-6 flex flex-col gap-4">
             <EmptyState
-              action={<WhatsappButton>Falar com loja</WhatsappButton>}
+              action={<WhatsappButton href={designWhatsappHref}>Falar com loja</WhatsappButton>}
               description="Quando catálogo ou busca ainda não tem dado útil, sistema continua orientando usuário sem tela morta."
               title="Nada por aqui ainda"
             />
