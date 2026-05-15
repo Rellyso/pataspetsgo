@@ -5,6 +5,7 @@ node_modules/
 skills-lock.json
 SKILL.md
 .agents/
+.codex
 
 # opencode
 /.opencode/

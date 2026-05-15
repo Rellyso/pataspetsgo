@@ -15,7 +15,9 @@ type ProductDetailViewProps = {
 
 export function ProductDetailView({ product }: ProductDetailViewProps) {
   const { addItem } = useCart();
-  const [selectedVariantId, setSelectedVariantId] = useState(product.primaryVariant.id);
+  const [selectedVariantId, setSelectedVariantId] = useState(
+    product.primaryVariant.id,
+  );
   const [quantity, setQuantity] = useState(1);
   const [justAdded, setJustAdded] = useState(false);
   const resetTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -110,7 +112,9 @@ export function ProductDetailView({ product }: ProductDetailViewProps) {
         />
 
         <div className="mt-6 space-y-3">
-          <p className="text-sm font-medium text-foreground">Escolha a variante</p>
+          <p className="text-sm font-medium text-foreground">
+            Escolha a variante
+          </p>
           <div className="flex flex-col gap-3">
             {product.variants.map((variant) => {
               const isSelected = variant.id === selectedVariant.id;
@@ -128,7 +132,9 @@ export function ProductDetailView({ product }: ProductDetailViewProps) {
                   type="button"
                 >
                   <p className="font-medium text-foreground">{variant.name}</p>
-                  <p className="mt-1 text-sm text-muted">Status: {variant.stockStatus}</p>
+                  <p className="mt-1 text-sm text-muted">
+                    Status: {variant.stockStatus}
+                  </p>
                 </button>
               );
             })}
@@ -142,15 +148,17 @@ export function ProductDetailView({ product }: ProductDetailViewProps) {
 
         {selectedVariant.stockStatus === "consult" ? (
           <p className="mt-4 rounded-card border border-warning/30 bg-warning/10 px-4 py-3 text-sm leading-6 text-foreground">
-            Este item pode ser pedido, mas a confirmação final de disponibilidade será feita pela
-            loja.
+            Este item pode ser pedido, mas a confirmação final de
+            disponibilidade será feita pela loja.
           </p>
         ) : null}
 
         <button
           className={[
-            "mt-6 inline-flex min-h-12 w-full items-center justify-center rounded-full px-4 py-3 text-base font-semibold text-white transition-colors duration-200",
-            justAdded ? "bg-success hover:bg-success/90" : "bg-primary hover:bg-primary-dark",
+            "mt-6 inline-flex min-h-12 w-full items-center justify-center rounded-full px-4 py-3 text-sm md:text-base font-semibold text-white transition-colors duration-200",
+            justAdded
+              ? "bg-success hover:bg-success/90"
+              : "bg-primary hover:bg-primary-dark",
           ].join(" ")}
           onClick={handleAdd}
           type="button"
@@ -163,7 +171,10 @@ export function ProductDetailView({ product }: ProductDetailViewProps) {
         </button>
 
         {justAdded ? (
-          <p aria-live="polite" className="mt-2 text-sm font-medium text-success">
+          <p
+            aria-live="polite"
+            className="mt-2 text-sm font-medium text-success"
+          >
             Item adicionado ao pedido.
           </p>
         ) : null}

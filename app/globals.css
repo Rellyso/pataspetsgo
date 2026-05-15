@@ -74,13 +74,6 @@ a {
   text-decoration: none;
 }
 
-button,
-input,
-textarea,
-select {
-  font: inherit;
-}
-
 ::selection {
   background: var(--primary-light);
 }

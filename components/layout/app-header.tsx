@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Container } from "@/components/layout/container";
 import { SearchInput } from "@/components/shared/search-input";
 import { WhatsappButton } from "@/components/shared/whatsapp-button";
@@ -10,6 +13,9 @@ type AppHeaderProps = {
 };
 
 export function AppHeader({ showSearch = true, whatsappHref }: AppHeaderProps) {
+  const pathname = usePathname();
+  const showHeaderSearch = showSearch && pathname !== "/catalogo";
+
   return (
     <header className="border-b border-default bg-background/90 backdrop-blur-sm">
       <Container className="py-4">
@@ -45,7 +51,7 @@ export function AppHeader({ showSearch = true, whatsappHref }: AppHeaderProps) {
               <WhatsappButton href={whatsappHref}>WhatsApp</WhatsappButton>
             </div>
 
-            {showSearch ? (
+            {showHeaderSearch ? (
               <div className="w-full lg:max-w-md">
                 <SearchInput
                   aria-label="Buscar produtos"

@@ -105,6 +105,7 @@
 ## UX Visual Rules
 - The home must push quickly toward catalog, categories, and promotions.
 - The interface should feel like assisted ordering, not a generic storefront.
+- In the public catalog, categories should work first as navigation sections, especially on mobile, not only as isolated filter chips.
 - `Adicionar ao pedido` is more important than secondary actions.
 - `promotional_price` must dominate the price hierarchy when present.
 - Product variations should look simple and confidence-building, not technical.
@@ -123,6 +124,7 @@
 - Prefer consistent responsive padding rhythms such as `px-4 sm:px-6 lg:px-8` for major shells and sections.
 - Avoid separate mobile/desktop content structures unless the interaction model truly changes.
 - Keep primary actions reachable with one hand on mobile, especially in search, filter, product, cart, and order flows.
+- On mobile catalog views, prefer sticky horizontal category navigation that scrolls to in-page sections and does not hide section headers.
 
 ## Accessibility Rules
 - Heading levels should remain sequential so assistive tech can navigate the page structure.

@@ -21,7 +21,9 @@ export function ProductCard({ product }: ProductCardProps) {
   const resetTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const ctaLabel =
-    primaryVariant.stockStatus === "consult" ? "Adicionar com confirmação" : "Adicionar ao pedido";
+    primaryVariant.stockStatus === "consult"
+      ? "Adicionar com confirmação"
+      : "Adicionar ao pedido";
 
   useEffect(() => {
     return () => {
@@ -54,8 +56,8 @@ export function ProductCard({ product }: ProductCardProps) {
   };
 
   return (
-    <article className="flex h-full flex-col rounded-card border border-default bg-surface p-4 shadow-soft transition-colors duration-200 hover:border-primary-light">
-      <div className="flex aspect-4/3 items-center justify-center rounded-card bg-background text-sm text-muted">
+    <article className="flex h-full flex-col rounded-card border border-default bg-surface p-3 shadow-soft transition-colors duration-200 hover:border-primary-light sm:p-4">
+      <div className="flex aspect-square items-center justify-center rounded-card bg-background text-xs text-muted sm:aspect-4/3 sm:text-sm">
         {product.imageUrl ? (
           <Image
             alt={product.name}
@@ -67,15 +69,17 @@ export function ProductCard({ product }: ProductCardProps) {
         )}
       </div>
 
-      <div className="mt-4 flex flex-1 flex-col gap-3">
-        <div className="flex flex-wrap items-center gap-2">
+      <div className="mt-3 flex flex-1 flex-col gap-2.5 sm:mt-4 sm:gap-3">
+        <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
           {product.brand ? <BrandBadge name={product.brand.name} /> : null}
           {product.isPromotion ? <PromoBadge /> : null}
         </div>
 
-        <div className="space-y-2">
-          <h3 className="font-display text-lg font-semibold text-foreground">{product.name}</h3>
-          <p className="text-sm leading-6 text-muted">
+        <div className="space-y-1.5">
+          <h3 className="line-clamp-2 font-display text-base font-semibold text-foreground sm:text-lg">
+            {product.name}
+          </h3>
+          <p className="line-clamp-2 text-xs leading-5 text-muted sm:text-sm sm:leading-6">
             {product.shortDescription ?? product.description}
           </p>
         </div>
@@ -85,12 +89,14 @@ export function ProductCard({ product }: ProductCardProps) {
           promotionalPrice={primaryVariant.promotionalPrice}
         />
 
-        <div className="mt-auto flex flex-col gap-2">
+        <div className="mt-auto flex flex-col gap-1.5 sm:gap-2">
           {canAddDirectly ? (
             <button
               className={[
-                "inline-flex min-h-11 items-center justify-center rounded-full px-4 py-3 text-sm font-semibold text-white transition-colors duration-200",
-                justAdded ? "bg-success hover:bg-success/90" : "bg-primary hover:bg-primary-dark",
+                "inline-flex min-h-10 items-center justify-center rounded-full px-3 py-2.5 text-xs font-semibold text-white transition-colors duration-200 sm:min-h-11 sm:px-4 sm:py-3 sm:text-sm",
+                justAdded
+                  ? "bg-success hover:bg-success/90"
+                  : "bg-primary hover:bg-primary-dark",
               ].join(" ")}
               onClick={handleAdd}
               type="button"
@@ -99,7 +105,7 @@ export function ProductCard({ product }: ProductCardProps) {
             </button>
           ) : (
             <Link
-              className="inline-flex min-h-11 items-center justify-center rounded-full bg-primary px-4 py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-primary-dark"
+              className="inline-flex min-h-10 items-center justify-center rounded-full bg-primary px-3 py-2.5 text-xs font-semibold text-white transition-colors duration-200 hover:bg-primary-dark sm:min-h-11 sm:px-4 sm:py-3 sm:text-sm"
               href={`/produto/${product.slug}`}
             >
               Escolher opções
@@ -113,7 +119,7 @@ export function ProductCard({ product }: ProductCardProps) {
           ) : null}
 
           <Link
-            className="inline-flex min-h-10 items-center justify-center rounded-full border border-default bg-surface px-4 py-2 text-sm font-semibold text-foreground transition-colors duration-200 hover:border-primary-light hover:text-foreground"
+            className="inline-flex min-h-9 items-center justify-center rounded-full border border-default bg-surface px-3 py-2 text-xs font-semibold text-foreground transition-colors duration-200 hover:border-primary-light hover:text-foreground sm:min-h-10 sm:px-4 sm:text-sm"
             href={`/produto/${product.slug}`}
           >
             Ver detalhes

@@ -74,6 +74,7 @@ When working on the product foundation, prefer this order:
 Product and UI priorities:
 
 - keep the public experience focused on fast catalog browsing and WhatsApp ordering;
+- in the public catalog, treat categories as navigable sections on mobile before treating them as just another filter control;
 - treat WhatsApp as the primary conversion action;
 - avoid generic full e-commerce assumptions unless a future spec explicitly requires them;
 - keep the admin area operational and efficient, not overly decorative.
