@@ -9,11 +9,12 @@ type CategorySectionTab = {
 
 type CategorySectionTabsProps = {
   sections: CategorySectionTab[];
+  className?: string;
 };
 
 const topAnchorId = "catalog-results-top";
 
-export function CategorySectionTabs({ sections }: CategorySectionTabsProps) {
+export function CategorySectionTabs({ sections, className }: CategorySectionTabsProps) {
   const [activeId, setActiveId] = useState(sections[0]?.id ?? topAnchorId);
 
   useEffect(() => {
@@ -57,9 +58,13 @@ export function CategorySectionTabs({ sections }: CategorySectionTabsProps) {
   }, [sections]);
 
   return (
-    <div className="sticky top-0 z-30 border-y border-default bg-background/95 py-3 backdrop-blur-sm xl:hidden">
-      <div className="overflow-hidden">
-        <div className="overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+    <div
+      className={["sticky top-0 z-30 overflow-hidden xl:hidden", className]
+        .filter(Boolean)
+        .join(" ")}
+    >
+      <div className="-mx-4 border-y border-default bg-background/95 py-3 backdrop-blur-sm sm:-mx-6">
+        <div className="overflow-x-auto px-4 [scrollbar-width:none] [-ms-overflow-style:none] sm:px-6 [&::-webkit-scrollbar]:hidden">
           <div className="flex w-max min-w-full gap-2 pr-4">
             <a
               className={[

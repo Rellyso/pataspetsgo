@@ -7,10 +7,7 @@ import { EmptyState } from "@/components/shared/empty-state";
 import { SearchInput } from "@/components/shared/search-input";
 import { SectionTitle } from "@/components/shared/section-title";
 import { getCatalogPageData } from "@/features/catalog/public-catalog";
-import type {
-  CatalogFilterOption,
-  PublicCatalogItem,
-} from "@/features/catalog/types";
+import type { CatalogFilterOption, PublicCatalogItem } from "@/features/catalog/types";
 import { parseCatalogFilters } from "@/lib/validations/catalog";
 
 type CatalogPageProps = {
@@ -62,26 +59,23 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
         </section>
 
         <section className="grid gap-4 xl:grid-cols-[minmax(0,1.25fr)_minmax(0,0.75fr)]">
-          <article className="overflow-hidden rounded-card border border-default bg-surface p-4 shadow-soft sm:p-6">
+          <article className="min-w-0 rounded-card border border-default bg-surface p-4 shadow-soft sm:p-6">
             <div id="catalog-results-top" />
             <h2 className="font-display text-xl font-semibold text-foreground">
               Escolha seus produtos
             </h2>
             <p className="mt-1 text-xs text-muted sm:mt-2 sm:text-sm">
-              {catalogData.total > 1
-                ? `${catalogData.total} produtos`
-                : "1 produto"}
+              {catalogData.total > 1 ? `${catalogData.total} produtos` : "1 produto"}
             </p>
 
             {sections.length > 1 ? (
-              <div className="mt-4 -mx-4 sm:-mx-6">
-                <CategorySectionTabs
-                  sections={sections.map((section) => ({
-                    id: section.id,
-                    label: section.name,
-                  }))}
-                />
-              </div>
+              <CategorySectionTabs
+                className="mt-4"
+                sections={sections.map((section) => ({
+                  id: section.id,
+                  label: section.name,
+                }))}
+              />
             ) : null}
 
             {hasActiveFilters ? (
@@ -204,7 +198,7 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
             )}
           </article>
 
-          <article className="hidden rounded-card border border-default bg-surface p-6 shadow-soft xl:block">
+          <article className="hidden min-w-0 rounded-card border border-default bg-surface p-6 shadow-soft xl:block">
             <h2 className="font-display text-xl font-semibold text-foreground">
               Filtros disponíveis
             </h2>
@@ -260,8 +254,7 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
                         className="chip-category"
                         href={buildCatalogHref(filters, { age: undefined })}
                       >
-                        Idade:{" "}
-                        {getAgeGroupLabel(catalogData.appliedFilters.age)}
+                        Idade: {getAgeGroupLabel(catalogData.appliedFilters.age)}
                       </Link>
                     ) : null}
                     {catalogData.appliedFilters.size ? (
@@ -269,8 +262,7 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
                         className="chip-category"
                         href={buildCatalogHref(filters, { size: undefined })}
                       >
-                        Porte:{" "}
-                        {getSizeGroupLabel(catalogData.appliedFilters.size)}
+                        Porte: {getSizeGroupLabel(catalogData.appliedFilters.size)}
                       </Link>
                     ) : null}
                     {catalogData.appliedFilters.promotion ? (
@@ -295,16 +287,10 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
 
               {sections.length > 1 ? (
                 <div>
-                  <p className="font-medium text-foreground">
-                    Navegar por categoria
-                  </p>
+                  <p className="font-medium text-foreground">Navegar por categoria</p>
                   <div className="mt-3 flex flex-wrap gap-2">
                     {sections.map((section) => (
-                      <a
-                        key={section.id}
-                        className="chip-category"
-                        href={`#${section.id}`}
-                      >
+                      <a key={section.id} className="chip-category" href={`#${section.id}`}>
                         {section.name}
                       </a>
                     ))}
@@ -423,9 +409,7 @@ function groupItemsByCategory(
     return sortedSections;
   }
 
-  return sortedSections.filter(
-    (section) => section.id === `catalog-section-${activeCategory}`,
-  );
+  return sortedSections.filter((section) => section.id === `catalog-section-${activeCategory}`);
 }
 
 function normalizeSortIndex(value: number) {
@@ -446,17 +430,13 @@ function buildCatalogHref(
   if (nextFilters.age) params.set("age", nextFilters.age);
   if (nextFilters.size) params.set("size", nextFilters.size);
   if (nextFilters.promotion) params.set("promotion", "true");
-  if (nextFilters.sort && nextFilters.sort !== "relevance")
-    params.set("sort", nextFilters.sort);
+  if (nextFilters.sort && nextFilters.sort !== "relevance") params.set("sort", nextFilters.sort);
 
   const query = params.toString();
   return query ? `/catalogo?${query}` : "/catalogo";
 }
 
-function findFilterLabel(
-  options: { label: string; value: string }[],
-  value: string | undefined,
-) {
+function findFilterLabel(options: { label: string; value: string }[], value: string | undefined) {
   if (!value) {
     return "";
   }
