@@ -92,11 +92,86 @@ export function CheckIcon(props: IconProps) {
   );
 }
 
+export function MenuIcon(props: IconProps) {
+  return (
+    <BaseIcon {...props}>
+      <path d="M4 7h16" />
+      <path d="M4 12h16" />
+      <path d="M4 17h16" />
+    </BaseIcon>
+  );
+}
+
 export function CloseIcon(props: IconProps) {
   return (
     <BaseIcon {...props}>
       <path d="M6.5 6.5l11 11" />
       <path d="M17.5 6.5l-11 11" />
+    </BaseIcon>
+  );
+}
+
+export function PackageIcon(props: IconProps) {
+  return (
+    <BaseIcon {...props}>
+      <path d="M12 3.75l7.25 3.75v9L12 20.25 4.75 16.5v-9L12 3.75z" />
+      <path d="M12 3.75v16.5" />
+      <path d="M4.75 7.5L12 11.25 19.25 7.5" />
+    </BaseIcon>
+  );
+}
+
+export function TagIcon(props: IconProps) {
+  return (
+    <BaseIcon {...props}>
+      <path d="M13.5 4.5H19.5v6L11 19 5 13 13.5 4.5z" />
+      <circle cx="16.5" cy="7.5" r="1" fill="currentColor" stroke="none" />
+    </BaseIcon>
+  );
+}
+
+export function BookmarkIcon(props: IconProps) {
+  return (
+    <BaseIcon {...props}>
+      <path d="M7 4.5h10A1.5 1.5 0 0118.5 6v13.5L12 15.5l-6.5 4V6A1.5 1.5 0 017 4.5z" />
+    </BaseIcon>
+  );
+}
+
+export function MegaphoneIcon(props: IconProps) {
+  return (
+    <BaseIcon {...props}>
+      <path d="M13.5 6.5l5.75-2v11l-5.75-2H8.25a2.75 2.75 0 01-2.75-2.75v-1.5A2.75 2.75 0 018.25 6.5h5.25z" />
+      <path d="M8.5 13.5l1.5 5h2.5l-1.25-4.75" />
+    </BaseIcon>
+  );
+}
+
+export function ClipboardListIcon(props: IconProps) {
+  return (
+    <BaseIcon {...props}>
+      <path d="M9 4.75h6" />
+      <path d="M9.25 3.5h5.5A1.75 1.75 0 0116.5 5.25V6H7.5v-.75A1.75 1.75 0 019.25 3.5z" />
+      <path d="M7.5 6H6.75A1.75 1.75 0 005 7.75v10.5A1.75 1.75 0 006.75 20h10.5A1.75 1.75 0 0019 18.25V7.75A1.75 1.75 0 0017.25 6h-.75" />
+      <path d="M8.5 10h7" />
+      <path d="M8.5 13.5h7" />
+      <path d="M8.5 17h4.5" />
+    </BaseIcon>
+  );
+}
+
+export function SettingsIcon(props: IconProps) {
+  return (
+    <BaseIcon {...props}>
+      <circle cx="12" cy="12" r="3.25" />
+      <path d="M12 4.5v1.75" />
+      <path d="M12 17.75V19.5" />
+      <path d="M19.5 12h-1.75" />
+      <path d="M6.25 12H4.5" />
+      <path d="M17.3 6.7L16.05 7.95" />
+      <path d="M7.95 16.05L6.7 17.3" />
+      <path d="M17.3 17.3l-1.25-1.25" />
+      <path d="M7.95 7.95L6.7 6.7" />
     </BaseIcon>
   );
 }

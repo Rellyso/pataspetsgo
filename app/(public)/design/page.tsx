@@ -1,3 +1,6 @@
+import { AdminPageHeader } from "@/components/admin/admin-page-header";
+import { DataTableShell } from "@/components/admin/data-table-shell";
+import { StatCard } from "@/components/admin/stat-card";
 import { AdminShell } from "@/components/layout/admin-shell";
 import { Container } from "@/components/layout/container";
 import { EmptyState } from "@/components/shared/empty-state";
@@ -185,39 +188,45 @@ export default function DesignPage() {
           </article>
 
           <div className="rounded-card border border-default bg-background p-3">
-            <AdminShell
-              actions={
-                <button
-                  className="min-h-11 rounded-full border border-default px-4 py-3 text-sm font-semibold text-foreground"
-                  type="button"
-                >
-                  Sair
-                </button>
-              }
-              description="Preview visual. Auth real continua no layout admin."
-              embedded
-              eyebrow="Admin base"
-              meta="Ritmo mais denso, mais quieto, mais operacional."
-              title="AdminShell"
-            >
-              <section className="grid gap-4 lg:grid-cols-2">
-                <article className="rounded-card border border-default bg-surface p-5 shadow-soft">
-                  <h3 className="font-display text-lg font-semibold text-foreground">
-                    Leitura operacional
-                  </h3>
-                  <p className="mt-2 text-sm leading-6 text-muted">
-                    Sem sidebar agora. Sem tabela agora. Só base estrutural compartilhável.
-                  </p>
-                </article>
-                <article className="rounded-card border border-default bg-surface p-5 shadow-soft">
-                  <h3 className="font-display text-lg font-semibold text-foreground">
-                    Pronto para Fase 7
-                  </h3>
-                  <p className="mt-2 text-sm leading-6 text-muted">
-                    Módulos operacionais entram depois sobre mesmo shell, sem refazer visual base.
-                  </p>
-                </article>
-              </section>
+            <AdminShell activeHref="/admin/produtos" embedded userEmail="admin@pataspets.com.br">
+              <div className="flex flex-col gap-4">
+                <AdminPageHeader
+                  description="Preview visual do shell administrativo final com header contextual e ritmo mais denso."
+                  eyebrow="Admin real"
+                  meta="Auth continua no layout protegido; aqui a intenção é validar a linguagem visual final."
+                  title="Produtos"
+                />
+
+                <div className="grid gap-4 lg:grid-cols-3">
+                  <StatCard
+                    description="Cards neutros para resumos e preparação operacional."
+                    label="Status"
+                    value="Pronto"
+                  />
+                  <StatCard
+                    description="Sidebar fixa no desktop, drawer no mobile."
+                    label="Navegação"
+                    value="Persistente"
+                  />
+                  <StatCard
+                    description="Shell reaproveitável para dashboard, listas e formulários."
+                    label="Base"
+                    value="Reutilizável"
+                  />
+                </div>
+
+                <DataTableShell
+                  columns={["Coluna", "Status", "Próxima etapa"]}
+                  description="Casca de listagem administrativa pronta para receber dados reais nas fases seguintes."
+                  emptyState={
+                    <EmptyState
+                      description="A fase 7 fecha shell, navegação e estados base sem inventar conteúdo operacional."
+                      title="Admin pronto para receber módulos reais"
+                    />
+                  }
+                  title="DataTableShell"
+                />
+              </div>
             </AdminShell>
           </div>
         </div>

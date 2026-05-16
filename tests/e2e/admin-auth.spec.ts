@@ -90,6 +90,15 @@ test("allows an admin user into the protected admin route", async ({ page }) => 
 
   await expect(page).toHaveURL(/\/admin$/);
   await expect(page.getByText(adminEmail)).toBeVisible();
+  await expect(page.getByRole("link", { name: /produtos/i })).toBeVisible();
+  await expect(page.getByRole("link", { name: /configurações da loja/i })).toBeVisible();
+
+  await page.getByRole("link", { name: /produtos/i }).click();
+  await expect(page).toHaveURL(/\/admin\/produtos$/);
+  await expect(page.getByRole("heading", { name: "Produtos" })).toBeVisible();
+
+  await page.getByRole("button", { name: "Sair" }).click();
+  await expect(page).toHaveURL(/\/auth\/login$/);
 });
 
 test("blocks a signed-in user without admin role", async ({ page }) => {
