@@ -1,19 +1,19 @@
 import { Container } from "@/components/layout/container";
-import { SectionTitle } from "@/components/shared/section-title";
 import { OrderPageClient } from "@/features/cart/order-page-client";
+import { getStoreSummary } from "@/features/catalog/public-catalog";
 
-export default function OrderPage() {
+export default async function OrderPage() {
+  let storeSummary = null;
+
+  try {
+    storeSummary = await getStoreSummary();
+  } catch {
+    storeSummary = null;
+  }
+
   return (
-    <Container className="flex flex-col gap-6">
-      <section className="rounded-card border border-default bg-surface p-6 shadow-soft sm:p-8">
-        <SectionTitle
-          as="h1"
-          subtitle="Carrinho local já funciona nesta etapa. Checkout completo, formulário e envio ao WhatsApp entram na Fase 6."
-          title="Pedido"
-        />
-      </section>
-
-      <OrderPageClient />
+    <Container className="flex flex-col gap-4">
+      <OrderPageClient storeSummary={storeSummary} />
     </Container>
   );
 }

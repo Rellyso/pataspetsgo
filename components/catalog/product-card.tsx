@@ -21,9 +21,7 @@ export function ProductCard({ product }: ProductCardProps) {
   const resetTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const ctaLabel =
-    primaryVariant.stockStatus === "consult"
-      ? "Adicionar com confirmação"
-      : "Adicionar ao pedido";
+    primaryVariant.stockStatus === "consult" ? "Adicionar com confirmação" : "Adicionar ao pedido";
 
   useEffect(() => {
     return () => {
@@ -56,47 +54,52 @@ export function ProductCard({ product }: ProductCardProps) {
   };
 
   return (
-    <article className="flex h-full flex-col rounded-card border border-default bg-surface p-3 shadow-soft transition-colors duration-200 hover:border-primary-light sm:p-4">
-      <div className="flex aspect-square items-center justify-center rounded-card bg-background text-xs text-muted sm:aspect-4/3 sm:text-sm">
-        {product.imageUrl ? (
-          <Image
-            alt={product.name}
-            className="h-full w-full rounded-card object-cover"
-            src={product.imageUrl}
-          />
-        ) : (
-          <span>Imagem em breve</span>
-        )}
-      </div>
-
-      <div className="mt-3 flex flex-1 flex-col gap-2.5 sm:mt-4 sm:gap-3">
-        <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+    <article className="flex h-full flex-col rounded-[1.5rem] border border-default bg-surface p-3 shadow-soft transition-colors duration-200 hover:border-primary-light sm:p-4">
+      <div className="relative overflow-hidden rounded-[1.1rem] bg-background">
+        <div className="absolute left-3 top-3 z-10 flex flex-wrap items-center gap-1.5">
           {product.brand ? <BrandBadge name={product.brand.name} /> : null}
           {product.isPromotion ? <PromoBadge /> : null}
         </div>
 
+        <div className="flex aspect-square items-center justify-center text-xs text-muted sm:aspect-[1.1/1]">
+          {product.imageUrl ? (
+            <Image
+              alt={product.name}
+              className="h-full w-full object-cover"
+              src={product.imageUrl}
+            />
+          ) : (
+            <span>Imagem em breve</span>
+          )}
+        </div>
+      </div>
+
+      <div className="mt-4 flex flex-1 flex-col gap-3">
         <div className="space-y-1.5">
-          <h3 className="line-clamp-2 font-display text-base font-semibold text-foreground sm:text-lg">
+          <h3 className="line-clamp-2 font-display text-[1.05rem] font-semibold leading-tight text-foreground sm:text-lg">
             {product.name}
           </h3>
-          <p className="line-clamp-2 text-xs leading-5 text-muted sm:text-sm sm:leading-6">
+          <p className="line-clamp-2 text-sm leading-5 text-muted">
             {product.shortDescription ?? product.description}
           </p>
         </div>
 
-        <PriceDisplay
-          price={primaryVariant.price}
-          promotionalPrice={primaryVariant.promotionalPrice}
-        />
+        <div className="flex items-end justify-between gap-3">
+          <PriceDisplay
+            price={primaryVariant.price}
+            promotionalPrice={primaryVariant.promotionalPrice}
+          />
+          <span className="text-xs text-muted">
+            {canAddDirectly ? "Pedido rápido" : `${product.variants.length} opções`}
+          </span>
+        </div>
 
-        <div className="mt-auto flex flex-col gap-1.5 sm:gap-2">
+        <div className="mt-auto flex flex-col gap-2">
           {canAddDirectly ? (
             <button
               className={[
-                "inline-flex min-h-10 items-center justify-center rounded-full px-3 py-2.5 text-xs font-semibold text-white transition-colors duration-200 sm:min-h-11 sm:px-4 sm:py-3 sm:text-sm",
-                justAdded
-                  ? "bg-success hover:bg-success/90"
-                  : "bg-primary hover:bg-primary-dark",
+                "inline-flex min-h-11 w-full items-center justify-center rounded-full px-4 py-3 text-sm font-semibold text-white transition-colors duration-200",
+                justAdded ? "bg-success hover:bg-success/90" : "bg-primary hover:bg-primary-dark",
               ].join(" ")}
               onClick={handleAdd}
               type="button"
@@ -105,25 +108,31 @@ export function ProductCard({ product }: ProductCardProps) {
             </button>
           ) : (
             <Link
-              className="inline-flex min-h-10 items-center justify-center rounded-full bg-primary px-3 py-2.5 text-xs font-semibold text-white transition-colors duration-200 hover:bg-primary-dark sm:min-h-11 sm:px-4 sm:py-3 sm:text-sm"
+              className="inline-flex min-h-11 w-full items-center justify-center rounded-full bg-primary px-4 py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-primary-dark"
               href={`/produto/${product.slug}`}
             >
               Escolher opções
             </Link>
           )}
 
-          {justAdded ? (
-            <p aria-live="polite" className="text-xs font-medium text-success">
-              Item adicionado ao pedido.
-            </p>
-          ) : null}
+          <div className="flex items-center justify-between gap-3">
+            {justAdded ? (
+              <p aria-live="polite" className="text-xs font-medium text-success">
+                Item adicionado ao pedido.
+              </p>
+            ) : (
+              <span className="text-xs text-muted">
+                {product.category?.name ?? "Catálogo público"}
+              </span>
+            )}
 
-          <Link
-            className="inline-flex min-h-9 items-center justify-center rounded-full border border-default bg-surface px-3 py-2 text-xs font-semibold text-foreground transition-colors duration-200 hover:border-primary-light hover:text-foreground sm:min-h-10 sm:px-4 sm:text-sm"
-            href={`/produto/${product.slug}`}
-          >
-            Ver detalhes
-          </Link>
+            <Link
+              className="text-sm font-semibold text-primary transition-colors duration-200 hover:text-primary-dark"
+              href={`/produto/${product.slug}`}
+            >
+              Ver detalhes
+            </Link>
+          </div>
         </div>
       </div>
     </article>

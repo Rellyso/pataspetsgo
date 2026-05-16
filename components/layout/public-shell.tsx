@@ -2,7 +2,9 @@ import type { ReactNode } from "react";
 
 import { AppFooter } from "@/components/layout/app-footer";
 import { AppHeader } from "@/components/layout/app-header";
+import { PublicBottomNav } from "@/components/layout/public-bottom-nav";
 import { getStoreSummary } from "@/features/catalog/public-catalog";
+import { toWhatsappHref } from "@/lib/whatsapp";
 
 type PublicShellProps = {
   children: ReactNode;
@@ -10,21 +12,16 @@ type PublicShellProps = {
 
 export async function PublicShell({ children }: PublicShellProps) {
   const storeSummary = await getStoreSummary();
+  const whatsappHref = toWhatsappHref(storeSummary?.whatsappPhone);
 
   return (
     <div className="flex min-h-screen flex-col bg-background text-foreground">
-      <AppHeader whatsappHref={toWhatsappHref(storeSummary?.whatsappPhone)} />
-      <main className="flex-1 py-10 sm:py-12">{children}</main>
-      <AppFooter />
+      <AppHeader storeName={storeSummary?.storeName} whatsappHref={whatsappHref} />
+      <main className="flex-1 pb-36 pt-4 sm:pt-6 lg:pb-14 lg:pt-8">{children}</main>
+      <div className="hidden lg:block">
+        <AppFooter />
+      </div>
+      <PublicBottomNav />
     </div>
   );
-}
-
-function toWhatsappHref(phone: string | undefined) {
-  if (!phone) {
-    return undefined;
-  }
-
-  const digits = phone.replace(/\D/g, "");
-  return digits.length > 0 ? `https://wa.me/${digits}` : undefined;
 }

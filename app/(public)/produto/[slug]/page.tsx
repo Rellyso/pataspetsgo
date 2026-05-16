@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { ProductDetailView } from "@/components/catalog/product-detail-view";
@@ -20,17 +21,14 @@ export default async function ProductPage({ params }: ProductPageProps) {
     }
 
     return (
-      <Container className="flex flex-col gap-6">
-        <section className="rounded-card border border-default bg-surface p-6 shadow-soft sm:p-8">
-          <SectionTitle
-            as="h1"
-            subtitle={
-              product.shortDescription ??
-              "Detalhe público do produto com variante válida para pedido."
-            }
-            title={product.name}
-          />
-        </section>
+      <Container className="flex flex-col gap-4">
+        <div className="flex items-center gap-2 text-sm text-muted">
+          <Link className="transition-colors hover:text-foreground" href="/catalogo">
+            Catálogo
+          </Link>
+          <span>/</span>
+          <span className="truncate">{product.name}</span>
+        </div>
 
         <ProductDetailView product={product} />
       </Container>
