@@ -74,7 +74,10 @@ When working on the product foundation, prefer this order:
 Product and UI priorities:
 
 - keep the public experience focused on fast catalog browsing and WhatsApp ordering;
+- make the public mobile experience feel closer to a lightweight shopping app than to a traditional website shell;
 - in the public catalog, treat categories as navigable sections on mobile before treating them as just another filter control;
+- prefer persistent mobile navigation patterns that reduce thumb travel during browsing and ordering, especially bottom navigation and contextual sticky actions;
+- treat the catalog, product detail and `/pedido` as one continuous assisted-ordering journey instead of isolated pages;
 - treat WhatsApp as the primary conversion action;
 - avoid generic full e-commerce assumptions unless a future spec explicitly requires them;
 - keep the admin area operational and efficient, not overly decorative.
@@ -100,6 +103,8 @@ Current foundation decisions:
 - Use `Biome` for formatting and linting instead of ESLint/Prettier.
 - Tailwind CSS v4 tokens should be defined in `app/globals.css` with `@theme inline` when mapping existing CSS variables to Tailwind utilities.
 - Prefer semantic Tailwind utilities like `bg-background`, `text-foreground`, `border-border`, and `font-display` instead of arbitrary `var(...)` classes when a token exists.
+- Prefer using `shadcn/ui` primitives for app shell, sheet, dialog, form and navigation building blocks when they help reduce custom UI infrastructure and stay aligned with the project tokens.
+- When using `shadcn/ui`, keep PatasGo visual decisions in local tokens and component composition; do not import default visual language blindly.
 - Typography should follow `DESIGN.md` from the start: `General Sans` for display, `Plus Jakarta Sans` for body/UI, and `IBM Plex Mono` for operational/code moments.
 - `app/globals.css` is temporarily excluded from Biome checks because the current parser setup does not yet handle the Tailwind `@theme` directive cleanly.
 

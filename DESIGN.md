@@ -14,6 +14,7 @@
 - **Decoration level:** Intentional.
 - **Mood:** Fast, trustworthy, local, friendly. The product should feel closer to a well-run neighborhood pet shop than to a giant promo-driven marketplace.
 - **Reference pattern:** Avoid the dense supermarket-style feel common in large pet retailers. Keep the speed and category clarity, but remove noise and visual excess.
+- **Interaction posture:** App-like on mobile. The public experience should feel like a lightweight ordering app with strong orientation, fast thumb reach, and persistent purchase context.
 
 ## Typography
 - **Display/Hero:** `General Sans`.
@@ -105,11 +106,14 @@
 ## UX Visual Rules
 - The home must push quickly toward catalog, categories, and promotions.
 - The interface should feel like assisted ordering, not a generic storefront.
+- The public experience should feel like a compact shopping app on mobile, especially in catalog, product, cart, and order-review surfaces.
 - In the public catalog, categories should work first as navigation sections, especially on mobile, not only as isolated filter chips.
+- Secondary filters on mobile should prefer bottom sheet or similarly contained expansion patterns instead of permanently competing with category navigation.
 - `Adicionar ao pedido` is more important than secondary actions.
 - `promotional_price` must dominate the price hierarchy when present.
 - Product variations should look simple and confidence-building, not technical.
 - Mobile use with one hand should shape header, sticky actions, and filter behavior.
+- When the customer already has items in the cart, the interface should preserve visible purchase context with compact summaries or contextual sticky surfaces near the bottom reach zone.
 - The admin should prioritize clarity, list scanning, and form efficiency over visual personality.
 
 ## Interaction Rules
@@ -125,6 +129,9 @@
 - Avoid separate mobile/desktop content structures unless the interaction model truly changes.
 - Keep primary actions reachable with one hand on mobile, especially in search, filter, product, cart, and order flows.
 - On mobile catalog views, prefer sticky horizontal category navigation that scrolls to in-page sections and does not hide section headers.
+- On public mobile routes, prefer a persistent bottom navigation for the core journey: `Home`, `Catálogo`, and `Pedido`.
+- Sticky mobile surfaces may stack only when they have clearly different roles, such as category navigation, cart summary, and final CTA. Avoid overlapping fixed UI that competes for the same space.
+- Product detail and `/pedido` should use sticky bottom action areas when they improve conversion and editing speed without conflicting with the keyboard.
 
 ## Accessibility Rules
 - Heading levels should remain sequential so assistive tech can navigate the page structure.
@@ -139,6 +146,7 @@
 ## Components To Express This System
 - `AppHeader`
 - `AppFooter`
+- `PublicBottomNav`
 - `Container`
 - `SectionTitle`
 - `ProductCard`
@@ -148,7 +156,10 @@
 - `PriceDisplay`
 - `SearchInput`
 - `FilterChip`
+- `CatalogFilterSheet`
 - `QuantitySelector`
+- `CartSummaryBar`
+- `StickyOrderActionBar`
 - `WhatsappButton`
 - `AdminSidebar`
 - `AdminPageHeader`
@@ -171,8 +182,12 @@
 - `specs/03-design-system.md` should stay aligned with this file.
 - The `/design` route should demonstrate these decisions with both public and admin examples.
 - During early implementation, temporary font fallbacks are acceptable, but the target visual system remains the one defined here.
+- Prefer `shadcn/ui` primitives for foundational interaction patterns such as sheets, dialogs, forms, tabs, and similar app-UI building blocks when they accelerate consistency.
+- `shadcn/ui` should provide structure and accessibility primitives, while PatasGo tokens, spacing, colors, and composition remain the final source of visual identity.
 
 ## Decisions Log
 | Date | Decision | Rationale |
 |------|----------|-----------|
 | 2026-05-01 | Established the initial PatasGo design system | The product needs to feel fast, trustworthy, local, and WhatsApp-first instead of resembling a dense generic pet marketplace. |
+| 2026-05-15 | Standardized the public journey as app-like on mobile | The catalog, product detail, and order review need stronger continuity, thumb-friendly navigation, and persistent purchase context to improve assisted ordering. |
+| 2026-05-15 | Preferred `shadcn/ui` as the default primitive layer | The project benefits from reusable accessible primitives without giving up PatasGo's own tokens and visual system. |
