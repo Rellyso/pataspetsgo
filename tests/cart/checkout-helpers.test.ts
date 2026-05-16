@@ -5,6 +5,13 @@ import {
   normalizeQuantity,
   upsertCartItem,
 } from "@/features/cart/helpers";
+import {
+  buildAddressFromViaCep,
+  formatPhoneInput,
+  formatPostalCodeInput,
+  normalizePhoneDigits,
+  normalizePostalCode,
+} from "@/lib/checkout-utils";
 import { checkoutFormSchema } from "@/lib/validations/checkout";
 
 describe("cart helpers", () => {
@@ -81,7 +88,7 @@ describe("checkoutFormSchema", () => {
 
     expect(result.success).toBe(false);
     expect(result.error?.flatten().fieldErrors.address?.[0]).toBe(
-      "Informe o endereco para entrega.",
+      "Informe o endereço para entrega.",
     );
   });
 
@@ -95,5 +102,65 @@ describe("checkoutFormSchema", () => {
     });
 
     expect(result.success).toBe(true);
+  });
+
+  it("accepts masked and unmasked phones with enough digits", () => {
+    const masked = checkoutFormSchema.safeParse({
+      address: "",
+      customerName: "Maria",
+      customerPhone: "(85) 99999-0000",
+      deliveryType: "pickup",
+      notes: "",
+    });
+    const unmasked = checkoutFormSchema.safeParse({
+      address: "",
+      customerName: "Maria",
+      customerPhone: "85999990000",
+      deliveryType: "pickup",
+      notes: "",
+    });
+
+    expect(masked.success).toBe(true);
+    expect(unmasked.success).toBe(true);
+  });
+
+  it("rejects phones that are too short", () => {
+    const result = checkoutFormSchema.safeParse({
+      address: "",
+      customerName: "Maria",
+      customerPhone: "1234567",
+      deliveryType: "pickup",
+      notes: "",
+    });
+
+    expect(result.success).toBe(false);
+    expect(result.error?.flatten().fieldErrors.customerPhone?.[0]).toBe(
+      "Informe um telefone válido.",
+    );
+  });
+});
+
+describe("checkout utils", () => {
+  it("normalizes and formats brazilian phones", () => {
+    expect(normalizePhoneDigits("(85) 99999-0000")).toBe("85999990000");
+    expect(formatPhoneInput("8598765432")).toBe("(85) 9876-5432");
+    expect(formatPhoneInput("85999990000")).toBe("(85) 99999-0000");
+  });
+
+  it("normalizes and formats postal codes", () => {
+    expect(normalizePostalCode("60.125-340")).toBe("60125340");
+    expect(formatPostalCodeInput("60125340")).toBe("60125-340");
+  });
+
+  it("builds an address string from ViaCEP data", () => {
+    expect(
+      buildAddressFromViaCep({
+        bairro: "Aldeota",
+        cep: "60125-340",
+        localidade: "Fortaleza",
+        logradouro: "Rua Silva Paulet",
+        uf: "CE",
+      }),
+    ).toBe("Rua Silva Paulet, Aldeota • Fortaleza - CE");
   });
 });

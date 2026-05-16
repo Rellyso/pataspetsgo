@@ -37,6 +37,10 @@ export const checkoutFormSchema = z
     }
   });
 
+export const checkoutClientFormSchema = checkoutFormSchema.extend({
+  postalCode: z.string().trim(),
+});
+
 export const submitOrderPayloadSchema = z.object({
   customerName: checkoutFormSchema.shape.customerName,
   customerPhone: checkoutFormSchema.shape.customerPhone,
@@ -50,4 +54,5 @@ export const submitOrderPayloadSchema = z.object({
 export type DeliveryType = z.infer<typeof deliveryTypeSchema>;
 export type CartItemInput = z.infer<typeof cartItemSchema>;
 export type CheckoutFormInput = z.infer<typeof checkoutFormSchema>;
+export type CheckoutClientFormInput = z.infer<typeof checkoutClientFormSchema>;
 export type SubmitOrderPayload = z.infer<typeof submitOrderPayloadSchema>;

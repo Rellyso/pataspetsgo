@@ -15,10 +15,7 @@ type CategorySectionTabsProps = {
 
 const topAnchorId = "catalog-results-top";
 
-export function CategorySectionTabs({
-  sections,
-  className,
-}: CategorySectionTabsProps) {
+export function CategorySectionTabs({ sections, className }: CategorySectionTabsProps) {
   const [activeId, setActiveId] = useState(sections[0]?.id ?? topAnchorId);
 
   useEffect(() => {
@@ -28,9 +25,7 @@ export function CategorySectionTabs({
 
     const sectionElements = sections
       .map((section) => document.getElementById(section.id))
-      .filter(
-        (element): element is HTMLElement => element instanceof HTMLElement,
-      );
+      .filter((element): element is HTMLElement => element instanceof HTMLElement);
 
     if (sectionElements.length === 0) {
       return;
@@ -44,8 +39,7 @@ export function CategorySectionTabs({
         }
 
         visibleEntries.sort(
-          (left, right) =>
-            left.boundingClientRect.top - right.boundingClientRect.top,
+          (left, right) => left.boundingClientRect.top - right.boundingClientRect.top,
         );
         setActiveId(visibleEntries[0].target.id);
       },
