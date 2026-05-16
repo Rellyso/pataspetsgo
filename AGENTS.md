@@ -124,6 +124,13 @@ The codebase should use **English** for:
 
 The user-facing interface should use **Portuguese (Brazil)**.
 
+Text quality rules for user-facing Portuguese (Brazil):
+
+- always use correct accents, cedilla and punctuation in visible UI text, validation messages, WhatsApp messages and operational feedback;
+- do not omit diacritics in Portuguese words such as `não`, `catálogo`, `número`, `endereço`, `configurações`, `possível` or `válido`;
+- prefer natural Brazilian Portuguese phrasing over machine-like or transliterated text;
+- review newly added PT-BR copy before finishing a task, especially button labels, empty states, success/error messages and form validation.
+
 Examples:
 
 ```ts

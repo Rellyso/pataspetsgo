@@ -2,6 +2,12 @@
 
 import { createContext, type ReactNode, useContext, useEffect, useMemo, useState } from "react";
 
+import {
+  calculateEstimatedTotal,
+  getTotalItems,
+  normalizeQuantity,
+  upsertCartItem,
+} from "./helpers";
 import { loadCartFromStorage, saveCartToStorage } from "./storage";
 import type { AddCartItemInput, CartItem } from "./types";
 
@@ -29,12 +35,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
   }, [items]);
 
   const value = useMemo<CartContextValue>(() => {
-    const totalItems = items.reduce((total, item) => total + item.quantity, 0);
-    const estimatedTotal = items.reduce(
-      (total, item) =>
-        total + (item.promotionalPriceSnapshot ?? item.unitPriceSnapshot) * item.quantity,
-      0,
-    );
+    const totalItems = getTotalItems(items);
+    const estimatedTotal = calculateEstimatedTotal(items);
 
     return {
       items,
@@ -42,20 +44,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
       estimatedTotal,
       addItem(item) {
         setItems((currentItems) => {
-          const quantity = item.quantity ?? 1;
-          const existingItem = currentItems.find(
-            (currentItem) => currentItem.productVariantId === item.productVariantId,
-          );
-
-          if (existingItem) {
-            return currentItems.map((currentItem) =>
-              currentItem.productVariantId === item.productVariantId
-                ? { ...currentItem, quantity: currentItem.quantity + quantity }
-                : currentItem,
-            );
-          }
-
-          return [...currentItems, { ...item, quantity }];
+          return upsertCartItem(currentItems, {
+            ...item,
+            quantity: normalizeQuantity(item.quantity ?? 1),
+          });
         });
       },
       removeItem(productVariantId) {
@@ -67,7 +59,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
         setItems((currentItems) =>
           currentItems
             .map((item) =>
-              item.productVariantId === productVariantId ? { ...item, quantity } : item,
+              item.productVariantId === productVariantId
+                ? { ...item, quantity: normalizeQuantity(quantity) }
+                : item,
             )
             .filter((item) => item.quantity > 0),
         );

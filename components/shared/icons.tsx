@@ -91,3 +91,12 @@ export function CheckIcon(props: IconProps) {
     </BaseIcon>
   );
 }
+
+export function CloseIcon(props: IconProps) {
+  return (
+    <BaseIcon {...props}>
+      <path d="M6.5 6.5l11 11" />
+      <path d="M17.5 6.5l-11 11" />
+    </BaseIcon>
+  );
+}

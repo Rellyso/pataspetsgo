@@ -465,6 +465,23 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
+      create_order_with_items: {
+        Args: {
+          p_address: string | null;
+          p_customer_name: string;
+          p_customer_phone: string;
+          p_delivery_type: string;
+          p_items: Json;
+          p_notes: string | null;
+          p_total_estimated: number;
+          p_whatsapp_message: string;
+        };
+        Returns: {
+          order_id: string;
+          order_number: string;
+          whatsapp_message: string;
+        }[];
+      };
       generate_order_number: { Args: never; Returns: string };
     };
     Enums: {
