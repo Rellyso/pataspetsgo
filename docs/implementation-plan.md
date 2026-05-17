@@ -285,26 +285,120 @@ Checkpoint:
 ## Fase 9 — Pedidos, banners e configurações
 
 Objetivo:
-- completar os módulos operacionais restantes do MVP.
+- completar os módulos operacionais restantes do MVP com entregas sequenciais que fecham pedidos, vitrine da home e configuração institucional da loja.
 
 Implementar:
-- listagem e detalhe de pedidos
-- atualização simples de status
-- CRUD de banners
-- edição de `store_settings`
+- estruturar a fase em `9.1`, `9.2` e `9.3`, preservando a fase 9 como unidade única do roadmap
+- alinhar a implementação ao padrão já usado em `features/admin/catalog`, com queries server-side, actions server-only, validação centralizada com Zod e revalidação por rota
+- conectar os módulos ao que já existe no projeto: placeholders ativos em `/admin/pedidos`, `/admin/banners` e `/admin/configuracoes`, criação de pedidos via `features/cart/submit-order.ts` e leitura pública de `banners` e `store_settings` em `features/catalog/public-catalog.ts`
 
 Specs principais:
 - `08`
 
 Entregáveis:
-- operador consegue consultar pedidos
-- operador consegue ajustar home por banners
-- operador consegue editar dados institucionais da loja
+- fase 9 documentada com subetapas sequenciais e dependências explícitas entre operação admin, home pública e checkout
+- operador consegue consultar pedidos, ajustar a home por banners e editar dados institucionais e operacionais da loja
+- validações, testes e checkpoints da fase deixam claro o contrato de snapshot de pedido, a operação dos banners e o impacto real de `store_settings`
 
 Checkpoint:
 - pedido usa snapshot persistido
 - home segue funcional sem banners ativos
 - checkout muda conforme `store_settings`
+
+### Fase 9.1 — Pedidos administrativos
+
+Objetivo:
+- transformar `/admin/pedidos` em módulo operacional de consulta rápida para atendimento via WhatsApp.
+
+Implementar:
+- `features/admin/orders` com queries server-side para listagem e detalhe
+- filtros por `status`, `delivery_type` e período simples
+- busca por `order_number`, `customer_name` e `customer_phone`
+- ordenação padrão por `created_at desc`
+- detalhe do pedido baseado apenas em `orders` + `order_items`, sem recalcular a partir do catálogo atual
+- action server-only para atualizar `orders.status` com confirmação explícita e revalidação do domínio permitido
+- reaproveitamento do shell admin com versão responsiva em cartões operacionais no mobile
+
+Interfaces e tipos:
+- novo schema de filtros em `lib/validations/admin-orders.ts`
+- novo schema de atualização de status aceitando apenas `pending | sent_to_whatsapp | confirmed | canceled`
+- tipos de listagem e detalhe em `features/admin/orders/types.ts`
+
+Entregáveis:
+- `/admin/pedidos` com listagem funcional
+- detalhe do pedido acessível a partir da listagem
+- atualização de status com feedback de sucesso e erro
+
+Checkpoint:
+- admin encontra pedidos recentes rapidamente
+- detalhe mostra snapshot persistido de itens, preços e mensagem de WhatsApp
+- mudar status não altera itens, total nem mensagem
+
+### Fase 9.2 — Banners administrativos
+
+Objetivo:
+- substituir o placeholder de `/admin/banners` por CRUD leve de vitrine com upload e ordenação previsível.
+
+Implementar:
+- `features/admin/banners` com listagem, criação, edição e toggle de ativo
+- formulário com `title`, `subtitle`, `image`, `cta_label`, `cta_url`, `position` e `is_active`
+- upload para bucket `banners` no mesmo padrão operacional já usado em catálogo
+- validação para impedir banner ativo com destino quebrado
+- revalidação da home pública e da rota admin após salvar ou alternar status
+- empty state orientado à criação do primeiro banner
+
+Interfaces e tipos:
+- novo schema em `lib/validations/admin-banners.ts`
+- regra explícita de coerência entre `cta_label` e `cta_url`
+- tipo de payload e item administrativo em `features/admin/banners/types.ts`
+
+Entregáveis:
+- `/admin/banners` com listagem operacional
+- formulário de criar e editar com feedback de upload
+- ordenação simples por `position`
+
+Checkpoint:
+- banner inativo não aparece na home
+- home segue íntegra sem banners ativos
+- upload deixa claro “imagem enviada” versus “registro salvo”
+
+### Fase 9.3 — Configurações da loja e integração operacional
+
+Objetivo:
+- transformar `/admin/configuracoes` em editor do singleton `store_settings` e fechar o impacto no público e no checkout.
+
+Implementar:
+- `features/admin/store-settings` com query singleton e action única de update
+- formulário para `store_name`, `description`, `whatsapp_phone`, `instagram_url`, `address`, `opening_hours`, `google_maps_url`, `delivery_enabled` e `pickup_enabled`
+- validação forte de `whatsapp_phone` e validação mínima útil de URLs opcionais
+- revalidação de home, superfícies públicas que usam resumo da loja e fluxo `/pedido`
+- tratamento explícito para cenário anômalo de ausência do singleton, sem criar fluxo de múltiplos registros
+
+Interfaces e tipos:
+- novo schema em `lib/validations/admin-store-settings.ts`
+- tipo singleton de leitura e escrita em `features/admin/store-settings/types.ts`
+
+Entregáveis:
+- `/admin/configuracoes` com edição do registro existente
+- feedback claro de sucesso e erro
+- atualização refletida no checkout e na home após salvar
+
+Checkpoint:
+- `delivery_enabled` e `pickup_enabled` alteram o comportamento do checkout já existente
+- `whatsapp_phone` inválido é barrado no servidor
+- não existe fluxo de criação de uma segunda configuração
+
+Testes e cenários:
+- testes de validação para filtros e status de pedidos, formulário de banners e formulário de `store_settings`
+- testes de banco e integrados para update de `orders.status` e preservação de snapshot em `order_items`
+- testes de UI admin para estados de loading, vazio, erro e sucesso nos três módulos
+- testes E2E cobrindo listagem e detalhe de pedido, atualização de status, criação e edição de banner refletindo na home e edição de `store_settings` refletindo em `/pedido`
+- regressão manual obrigatória para home sem banners ativos e checkout com apenas `pickup`, apenas `delivery` e fallback `arrange`
+
+Assumptions:
+- a fase 9 permanece única no roadmap, mas documentada com subetapas `9.1`, `9.2` e `9.3`
+- o detalhe do pedido pode abrir na própria rota de pedidos via sheet, painel ou rota filha, desde que preserve leitura rápida e snapshot persistido
+- não entram nesta fase automação de WhatsApp, workflow complexo de status, histórico de alterações ou motor avançado de campanhas para banners
 
 ## Fase 10 — SEO e fechamento
 

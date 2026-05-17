@@ -17,9 +17,7 @@ type ProductDetailViewProps = {
 
 export function ProductDetailView({ product }: ProductDetailViewProps) {
   const { addItem, estimatedTotal, totalItems } = useCart();
-  const [selectedVariantId, setSelectedVariantId] = useState(
-    product.primaryVariant.id,
-  );
+  const [selectedVariantId, setSelectedVariantId] = useState(product.primaryVariant.id);
   const [quantity, setQuantity] = useState(1);
   const [justAdded, setJustAdded] = useState(false);
   const resetTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -31,8 +29,7 @@ export function ProductDetailView({ product }: ProductDetailViewProps) {
     [product, selectedVariantId],
   );
 
-  const selectedTotal =
-    (selectedVariant.promotionalPrice ?? selectedVariant.price) * quantity;
+  const selectedTotal = (selectedVariant.promotionalPrice ?? selectedVariant.price) * quantity;
 
   useEffect(() => {
     return () => {
@@ -122,9 +119,7 @@ export function ProductDetailView({ product }: ProductDetailViewProps) {
         </article>
 
         <article className="rounded-[1.6rem] border border-default bg-surface p-5 shadow-soft sm:p-6">
-          <p className="text-sm font-semibold text-primary">
-            Escolha simples e rápida
-          </p>
+          <p className="text-sm font-semibold text-primary">Escolha simples e rápida</p>
           <div className="mt-3">
             <PriceDisplay
               price={selectedVariant.price}
@@ -138,9 +133,7 @@ export function ProductDetailView({ product }: ProductDetailViewProps) {
           </div>
 
           <div className="mt-6 space-y-3">
-            <p className="text-sm font-semibold text-foreground">
-              Variantes disponíveis
-            </p>
+            <p className="text-sm font-semibold text-foreground">Variantes disponíveis</p>
             <div className="flex flex-col gap-3">
               {product.variants.map((variant) => {
                 const isSelected = variant.id === selectedVariant.id;
@@ -159,9 +152,7 @@ export function ProductDetailView({ product }: ProductDetailViewProps) {
                   >
                     <div className="flex items-start justify-between gap-3">
                       <div>
-                        <p className="font-semibold text-foreground">
-                          {variant.name}
-                        </p>
+                        <p className="font-semibold text-foreground">{variant.name}</p>
                         <p className="mt-1 text-sm text-muted">
                           {variant.stockStatus === "consult"
                             ? "Disponível com confirmação da loja"
@@ -169,9 +160,7 @@ export function ProductDetailView({ product }: ProductDetailViewProps) {
                         </p>
                       </div>
                       <span className="text-sm font-semibold text-foreground">
-                        {formatCurrency(
-                          variant.promotionalPrice ?? variant.price,
-                        )}
+                        {formatCurrency(variant.promotionalPrice ?? variant.price)}
                       </span>
                     </div>
                   </button>
@@ -182,20 +171,16 @@ export function ProductDetailView({ product }: ProductDetailViewProps) {
 
           <div className="mt-6 flex items-center justify-between gap-4">
             <div>
-              <p className="text-sm font-semibold text-foreground">
-                Quantidade
-              </p>
-              <p className="text-sm text-muted">
-                Ajuste antes de seguir para o pedido.
-              </p>
+              <p className="text-sm font-semibold text-foreground">Quantidade</p>
+              <p className="text-sm text-muted">Ajuste antes de seguir para o pedido.</p>
             </div>
             <QuantitySelector onChange={setQuantity} value={quantity} />
           </div>
 
           {selectedVariant.stockStatus === "consult" ? (
             <p className="mt-4 rounded-[1.15rem] border border-warning/30 bg-warning/10 px-4 py-3 text-sm leading-6 text-foreground">
-              Este item pode entrar no pedido, mas a confirmação final de
-              disponibilidade será feita pela loja.
+              Este item pode entrar no pedido, mas a confirmação final de disponibilidade será feita
+              pela loja.
             </p>
           ) : null}
 
@@ -203,9 +188,7 @@ export function ProductDetailView({ product }: ProductDetailViewProps) {
             <button
               className={[
                 "inline-flex min-h-12 w-full items-center justify-center rounded-full px-4 py-3 text-base font-semibold text-white transition-colors duration-200",
-                justAdded
-                  ? "bg-success hover:bg-success/90"
-                  : "bg-primary hover:bg-primary-dark",
+                justAdded ? "bg-success hover:bg-success/90" : "bg-primary hover:bg-primary-dark",
               ].join(" ")}
               onClick={handleAdd}
               type="button"
@@ -217,10 +200,7 @@ export function ProductDetailView({ product }: ProductDetailViewProps) {
                   : "Adicionar ao pedido"}
             </button>
             {justAdded ? (
-              <p
-                aria-live="polite"
-                className="mt-2 text-sm font-medium text-success"
-              >
+              <p aria-live="polite" className="mt-2 text-sm font-medium text-success">
                 Item adicionado ao pedido.
               </p>
             ) : null}
@@ -236,12 +216,9 @@ export function ProductDetailView({ product }: ProductDetailViewProps) {
               href="/pedido"
             >
               <span className="font-semibold text-foreground">
-                {totalItems}{" "}
-                {totalItems > 1 ? "itens no pedido" : "item no pedido"}
+                {totalItems} {totalItems > 1 ? "itens no pedido" : "item no pedido"}
               </span>
-              <span className="text-muted">
-                {formatCurrency(estimatedTotal)}
-              </span>
+              <span className="text-muted">{formatCurrency(estimatedTotal)}</span>
             </Link>
           ) : null}
 
@@ -254,10 +231,8 @@ export function ProductDetailView({ product }: ProductDetailViewProps) {
                 {selectedVariant.name}
               </p>
               <p className="text-sm text-muted">
-                {formatCurrency(
-                  selectedVariant.promotionalPrice ?? selectedVariant.price,
-                )}{" "}
-                por unidade
+                {formatCurrency(selectedVariant.promotionalPrice ?? selectedVariant.price)} por
+                unidade
               </p>
             </div>
 
@@ -267,9 +242,7 @@ export function ProductDetailView({ product }: ProductDetailViewProps) {
           <button
             className={[
               "mt-3 inline-flex min-h-12 w-full items-center justify-center rounded-full px-4 py-3 text-sm font-semibold text-white transition-colors duration-200",
-              justAdded
-                ? "bg-success hover:bg-success/90"
-                : "bg-primary hover:bg-primary-dark",
+              justAdded ? "bg-success hover:bg-success/90" : "bg-primary hover:bg-primary-dark",
             ].join(" ")}
             onClick={handleAdd}
             type="button"

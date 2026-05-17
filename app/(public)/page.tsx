@@ -119,9 +119,7 @@ export default async function PublicHomePage() {
                       {banner.title}
                     </p>
                     {banner.subtitle ? (
-                      <p className="text-sm leading-6 text-muted">
-                        {banner.subtitle}
-                      </p>
+                      <p className="text-sm leading-6 text-muted">{banner.subtitle}</p>
                     ) : null}
                     {banner.ctaUrl ? (
                       <Link

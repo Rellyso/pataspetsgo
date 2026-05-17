@@ -69,10 +69,7 @@ export async function updateSession(request: NextRequest) {
 }
 
 function isInvalidRefreshTokenError(error: unknown) {
-  return (
-    error instanceof Error &&
-    error.message.toLowerCase().includes("invalid refresh token")
-  );
+  return error instanceof Error && error.message.toLowerCase().includes("invalid refresh token");
 }
 
 function clearSupabaseCookies(request: NextRequest, response: NextResponse) {

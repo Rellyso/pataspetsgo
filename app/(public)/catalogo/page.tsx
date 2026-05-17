@@ -9,14 +9,8 @@ import { SearchIcon } from "@/components/shared/icons";
 import { SearchInput } from "@/components/shared/search-input";
 import { CartSummaryBar } from "@/features/cart/cart-summary-bar";
 import { getCatalogPageData } from "@/features/catalog/public-catalog";
-import type {
-  CatalogFilterOption,
-  PublicCatalogItem,
-} from "@/features/catalog/types";
-import {
-  type CatalogFiltersInput,
-  parseCatalogFilters,
-} from "@/lib/validations/catalog";
+import type { CatalogFilterOption, PublicCatalogItem } from "@/features/catalog/types";
+import { type CatalogFiltersInput, parseCatalogFilters } from "@/lib/validations/catalog";
 
 type CatalogPageProps = {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
@@ -49,16 +43,12 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
           <div className="flex flex-col gap-4">
             <div className="flex items-start justify-between gap-4">
               <div>
-                <p className="text-sm font-semibold text-primary">
-                  Catálogo de compra rápida
-                </p>
+                <p className="text-sm font-semibold text-primary">Catálogo de compra rápida</p>
                 <h1 className="mt-1 font-display text-3xl font-semibold tracking-tight text-foreground">
                   Encontre e adicione ao pedido
                 </h1>
                 <p className="mt-2 text-sm text-muted">
-                  {catalogData.total > 1
-                    ? `${catalogData.total} produtos`
-                    : "1 produto"}
+                  {catalogData.total > 1 ? `${catalogData.total} produtos` : "1 produto"}
                 </p>
               </div>
 
@@ -84,11 +74,7 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
             {activeFilters.length > 0 ? (
               <div className="flex flex-wrap items-center gap-2">
                 {activeFilters.map((filter) => (
-                  <Link
-                    key={filter.label}
-                    className="chip-category"
-                    href={filter.href}
-                  >
+                  <Link key={filter.label} className="chip-category" href={filter.href}>
                     {filter.label}
                   </Link>
                 ))}
@@ -119,11 +105,7 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
             {catalogData.items.length > 0 ? (
               <div className="space-y-7">
                 {sections.map((section) => (
-                  <section
-                    key={section.id}
-                    className="scroll-mt-36 space-y-4"
-                    id={section.id}
-                  >
+                  <section key={section.id} className="scroll-mt-36 space-y-4" id={section.id}>
                     <div className="flex items-end justify-between gap-3 border-b border-default pb-3">
                       <div>
                         <h2 className="font-display text-xl font-semibold text-foreground">
@@ -167,12 +149,8 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
                     <SearchIcon className="size-4" />
                   </span>
                   <div>
-                    <p className="font-display text-lg font-semibold text-foreground">
-                      Filtros
-                    </p>
-                    <p className="text-sm text-muted">
-                      Atalhos secundários do catálogo.
-                    </p>
+                    <p className="font-display text-lg font-semibold text-foreground">Filtros</p>
+                    <p className="text-sm text-muted">Atalhos secundários do catálogo.</p>
                   </div>
                 </div>
               </div>
@@ -180,9 +158,7 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
               {filterGroups.map((group) =>
                 group.options.length > 0 ? (
                   <section key={group.title}>
-                    <h3 className="text-sm font-semibold text-foreground">
-                      {group.title}
-                    </h3>
+                    <h3 className="text-sm font-semibold text-foreground">{group.title}</h3>
                     <div className="mt-3 flex flex-wrap gap-2">
                       {group.options.map((option) => (
                         <Link
@@ -224,8 +200,8 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
             Catálogo
           </h1>
           <p className="mt-2 text-sm leading-6 text-muted">
-            Não foi possível carregar o contrato público agora. Tente novamente
-            com o backend disponível.
+            Não foi possível carregar o contrato público agora. Tente novamente com o backend
+            disponível.
           </p>
         </section>
       </Container>
@@ -236,27 +212,13 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
 function HiddenSearchFields({ filters }: { filters: CatalogFiltersInput }) {
   return (
     <>
-      {filters.category ? (
-        <input name="category" type="hidden" value={filters.category} />
-      ) : null}
-      {filters.brand ? (
-        <input name="brand" type="hidden" value={filters.brand} />
-      ) : null}
-      {filters.pet ? (
-        <input name="pet" type="hidden" value={filters.pet} />
-      ) : null}
-      {filters.age ? (
-        <input name="age" type="hidden" value={filters.age} />
-      ) : null}
-      {filters.size ? (
-        <input name="size" type="hidden" value={filters.size} />
-      ) : null}
-      {filters.promotion ? (
-        <input name="promotion" type="hidden" value="true" />
-      ) : null}
-      {filters.sort ? (
-        <input name="sort" type="hidden" value={filters.sort} />
-      ) : null}
+      {filters.category ? <input name="category" type="hidden" value={filters.category} /> : null}
+      {filters.brand ? <input name="brand" type="hidden" value={filters.brand} /> : null}
+      {filters.pet ? <input name="pet" type="hidden" value={filters.pet} /> : null}
+      {filters.age ? <input name="age" type="hidden" value={filters.age} /> : null}
+      {filters.size ? <input name="size" type="hidden" value={filters.size} /> : null}
+      {filters.promotion ? <input name="promotion" type="hidden" value="true" /> : null}
+      {filters.sort ? <input name="sort" type="hidden" value={filters.sort} /> : null}
     </>
   );
 }
@@ -329,10 +291,7 @@ function buildFilterGroups(
       options: catalogData.availableFilters.categories.map((option) => ({
         label: option.label,
         href: buildCatalogHref(filters, {
-          category:
-            catalogData.appliedFilters.category === option.value
-              ? undefined
-              : option.value,
+          category: catalogData.appliedFilters.category === option.value ? undefined : option.value,
         }),
         active: catalogData.appliedFilters.category === option.value,
         count: option.count,
@@ -343,10 +302,7 @@ function buildFilterGroups(
       options: catalogData.availableFilters.brands.map((option) => ({
         label: option.label,
         href: buildCatalogHref(filters, {
-          brand:
-            catalogData.appliedFilters.brand === option.value
-              ? undefined
-              : option.value,
+          brand: catalogData.appliedFilters.brand === option.value ? undefined : option.value,
         }),
         active: catalogData.appliedFilters.brand === option.value,
         count: option.count,
@@ -401,9 +357,7 @@ function buildFilterGroups(
             {
               label: "Somente promoções",
               href: buildCatalogHref(filters, {
-                promotion: catalogData.appliedFilters.promotion
-                  ? undefined
-                  : true,
+                promotion: catalogData.appliedFilters.promotion ? undefined : true,
               }),
               active: Boolean(catalogData.appliedFilters.promotion),
             },
@@ -461,9 +415,7 @@ function groupItemsByCategory(
     return sortedSections;
   }
 
-  return sortedSections.filter(
-    (section) => section.id === `catalog-section-${activeCategory}`,
-  );
+  return sortedSections.filter((section) => section.id === `catalog-section-${activeCategory}`);
 }
 
 function buildCatalogHref(

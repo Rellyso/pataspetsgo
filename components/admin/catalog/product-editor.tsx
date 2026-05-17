@@ -17,10 +17,7 @@ import { type UseFormRegisterReturn, useForm } from "react-hook-form";
 import { PublicationBadge } from "@/components/admin/catalog/publication-badge";
 import { SideSheet } from "@/components/admin/catalog/side-sheet";
 import { StatusToggleButton } from "@/components/admin/catalog/status-toggle-button";
-import {
-  saveProductAction,
-  saveVariantAction,
-} from "@/features/admin/catalog/mutations";
+import { saveProductAction, saveVariantAction } from "@/features/admin/catalog/mutations";
 import type {
   AdminCatalogProductDetail,
   AdminCatalogVariantItem,
@@ -86,8 +83,7 @@ export function ProductEditor({
   const [feedback, setFeedback] = useState<string | null>(null);
   const [variantFeedback, setVariantFeedback] = useState<string | null>(null);
   const [variantSheetOpen, setVariantSheetOpen] = useState(false);
-  const [editingVariant, setEditingVariant] =
-    useState<AdminCatalogVariantItem | null>(null);
+  const [editingVariant, setEditingVariant] = useState<AdminCatalogVariantItem | null>(null);
   const [isProductPending, startProductTransition] = useTransition();
   const [isVariantPending, startVariantTransition] = useTransition();
 
@@ -227,8 +223,7 @@ export function ProductEditor({
 
     return {
       total: safeProduct.variants.length,
-      valid: safeProduct.variants.filter((variant) => variant.isPurchasable)
-        .length,
+      valid: safeProduct.variants.filter((variant) => variant.isPurchasable).length,
     };
   }, [safeProduct]);
 
@@ -315,9 +310,7 @@ export function ProductEditor({
                 </div>
                 <div className="text-sm text-muted">
                   <p>Imagem principal atual vinculada.</p>
-                  <p className="mt-1">
-                    Envie um novo arquivo apenas se quiser substituir.
-                  </p>
+                  <p className="mt-1">Envie um novo arquivo apenas se quiser substituir.</p>
                 </div>
               </div>
             ) : null}
@@ -334,19 +327,13 @@ export function ProductEditor({
             description="A descrição curta ajuda a escanear a listagem; a longa apoia a página de produto."
           >
             <div className="grid gap-4">
-              <Field
-                label="Descrição curta"
-                error={errors.shortDescription?.message}
-              >
+              <Field label="Descrição curta" error={errors.shortDescription?.message}>
                 <textarea
                   className={`${fieldClassName} min-h-24 resize-y`}
                   {...register("shortDescription")}
                 />
               </Field>
-              <Field
-                label="Descrição longa"
-                error={errors.description?.message}
-              >
+              <Field label="Descrição longa" error={errors.description?.message}>
                 <textarea
                   className={`${fieldClassName} min-h-36 resize-y`}
                   {...register("description")}
@@ -404,18 +391,9 @@ export function ProductEditor({
                 />
               </Field>
               <div className="grid gap-3">
-                <CheckboxCard
-                  label="Produto ativo"
-                  registration={register("isActive")}
-                />
-                <CheckboxCard
-                  label="Produto em destaque"
-                  registration={register("isFeatured")}
-                />
-                <CheckboxCard
-                  label="Produto em promoção"
-                  registration={register("isPromotion")}
-                />
+                <CheckboxCard label="Produto ativo" registration={register("isActive")} />
+                <CheckboxCard label="Produto em destaque" registration={register("isFeatured")} />
+                <CheckboxCard label="Produto em promoção" registration={register("isPromotion")} />
               </div>
             </div>
           </Section>
@@ -443,25 +421,22 @@ export function ProductEditor({
               Prontidão da vitrine
             </h2>
             <p className="mt-2 text-sm leading-6 text-muted">
-              A publicação pública segue o mesmo contrato do catálogo. Esta
-              leitura evita promoção vazia e produto sem variante válida.
+              A publicação pública segue o mesmo contrato do catálogo. Esta leitura evita promoção
+              vazia e produto sem variante válida.
             </p>
             <div className="mt-4">
               {safeProduct ? (
                 <PublicationBadge status={safeProduct.publicationStatus} />
               ) : (
                 <p className="text-sm text-muted">
-                  Salve o produto para acompanhar o status operacional da
-                  vitrine.
+                  Salve o produto para acompanhar o status operacional da vitrine.
                 </p>
               )}
             </div>
           </section>
 
           <section className="rounded-card border border-default bg-surface p-5 shadow-soft">
-            <h2 className="font-display text-xl font-semibold text-foreground">
-              Contexto rápido
-            </h2>
+            <h2 className="font-display text-xl font-semibold text-foreground">Contexto rápido</h2>
             <div className="mt-4 grid gap-3">
               <MetricCard
                 label="Variantes"
@@ -473,11 +448,7 @@ export function ProductEditor({
               />
               <MetricCard
                 label="Atualização"
-                value={
-                  safeProduct
-                    ? formatDate(safeProduct.updatedAt)
-                    : "Ainda não salvo"
-                }
+                value={safeProduct ? formatDate(safeProduct.updatedAt) : "Ainda não salvo"}
               />
             </div>
           </section>
@@ -491,8 +462,8 @@ export function ProductEditor({
               Variantes do produto
             </h2>
             <p className="mt-2 text-sm leading-6 text-muted">
-              Preço, promoção, disponibilidade e ordem ficam dentro do contexto
-              do produto para manter o fluxo simples.
+              Preço, promoção, disponibilidade e ordem ficam dentro do contexto do produto para
+              manter o fluxo simples.
             </p>
           </div>
           <button
@@ -516,9 +487,7 @@ export function ProductEditor({
                   <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                     <div>
                       <div className="flex flex-wrap items-center gap-2">
-                        <h3 className="font-semibold text-foreground">
-                          {variant.name}
-                        </h3>
+                        <h3 className="font-semibold text-foreground">{variant.name}</h3>
                         <span
                           className={`inline-flex min-h-8 items-center rounded-full border px-3 py-1 text-xs font-semibold ${
                             variant.isPurchasable
@@ -526,9 +495,7 @@ export function ProductEditor({
                               : "border-warning/20 bg-warning/10 text-warning"
                           }`}
                         >
-                          {variant.isPurchasable
-                            ? "Comprável"
-                            : "Não comprável"}
+                          {variant.isPurchasable ? "Comprável" : "Não comprável"}
                         </span>
                       </div>
                       <div className="mt-2 flex flex-wrap gap-3 text-sm text-muted">
@@ -564,8 +531,8 @@ export function ProductEditor({
             </div>
           ) : (
             <div className="mt-5 rounded-card border border-default bg-background p-5 text-sm text-muted">
-              Este produto ainda não está pronto para a vitrine. Crie pelo menos
-              uma variante válida para liberar a compra pública.
+              Este produto ainda não está pronto para a vitrine. Crie pelo menos uma variante válida
+              para liberar a compra pública.
             </div>
           )
         ) : (
@@ -584,10 +551,7 @@ export function ProductEditor({
         <form className="space-y-4" onSubmit={variantSubmit}>
           <input type="hidden" {...variantForm.register("id")} />
           <input type="hidden" {...variantForm.register("productId")} />
-          <Field
-            label="Nome"
-            error={variantForm.formState.errors.name?.message}
-          >
+          <Field label="Nome" error={variantForm.formState.errors.name?.message}>
             <input
               className={fieldClassName}
               placeholder="3 kg"
@@ -595,20 +559,14 @@ export function ProductEditor({
             />
           </Field>
           <div className="grid gap-4 sm:grid-cols-2">
-            <Field
-              label="SKU"
-              error={variantForm.formState.errors.sku?.message}
-            >
+            <Field label="SKU" error={variantForm.formState.errors.sku?.message}>
               <input
                 className={fieldClassName}
                 placeholder="GP-3KG"
                 {...variantForm.register("sku")}
               />
             </Field>
-            <Field
-              label="Peso"
-              error={variantForm.formState.errors.weight?.message}
-            >
+            <Field label="Peso" error={variantForm.formState.errors.weight?.message}>
               <input
                 className={fieldClassName}
                 placeholder="3 kg"
@@ -616,10 +574,7 @@ export function ProductEditor({
               />
             </Field>
           </div>
-          <Field
-            label="Sabor"
-            error={variantForm.formState.errors.flavor?.message}
-          >
+          <Field label="Sabor" error={variantForm.formState.errors.flavor?.message}>
             <input
               className={fieldClassName}
               placeholder="Frango e arroz"
@@ -627,10 +582,7 @@ export function ProductEditor({
             />
           </Field>
           <div className="grid gap-4 sm:grid-cols-2">
-            <Field
-              label="Preço"
-              error={variantForm.formState.errors.price?.message}
-            >
+            <Field label="Preço" error={variantForm.formState.errors.price?.message}>
               <input
                 className={fieldClassName}
                 min="0"
@@ -657,10 +609,7 @@ export function ProductEditor({
               label="Status de estoque"
               error={variantForm.formState.errors.stockStatus?.message}
             >
-              <select
-                className={fieldClassName}
-                {...variantForm.register("stockStatus")}
-              >
+              <select className={fieldClassName} {...variantForm.register("stockStatus")}>
                 {stockStatusOptions.map((item) => (
                   <option key={item.value} value={item.value}>
                     {item.label}
@@ -668,10 +617,7 @@ export function ProductEditor({
                 ))}
               </select>
             </Field>
-            <Field
-              label="Ordem"
-              error={variantForm.formState.errors.sortOrder?.message}
-            >
+            <Field label="Ordem" error={variantForm.formState.errors.sortOrder?.message}>
               <input
                 className={fieldClassName}
                 min="0"
@@ -680,14 +626,9 @@ export function ProductEditor({
               />
             </Field>
           </div>
-          <CheckboxCard
-            label="Variante ativa"
-            registration={variantForm.register("isActive")}
-          />
+          <CheckboxCard label="Variante ativa" registration={variantForm.register("isActive")} />
 
-          {variantFeedback ? (
-            <p className="text-sm text-muted">{variantFeedback}</p>
-          ) : null}
+          {variantFeedback ? <p className="text-sm text-muted">{variantFeedback}</p> : null}
 
           <div className="flex justify-end">
             <button
@@ -716,9 +657,7 @@ function Section({
   return (
     <section className="space-y-4 border-b border-default pb-6 last:border-b-0 last:pb-0">
       <div>
-        <h2 className="font-display text-xl font-semibold text-foreground">
-          {title}
-        </h2>
+        <h2 className="font-display text-xl font-semibold text-foreground">{title}</h2>
         <p className="mt-2 text-sm leading-6 text-muted">{description}</p>
       </div>
       {children}
@@ -726,15 +665,7 @@ function Section({
   );
 }
 
-function Field({
-  label,
-  error,
-  children,
-}: {
-  label: string;
-  error?: string;
-  children: ReactNode;
-}) {
+function Field({ label, error, children }: { label: string; error?: string; children: ReactNode }) {
   const id = useId();
   let child = children;
 
@@ -759,12 +690,8 @@ function Field({
 function MetricCard({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-card border border-default bg-background px-4 py-3">
-      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted">
-        {label}
-      </p>
-      <p className="mt-2 font-display text-2xl font-semibold text-foreground">
-        {value}
-      </p>
+      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted">{label}</p>
+      <p className="mt-2 font-display text-2xl font-semibold text-foreground">{value}</p>
     </div>
   );
 }
@@ -778,11 +705,7 @@ function CheckboxCard({
 }) {
   return (
     <label className="flex items-center gap-3 rounded-card border border-default bg-background px-4 py-3 text-sm font-medium text-foreground">
-      <input
-        className="size-4 accent-primary"
-        type="checkbox"
-        {...registration}
-      />
+      <input className="size-4 accent-primary" type="checkbox" {...registration} />
       {label}
     </label>
   );
@@ -791,10 +714,7 @@ function CheckboxCard({
 const fieldClassName =
   "min-h-12 w-full rounded-card border border-default bg-background px-4 py-3 text-sm text-foreground outline-none transition-colors duration-200 focus:border-primary focus-visible:ring-2 focus-visible:ring-ring/40";
 
-const stockStatusLabelMap: Record<
-  AdminCatalogVariantItem["stockStatus"],
-  string
-> = {
+const stockStatusLabelMap: Record<AdminCatalogVariantItem["stockStatus"], string> = {
   available: "Disponível",
   consult: "Sob consulta",
   unavailable: "Indisponível",

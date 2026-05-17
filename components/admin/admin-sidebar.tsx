@@ -54,16 +54,6 @@ function NavLink({
 export function AdminSidebar({ activeHref, onNavigate }: AdminSidebarProps) {
   return (
     <div className="flex h-full flex-col gap-6 bg-background p-4 lg:p-6">
-      <div className="rounded-card border border-default bg-surface p-4 shadow-soft">
-        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">PatasGo</p>
-        <h2 className="mt-2 font-display text-xl font-semibold text-foreground">
-          Área administrativa
-        </h2>
-        <p className="mt-2 text-sm leading-6 text-muted">
-          Operação simples para catálogo, pedidos e configuração da loja.
-        </p>
-      </div>
-
       <nav aria-label="Navegação principal do admin" className="space-y-5">
         {adminNavigationGroups.map((group) => (
           <section key={group.id}>

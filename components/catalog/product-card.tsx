@@ -21,9 +21,7 @@ export function ProductCard({ product }: ProductCardProps) {
   const resetTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const ctaLabel =
-    primaryVariant.stockStatus === "consult"
-      ? "Adicionar com confirmação"
-      : "Adicionar ao pedido";
+    primaryVariant.stockStatus === "consult" ? "Adicionar com confirmação" : "Adicionar ao pedido";
 
   useEffect(() => {
     return () => {
@@ -95,9 +93,7 @@ export function ProductCard({ product }: ProductCardProps) {
             promotionalPrice={primaryVariant.promotionalPrice}
           />
           <span className="text-xs text-muted">
-            {canAddDirectly
-              ? "Pedido rápido"
-              : `${product.variants.length} opções`}
+            {canAddDirectly ? "Pedido rápido" : `${product.variants.length} opções`}
           </span>
         </div>
 
@@ -106,9 +102,7 @@ export function ProductCard({ product }: ProductCardProps) {
             <button
               className={[
                 "inline-flex min-h-11 w-full items-center justify-center rounded-full px-4 py-3 text-sm font-semibold text-white transition-colors duration-200",
-                justAdded
-                  ? "bg-success hover:bg-success/90"
-                  : "bg-primary hover:bg-primary-dark",
+                justAdded ? "bg-success hover:bg-success/90" : "bg-primary hover:bg-primary-dark",
               ].join(" ")}
               onClick={handleAdd}
               type="button"
@@ -126,10 +120,7 @@ export function ProductCard({ product }: ProductCardProps) {
 
           <div className="flex items-center justify-between gap-3">
             {justAdded ? (
-              <p
-                aria-live="polite"
-                className="text-xs font-medium text-success"
-              >
+              <p aria-live="polite" className="text-xs font-medium text-success">
                 Item adicionado ao pedido.
               </p>
             ) : (
