@@ -11,7 +11,14 @@ type PublicShellProps = {
 };
 
 export async function PublicShell({ children }: PublicShellProps) {
-  const storeSummary = await getStoreSummary();
+  let storeSummary = null;
+
+  try {
+    storeSummary = await getStoreSummary();
+  } catch {
+    storeSummary = null;
+  }
+
   const whatsappHref = toWhatsappHref(storeSummary?.whatsappPhone);
 
   return (

@@ -4,8 +4,9 @@ type DataTableShellProps = {
   title: string;
   description?: ReactNode;
   columns: string[];
-  emptyState: ReactNode;
+  emptyState?: ReactNode;
   actions?: ReactNode;
+  children?: ReactNode;
 };
 
 export function DataTableShell({
@@ -14,6 +15,7 @@ export function DataTableShell({
   columns,
   emptyState,
   actions,
+  children,
 }: DataTableShellProps) {
   return (
     <section className="rounded-card border border-default bg-surface shadow-soft">
@@ -40,7 +42,7 @@ export function DataTableShell({
         ))}
       </div>
 
-      <div className="p-5">{emptyState}</div>
+      <div className="p-5">{children ?? emptyState}</div>
     </section>
   );
 }

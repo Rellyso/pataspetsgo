@@ -42,13 +42,46 @@ export async function updateSession(request: NextRequest) {
     },
   );
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  let user = null;
+
+  try {
+    const {
+      data: { user: authUser },
+    } = await supabase.auth.getUser();
+
+    user = authUser;
+  } catch (error) {
+    if (isInvalidRefreshTokenError(error)) {
+      clearSupabaseCookies(request, response);
+      return request.nextUrl.pathname.startsWith("/admin")
+        ? NextResponse.redirect(buildLoginUrl(request))
+        : response;
+    }
+
+    throw error;
+  }
 
   if (!user && request.nextUrl.pathname.startsWith("/admin")) {
     return NextResponse.redirect(buildLoginUrl(request));
   }
 
   return response;
+}
+
+function isInvalidRefreshTokenError(error: unknown) {
+  return (
+    error instanceof Error &&
+    error.message.toLowerCase().includes("invalid refresh token")
+  );
+}
+
+function clearSupabaseCookies(request: NextRequest, response: NextResponse) {
+  for (const cookie of request.cookies.getAll()) {
+    if (!cookie.name.startsWith("sb-")) {
+      continue;
+    }
+
+    request.cookies.delete(cookie.name);
+    response.cookies.delete(cookie.name);
+  }
 }

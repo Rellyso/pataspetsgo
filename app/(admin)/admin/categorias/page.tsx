@@ -1,14 +1,26 @@
-import { AdminModulePlaceholder } from "@/components/admin/admin-module-placeholder";
-import { getAdminNavItem } from "@/lib/admin/navigation";
+import { AdminPageHeader } from "@/components/admin/admin-page-header";
+import { CategoryManager } from "@/components/admin/catalog/category-manager";
+import { DataTableShell } from "@/components/admin/data-table-shell";
+import { getAdminCategories } from "@/features/admin/catalog/queries";
 
-export default function AdminCategoriesPage() {
+export default async function AdminCategoriesPage() {
+  const categories = await getAdminCategories();
+
   return (
-    <AdminModulePlaceholder
-      columns={["Categoria", "Slug", "Ordem", "Status"]}
-      item={getAdminNavItem("/admin/categorias")}
-      nextStep="Conectar listagem, ordenação simples e formulário administrativo conforme a spec 07."
-      phaseLabel="Fase 8"
-      summary="Categorias vão organizar a vitrine pública e os atalhos do catálogo com leitura operacional simples."
-    />
+    <div className="flex flex-col gap-6">
+      <AdminPageHeader
+        description="Categorias organizam seções do catálogo e precisam continuar operacionais mesmo em manutenção rápida pelo celular."
+        eyebrow="Fase 8"
+        meta="A desativação lógica evita vazamento para a vitrine sem excluir histórico de relacionamento."
+        title="Categorias"
+      />
+      <DataTableShell
+        columns={["Categoria", "Uso", "Status", "Ações"]}
+        description="Criação e edição acontecem em sheet para manter o fluxo curto e repetível."
+        title="Estrutura do catálogo"
+      >
+        <CategoryManager items={categories} />
+      </DataTableShell>
+    </div>
   );
 }

@@ -4,6 +4,7 @@ import { getSupabaseServerClient } from "@/lib/supabase/server";
 import type { CatalogFiltersInput } from "@/lib/validations/catalog";
 import type { Tables } from "@/types/database";
 
+import { getCatalogPublicationStatus, isPublicVariant } from "./publication-rules";
 import type {
   CatalogAvailableFilters,
   CatalogFilterOption,
@@ -240,13 +241,14 @@ async function getActiveBanners(): Promise<PublicBanner[]> {
 }
 
 function mapPublicProduct(product: ProductWithRelations): PublicCatalogItem | null {
-  if (!isActiveRelationValid(product.categories, product.category_id)) {
-    return null;
-  }
-
-  if (!isActiveRelationValid(product.brands, product.brand_id)) {
-    return null;
-  }
+  const publicationStatus = getCatalogPublicationStatus({
+    isActive: product.is_active,
+    categoryId: product.category_id,
+    category: product.categories,
+    brandId: product.brand_id,
+    brand: product.brands,
+    variants: product.product_variants ?? [],
+  });
 
   const variants = (product.product_variants ?? [])
     .filter(isPublicVariant)
@@ -256,7 +258,7 @@ function mapPublicProduct(product: ProductWithRelations): PublicCatalogItem | nu
     )
     .map(mapPublicVariant);
 
-  if (variants.length === 0) {
+  if (publicationStatus.code !== "ready" || variants.length === 0) {
     return null;
   }
 
@@ -278,21 +280,6 @@ function mapPublicProduct(product: ProductWithRelations): PublicCatalogItem | nu
     variants,
     primaryVariant: variants[0],
   };
-}
-
-function isActiveRelationValid<T extends { is_active: boolean }>(
-  relation: T | null,
-  relationId: string | null,
-) {
-  return relationId === null || relation?.is_active === true;
-}
-
-function isPublicVariant(variant: ProductVariantRow) {
-  return (
-    variant.is_active &&
-    variant.price >= 0 &&
-    ["available", "consult"].includes(variant.stock_status)
-  );
 }
 
 function mapPublicVariant(variant: ProductVariantRow): PublicProductVariant {
