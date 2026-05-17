@@ -86,7 +86,7 @@ test("allows an admin user into the protected admin route", async ({ page }) => 
 
   await page.getByLabel("Email").fill(adminEmail);
   await page.getByLabel("Senha").fill(password);
-  await page.getByRole("button", { name: "Entrar" }).click();
+  await page.getByRole("button", { name: /Entrar no admin/i }).click();
 
   await expect(page).toHaveURL(/\/admin$/);
   await expect(page.getByText(adminEmail)).toBeVisible();
@@ -106,7 +106,7 @@ test("blocks a signed-in user without admin role", async ({ page }) => {
 
   await page.getByLabel("Email").fill(regularEmail);
   await page.getByLabel("Senha").fill(password);
-  await page.getByRole("button", { name: "Entrar" }).click();
+  await page.getByRole("button", { name: /Entrar no admin/i }).click();
 
   await expect(page).toHaveURL(/\/auth\/access-denied$/);
   await expect(

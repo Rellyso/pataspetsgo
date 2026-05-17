@@ -175,3 +175,23 @@ export function SettingsIcon(props: IconProps) {
     </BaseIcon>
   );
 }
+
+export function EyeIcon(props: IconProps) {
+  return (
+    <BaseIcon {...props}>
+      <path d="M2.75 12s3.25-5.75 9.25-5.75S21.25 12 21.25 12 18 17.75 12 17.75 2.75 12 2.75 12z" />
+      <circle cx="12" cy="12" r="2.5" />
+    </BaseIcon>
+  );
+}
+
+export function EyeOffIcon(props: IconProps) {
+  return (
+    <BaseIcon {...props}>
+      <path d="M3.5 3.5l17 17" />
+      <path d="M10.5 6.45A9.4 9.4 0 0112 6.25c6 0 9.25 5.75 9.25 5.75a16.8 16.8 0 01-3.4 4.08" />
+      <path d="M7.05 7.05A16.36 16.36 0 002.75 12s3.25 5.75 9.25 5.75a9.9 9.9 0 003.15-.5" />
+      <path d="M10.59 10.59A2 2 0 0010 12a2 2 0 002 2c.52 0 1-.2 1.41-.59" />
+    </BaseIcon>
+  );
+}

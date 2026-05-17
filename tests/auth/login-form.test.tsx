@@ -42,7 +42,7 @@ describe("LoginForm", () => {
     render(<LoginForm nextPath="/admin" />);
 
     await user.type(screen.getByLabelText("Email"), "invalido");
-    await user.click(screen.getByRole("button", { name: "Entrar" }));
+    await user.click(screen.getByRole("button", { name: "Entrar no admin" }));
 
     expect(await screen.findByText("Informe um email valido.")).toBeTruthy();
     expect(await screen.findByText("Informe a senha.")).toBeTruthy();
@@ -58,7 +58,7 @@ describe("LoginForm", () => {
 
     await user.type(screen.getByLabelText("Email"), "admin@example.com");
     await user.type(screen.getByLabelText("Senha"), "secret123");
-    await user.click(screen.getByRole("button", { name: "Entrar" }));
+    await user.click(screen.getByRole("button", { name: "Entrar no admin" }));
 
     await waitFor(() => {
       expect(signInWithPassword).toHaveBeenCalledWith({
@@ -68,5 +68,40 @@ describe("LoginForm", () => {
       expect(replace).toHaveBeenCalledWith("/admin");
       expect(refresh).toHaveBeenCalled();
     });
+  });
+
+  it("submits the form when pressing Enter in the password field", async () => {
+    signInWithPassword.mockResolvedValue({ error: null });
+
+    const user = userEvent.setup();
+
+    render(<LoginForm nextPath="/admin/pedidos" />);
+
+    await user.type(screen.getByLabelText("Email"), "admin@example.com");
+    await user.type(screen.getByLabelText("Senha"), "secret123{enter}");
+
+    await waitFor(() => {
+      expect(signInWithPassword).toHaveBeenCalledWith({
+        email: "admin@example.com",
+        password: "secret123",
+      });
+      expect(replace).toHaveBeenCalledWith("/admin/pedidos");
+    });
+  });
+
+  it("toggles password visibility", async () => {
+    const user = userEvent.setup();
+
+    render(<LoginForm nextPath="/admin" />);
+
+    const passwordInput = screen.getByLabelText("Senha");
+
+    expect(passwordInput.getAttribute("type")).toBe("password");
+
+    await user.click(screen.getByRole("button", { name: "Mostrar senha" }));
+    expect(passwordInput.getAttribute("type")).toBe("text");
+
+    await user.click(screen.getByRole("button", { name: "Ocultar senha" }));
+    expect(passwordInput.getAttribute("type")).toBe("password");
   });
 });
