@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import type { RefObject } from "react";
+import type { FormEventHandler, RefObject } from "react";
 import { useRef, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 
@@ -213,7 +213,7 @@ type BrandSheetProps = {
   isPending: boolean;
   feedback: string | null;
   onClose: () => void;
-  onSubmit: () => void;
+  onSubmit: FormEventHandler<HTMLFormElement>;
   register: ReturnType<typeof useForm<AdminBrandInput>>["register"];
   errors: ReturnType<typeof useForm<AdminBrandInput>>["formState"]["errors"];
   logoInputRef: RefObject<HTMLInputElement | null>;

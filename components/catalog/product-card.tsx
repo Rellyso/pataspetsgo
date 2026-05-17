@@ -21,7 +21,9 @@ export function ProductCard({ product }: ProductCardProps) {
   const resetTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const ctaLabel =
-    primaryVariant.stockStatus === "consult" ? "Adicionar com confirmação" : "Adicionar ao pedido";
+    primaryVariant.stockStatus === "consult"
+      ? "Adicionar com confirmação"
+      : "Adicionar ao pedido";
 
   useEffect(() => {
     return () => {
@@ -54,18 +56,21 @@ export function ProductCard({ product }: ProductCardProps) {
   };
 
   return (
-    <article className="flex h-full flex-col rounded-[1.5rem] border border-default bg-surface p-3 shadow-soft transition-colors duration-200 hover:border-primary-light sm:p-4">
+    <article className="flex h-full flex-col rounded-3xl border border-default bg-surface p-3 shadow-soft transition-colors duration-200 hover:border-primary-light sm:p-4">
       <div className="relative overflow-hidden rounded-[1.1rem] bg-background">
         <div className="absolute left-3 top-3 z-10 flex flex-wrap items-center gap-1.5">
           {product.brand ? <BrandBadge name={product.brand.name} /> : null}
           {product.isPromotion ? <PromoBadge /> : null}
         </div>
 
-        <div className="flex aspect-square items-center justify-center text-xs text-muted sm:aspect-[1.1/1]">
+        <div className="relative flex aspect-square items-center justify-center text-xs text-muted sm:aspect-[1.1/1]">
           {product.imageUrl ? (
             <Image
               alt={product.name}
-              className="h-full w-full object-cover"
+              className="object-cover"
+              fill
+              loading="eager"
+              sizes="(min-width: 640px) 320px, 50vw"
               src={product.imageUrl}
             />
           ) : (
@@ -90,7 +95,9 @@ export function ProductCard({ product }: ProductCardProps) {
             promotionalPrice={primaryVariant.promotionalPrice}
           />
           <span className="text-xs text-muted">
-            {canAddDirectly ? "Pedido rápido" : `${product.variants.length} opções`}
+            {canAddDirectly
+              ? "Pedido rápido"
+              : `${product.variants.length} opções`}
           </span>
         </div>
 
@@ -99,7 +106,9 @@ export function ProductCard({ product }: ProductCardProps) {
             <button
               className={[
                 "inline-flex min-h-11 w-full items-center justify-center rounded-full px-4 py-3 text-sm font-semibold text-white transition-colors duration-200",
-                justAdded ? "bg-success hover:bg-success/90" : "bg-primary hover:bg-primary-dark",
+                justAdded
+                  ? "bg-success hover:bg-success/90"
+                  : "bg-primary hover:bg-primary-dark",
               ].join(" ")}
               onClick={handleAdd}
               type="button"
@@ -117,7 +126,10 @@ export function ProductCard({ product }: ProductCardProps) {
 
           <div className="flex items-center justify-between gap-3">
             {justAdded ? (
-              <p aria-live="polite" className="text-xs font-medium text-success">
+              <p
+                aria-live="polite"
+                className="text-xs font-medium text-success"
+              >
                 Item adicionado ao pedido.
               </p>
             ) : (

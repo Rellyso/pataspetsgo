@@ -61,7 +61,7 @@ export default async function PublicHomePage() {
           </div>
         </section>
 
-        <section className="rounded-[1.5rem] border border-default bg-surface p-5 shadow-soft sm:p-6">
+        <section className="rounded-3xl border border-default bg-surface p-5 shadow-soft sm:p-6">
           <SectionTitle
             subtitle="Atalhos para quem já sabe por onde quer começar."
             title="Categorias principais"
@@ -102,7 +102,7 @@ export default async function PublicHomePage() {
         </section>
 
         {homeData.activeBanners.length > 0 ? (
-          <section className="rounded-[1.5rem] border border-default bg-surface p-5 shadow-soft sm:p-6">
+          <section className="rounded-3xl border border-default bg-surface p-5 shadow-soft sm:p-6">
             <SectionTitle
               subtitle="Comercial leve, com prioridade para orientação rápida."
               title="Ofertas e recados"
@@ -119,7 +119,9 @@ export default async function PublicHomePage() {
                       {banner.title}
                     </p>
                     {banner.subtitle ? (
-                      <p className="text-sm leading-6 text-muted">{banner.subtitle}</p>
+                      <p className="text-sm leading-6 text-muted">
+                        {banner.subtitle}
+                      </p>
                     ) : null}
                     {banner.ctaUrl ? (
                       <Link
@@ -137,7 +139,7 @@ export default async function PublicHomePage() {
         ) : null}
 
         {homeData.featuredProducts.length > 0 ? (
-          <section className="rounded-[1.5rem] border border-default bg-surface p-5 shadow-soft sm:p-6">
+          <section className="rounded-3xl border border-default bg-surface p-5 shadow-soft sm:p-6">
             <SectionTitle
               subtitle="Produtos escolhidos para acelerar a decisão de compra."
               title="Em destaque"
@@ -151,7 +153,7 @@ export default async function PublicHomePage() {
         ) : null}
 
         {homeData.promotionProducts.length > 0 ? (
-          <section className="rounded-[1.5rem] border border-default bg-surface p-5 shadow-soft sm:p-6">
+          <section className="rounded-3xl border border-default bg-surface p-5 shadow-soft sm:p-6">
             <SectionTitle
               subtitle="Promoções com foco em conversão, sem virar um panfleto."
               title="Promoções"

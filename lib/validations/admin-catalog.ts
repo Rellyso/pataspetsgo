@@ -1,14 +1,32 @@
 import { z } from "zod";
 
-const emptyStringToNull = z
-  .string()
-  .trim()
-  .transform((value) => (value.length > 0 ? value : null));
+const emptyStringToNull = z.preprocess(
+  (value) => {
+    if (value === null || value === undefined) {
+      return "";
+    }
 
-const emptyStringToUndefined = z
-  .string()
-  .trim()
-  .transform((value) => (value.length > 0 ? value : undefined));
+    return value;
+  },
+  z
+    .string()
+    .trim()
+    .transform((value) => (value.length > 0 ? value : null)),
+);
+
+const emptyStringToUndefined = z.preprocess(
+  (value) => {
+    if (value === null || value === undefined) {
+      return "";
+    }
+
+    return value;
+  },
+  z
+    .string()
+    .trim()
+    .transform((value) => (value.length > 0 ? value : undefined)),
+);
 
 const emptyStringToNullish = <T extends z.ZodTypeAny>(schema: T) =>
   z.preprocess((value) => {
@@ -19,6 +37,15 @@ const emptyStringToNullish = <T extends z.ZodTypeAny>(schema: T) =>
     return value;
   }, schema.nullable());
 
+const emptyStringToUndefinedSchema = <T extends z.ZodTypeAny>(schema: T) =>
+  z.preprocess((value) => {
+    if (value === "" || value === null || value === undefined) {
+      return undefined;
+    }
+
+    return value;
+  }, schema.optional());
+
 const slugSchema = z
   .string()
   .trim()
@@ -26,6 +53,7 @@ const slugSchema = z
   .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "Use apenas letras minúsculas, números e hífens.");
 
 const uuidOrNullSchema = emptyStringToNullish(z.string().uuid());
+const optionalUuidSchema = emptyStringToUndefinedSchema(z.string().uuid());
 
 export const petTypeOptions = [
   { value: "dog", label: "Cachorro" },
@@ -78,7 +106,7 @@ export function parseAdminProductFilters(
 }
 
 export const adminProductSchema = z.object({
-  id: z.string().uuid().optional(),
+  id: optionalUuidSchema,
   name: z.string().trim().min(1, "Informe o nome do produto."),
   slug: slugSchema,
   shortDescription: emptyStringToNull,
@@ -105,7 +133,7 @@ export type AdminProductInput = z.infer<typeof adminProductSchema>;
 
 export const adminVariantSchema = z
   .object({
-    id: z.string().uuid().optional(),
+    id: optionalUuidSchema,
     productId: z.string().uuid("Produto inválido."),
     name: z.string().trim().min(1, "Informe o nome da variante."),
     sku: emptyStringToNull,
@@ -132,7 +160,7 @@ export const adminVariantSchema = z
 export type AdminVariantInput = z.infer<typeof adminVariantSchema>;
 
 export const adminCategorySchema = z.object({
-  id: z.string().uuid().optional(),
+  id: optionalUuidSchema,
   name: z.string().trim().min(1, "Informe o nome da categoria."),
   slug: slugSchema,
   description: emptyStringToNull,
@@ -148,7 +176,7 @@ export const adminCategorySchema = z.object({
 export type AdminCategoryInput = z.infer<typeof adminCategorySchema>;
 
 export const adminBrandSchema = z.object({
-  id: z.string().uuid().optional(),
+  id: optionalUuidSchema,
   name: z.string().trim().min(1, "Informe o nome da marca."),
   slug: slugSchema,
   isActive: z.boolean(),
