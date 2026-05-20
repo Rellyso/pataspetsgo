@@ -113,22 +113,25 @@ export default async function PublicHomePage() {
                   key={banner.id}
                   className="overflow-hidden rounded-[1.35rem] border border-default bg-background"
                 >
-                  <div className="h-32 bg-[linear-gradient(135deg,rgba(0,169,200,0.18),rgba(255,122,0,0.18))]" />
+                  <div className="h-40 overflow-hidden bg-[linear-gradient(135deg,rgba(0,169,200,0.18),rgba(255,122,0,0.18))]">
+                    {/* biome-ignore lint/performance/noImgElement: Home banners use arbitrary Supabase public URLs without next/image remote config. */}
+                    <img
+                      alt={banner.title}
+                      className="h-full w-full object-cover"
+                      src={banner.imageUrl}
+                    />
+                  </div>
                   <div className="space-y-3 p-5">
                     <p className="font-display text-xl font-semibold text-foreground">
                       {banner.title}
                     </p>
-                    {banner.subtitle ? (
-                      <p className="text-sm leading-6 text-muted">{banner.subtitle}</p>
-                    ) : null}
-                    {banner.ctaUrl ? (
-                      <Link
-                        className="inline-flex min-h-11 items-center justify-center rounded-full bg-primary px-4 py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-primary-dark"
-                        href={banner.ctaUrl}
-                      >
-                        {banner.ctaLabel ?? "Explorar"}
-                      </Link>
-                    ) : null}
+                    {banner.subtitle ? <p className="text-sm leading-6 text-muted">{banner.subtitle}</p> : null}
+                    <Link
+                      className="inline-flex min-h-11 items-center justify-center rounded-full bg-primary px-4 py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-primary-dark"
+                      href={banner.ctaUrl}
+                    >
+                      {banner.ctaLabel}
+                    </Link>
                   </div>
                 </article>
               ))}

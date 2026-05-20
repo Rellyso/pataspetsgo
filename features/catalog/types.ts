@@ -48,8 +48,8 @@ export type PublicBanner = {
   title: string;
   subtitle: string | null;
   imageUrl: string;
-  ctaLabel: string | null;
-  ctaUrl: string | null;
+  ctaLabel: string;
+  ctaUrl: string;
   position: number;
 };
 

@@ -7,7 +7,7 @@ import { toggleEntityActiveAction } from "@/features/admin/catalog/mutations";
 
 type StatusToggleButtonProps = {
   id: string;
-  table: "products" | "product_variants" | "categories" | "brands";
+  table: "products" | "product_variants" | "categories" | "brands" | "banners";
   isActive: boolean;
   productId?: string;
 };

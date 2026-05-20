@@ -227,15 +227,20 @@ async function getActiveBanners(): Promise<PublicBanner[]> {
   return (data satisfies BannerRow[])
     .filter(
       (banner) =>
-        banner.image_url && banner.title && (banner.cta_url === null || banner.cta_url.length > 0),
+        banner.image_url &&
+        banner.title &&
+        banner.cta_label !== null &&
+        banner.cta_label.length > 0 &&
+        banner.cta_url !== null &&
+        banner.cta_url.length > 0,
     )
     .map((banner) => ({
       id: banner.id,
       title: banner.title,
       subtitle: banner.subtitle,
       imageUrl: banner.image_url,
-      ctaLabel: banner.cta_label,
-      ctaUrl: banner.cta_url,
+      ctaLabel: banner.cta_label ?? "Explorar",
+      ctaUrl: banner.cta_url ?? "/catalogo",
       position: banner.position,
     }));
 }

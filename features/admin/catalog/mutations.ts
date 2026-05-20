@@ -358,7 +358,7 @@ export async function saveBrandAction(formData: FormData): Promise<MutationResul
 }
 
 export async function toggleEntityActiveAction(input: {
-  table: "products" | "product_variants" | "categories" | "brands";
+  table: "products" | "product_variants" | "categories" | "brands" | "banners";
   id: string;
   nextValue: boolean;
   productId?: string;
@@ -375,7 +375,12 @@ export async function toggleEntityActiveAction(input: {
     return mapMutationError(error, "Não foi possível atualizar o status.");
   }
 
-  revalidateCatalogAdminRoutes(input.productId);
+  if (input.table === "banners") {
+    revalidatePath("/admin/banners");
+    revalidatePath("/");
+  } else {
+    revalidateCatalogAdminRoutes(input.productId);
+  }
 
   return {
     success: true,
