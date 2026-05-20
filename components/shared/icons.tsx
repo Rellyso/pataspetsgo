@@ -38,6 +38,29 @@ export function GridIcon(props: IconProps) {
   );
 }
 
+export function RowsIcon(props: IconProps) {
+  return (
+    <BaseIcon {...props}>
+      <rect height="4.25" rx="1.5" width="17" x="3.5" y="4" />
+      <rect height="4.25" rx="1.5" width="17" x="3.5" y="9.875" />
+      <rect height="4.25" rx="1.5" width="17" x="3.5" y="15.75" />
+    </BaseIcon>
+  );
+}
+
+export function ListIcon(props: IconProps) {
+  return (
+    <BaseIcon {...props}>
+      <circle cx="5.25" cy="6.25" fill="currentColor" r="1.1" stroke="none" />
+      <circle cx="5.25" cy="12" fill="currentColor" r="1.1" stroke="none" />
+      <circle cx="5.25" cy="17.75" fill="currentColor" r="1.1" stroke="none" />
+      <path d="M9 6.25h10.25" />
+      <path d="M9 12h10.25" />
+      <path d="M9 17.75h10.25" />
+    </BaseIcon>
+  );
+}
+
 export function ShoppingBagIcon(props: IconProps) {
   return (
     <BaseIcon {...props}>

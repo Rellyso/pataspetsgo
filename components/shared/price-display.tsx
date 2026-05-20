@@ -3,12 +3,13 @@ import { formatCurrency } from "@/lib/currency";
 type PriceDisplayProps = {
   price: number;
   promotionalPrice?: number | null;
-  size?: "default" | "large";
+  size?: "small" | "default" | "large";
 };
 
 export function PriceDisplay({ price, promotionalPrice, size = "default" }: PriceDisplayProps) {
   const currentPrice = promotionalPrice ?? price;
-  const priceClass = size === "large" ? "text-3xl" : "text-xl";
+  const priceClass =
+    size === "large" ? "text-3xl" : size === "small" ? "text-base sm:text-lg" : "text-xl";
 
   return (
     <div className="flex flex-wrap items-end gap-x-3 gap-y-1">

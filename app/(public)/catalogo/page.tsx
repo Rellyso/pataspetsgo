@@ -1,8 +1,8 @@
 import Link from "next/link";
 
 import { CatalogFilterSheet } from "@/components/catalog/catalog-filter-sheet";
+import { CatalogResults } from "@/components/catalog/catalog-results";
 import { CategorySectionTabs } from "@/components/catalog/category-section-tabs";
-import { ProductCard } from "@/components/catalog/product-card";
 import { Container } from "@/components/layout/container";
 import { EmptyState } from "@/components/shared/empty-state";
 import { SearchIcon } from "@/components/shared/icons";
@@ -103,28 +103,7 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
           <article className="min-w-0 rounded-3xl border border-default bg-surface p-4 shadow-soft sm:p-6">
             <div id="catalog-results-top" />
             {catalogData.items.length > 0 ? (
-              <div className="space-y-7">
-                {sections.map((section) => (
-                  <section key={section.id} className="scroll-mt-36 space-y-4" id={section.id}>
-                    <div className="flex items-end justify-between gap-3 border-b border-default pb-3">
-                      <div>
-                        <h2 className="font-display text-xl font-semibold text-foreground">
-                          {section.name}
-                        </h2>
-                        <p className="mt-1 text-sm text-muted">
-                          {section.items.length} item(ns) nesta seção
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-2">
-                      {section.items.map((item) => (
-                        <ProductCard key={item.id} product={item} />
-                      ))}
-                    </div>
-                  </section>
-                ))}
-              </div>
+              <CatalogResults sections={sections} />
             ) : (
               <EmptyState
                 action={
