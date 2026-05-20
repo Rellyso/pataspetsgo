@@ -1,14 +1,20 @@
-import { AdminModulePlaceholder } from "@/components/admin/admin-module-placeholder";
-import { getAdminNavItem } from "@/lib/admin/navigation";
+import { AdminPageHeader } from "@/components/admin/admin-page-header";
+import { StoreSettingsManager } from "@/components/admin/store-settings/store-settings-manager";
+import { getAdminStoreSettings } from "@/features/admin/store-settings/queries";
 
-export default function AdminSettingsPage() {
+export default async function AdminSettingsPage() {
+  const settings = await getAdminStoreSettings();
+
   return (
-    <AdminModulePlaceholder
-      columns={["Campo", "Valor atual", "Impacto", "Atualização"]}
-      item={getAdminNavItem("/admin/configuracoes")}
-      nextStep="Editar o singleton `store_settings` com validação e feedback coerente na fase 9."
-      phaseLabel="Fase 9"
-      summary="Configurações da loja vão concentrar dados institucionais e regras operacionais que impactam o público e o checkout."
-    />
+    <div className="flex flex-col gap-6">
+      <AdminPageHeader
+        description="Centralize aqui os dados institucionais da loja e as flags operacionais que impactam a home, o rodapé público e o checkout."
+        eyebrow="Fase 9.3"
+        meta="Singleton obrigatório: a área admin edita a linha existente, sem criar uma segunda configuração."
+        title="Configurações"
+      />
+
+      <StoreSettingsManager settings={settings} />
+    </div>
   );
 }

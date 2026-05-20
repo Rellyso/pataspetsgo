@@ -186,7 +186,9 @@ export const getStoreSummary = cache(async (): Promise<StoreSummary | null> => {
   const supabase = await getSupabaseServerClient();
   const { data, error } = await supabase
     .from("store_settings")
-    .select("store_name, description, whatsapp_phone, delivery_enabled, pickup_enabled")
+    .select(
+      "store_name, description, whatsapp_phone, instagram_url, address, opening_hours, google_maps_url, delivery_enabled, pickup_enabled",
+    )
     .limit(1)
     .maybeSingle();
 
@@ -200,13 +202,25 @@ export const getStoreSummary = cache(async (): Promise<StoreSummary | null> => {
 
   const row = data satisfies Pick<
     StoreSettingsRow,
-    "store_name" | "description" | "whatsapp_phone" | "delivery_enabled" | "pickup_enabled"
+    | "store_name"
+    | "description"
+    | "whatsapp_phone"
+    | "instagram_url"
+    | "address"
+    | "opening_hours"
+    | "google_maps_url"
+    | "delivery_enabled"
+    | "pickup_enabled"
   >;
 
   return {
     storeName: row.store_name,
     description: row.description,
     whatsappPhone: row.whatsapp_phone,
+    instagramUrl: row.instagram_url,
+    address: row.address,
+    openingHours: row.opening_hours,
+    googleMapsUrl: row.google_maps_url,
     deliveryEnabled: row.delivery_enabled,
     pickupEnabled: row.pickup_enabled,
   };

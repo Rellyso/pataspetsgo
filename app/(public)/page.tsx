@@ -58,6 +58,69 @@ export default async function PublicHomePage() {
                 </div>
               ))}
             </div>
+
+            {homeData.storeSummary?.openingHours ||
+            homeData.storeSummary?.address ||
+            homeData.storeSummary?.instagramUrl ||
+            homeData.storeSummary?.googleMapsUrl ? (
+              <div className="mt-6 flex flex-col gap-4 rounded-[1.35rem] border border-white/70 bg-white/72 p-4 backdrop-blur-sm">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted">
+                    Informações da loja
+                  </p>
+                  <p className="mt-1 text-sm leading-6 text-foreground">
+                    Use estes atalhos para retirada, localização e contato institucional.
+                  </p>
+                </div>
+
+                <div className="grid gap-3 md:grid-cols-2">
+                  {homeData.storeSummary.openingHours ? (
+                    <div className="rounded-[1rem] border border-white/70 bg-white/75 p-4">
+                      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted">
+                        Horário
+                      </p>
+                      <p className="mt-2 text-sm leading-6 text-foreground">
+                        {homeData.storeSummary.openingHours}
+                      </p>
+                    </div>
+                  ) : null}
+
+                  {homeData.storeSummary.address ? (
+                    <div className="rounded-[1rem] border border-white/70 bg-white/75 p-4">
+                      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted">
+                        Endereço
+                      </p>
+                      <p className="mt-2 text-sm leading-6 text-foreground">
+                        {homeData.storeSummary.address}
+                      </p>
+                    </div>
+                  ) : null}
+                </div>
+
+                <div className="flex flex-wrap gap-3">
+                  {homeData.storeSummary.instagramUrl ? (
+                    <a
+                      className="inline-flex min-h-11 items-center justify-center rounded-full border border-default bg-white/80 px-4 py-3 text-sm font-semibold text-foreground transition-colors duration-200 hover:border-primary-light hover:bg-white"
+                      href={homeData.storeSummary.instagramUrl}
+                      rel="noreferrer"
+                      target="_blank"
+                    >
+                      Instagram
+                    </a>
+                  ) : null}
+                  {homeData.storeSummary.googleMapsUrl ? (
+                    <a
+                      className="inline-flex min-h-11 items-center justify-center rounded-full border border-default bg-white/80 px-4 py-3 text-sm font-semibold text-foreground transition-colors duration-200 hover:border-primary-light hover:bg-white"
+                      href={homeData.storeSummary.googleMapsUrl}
+                      rel="noreferrer"
+                      target="_blank"
+                    >
+                      Ver no mapa
+                    </a>
+                  ) : null}
+                </div>
+              </div>
+            ) : null}
           </div>
         </section>
 
@@ -125,7 +188,9 @@ export default async function PublicHomePage() {
                     <p className="font-display text-xl font-semibold text-foreground">
                       {banner.title}
                     </p>
-                    {banner.subtitle ? <p className="text-sm leading-6 text-muted">{banner.subtitle}</p> : null}
+                    {banner.subtitle ? (
+                      <p className="text-sm leading-6 text-muted">{banner.subtitle}</p>
+                    ) : null}
                     <Link
                       className="inline-flex min-h-11 items-center justify-center rounded-full bg-primary px-4 py-3 text-sm font-semibold text-white transition-colors duration-200 hover:bg-primary-dark"
                       href={banner.ctaUrl}

@@ -26,7 +26,7 @@ export async function PublicShell({ children }: PublicShellProps) {
       <AppHeader storeName={storeSummary?.storeName} whatsappHref={whatsappHref} />
       <main className="flex-1 pb-36 pt-4 sm:pt-6 lg:pb-14 lg:pt-8">{children}</main>
       <div className="hidden lg:block">
-        <AppFooter />
+        <AppFooter storeSummary={storeSummary} />
       </div>
       <PublicBottomNav />
     </div>

@@ -314,6 +314,26 @@ export function OrderPageClient({ storeSummary }: OrderPageClientProps) {
           O total continua estimado, e a confirmação final acontece no atendimento pelo WhatsApp.
         </p>
 
+        {storeSummary?.openingHours || storeSummary?.address || storeSummary?.googleMapsUrl ? (
+          <div className="mt-5 rounded-[1.25rem] border border-default bg-background p-4">
+            <p className="text-sm font-semibold text-foreground">Contexto da loja</p>
+            <div className="mt-3 space-y-2 text-sm leading-6 text-muted">
+              {storeSummary.openingHours ? <p>Horário: {storeSummary.openingHours}</p> : null}
+              {storeSummary.address ? <p>Retirada: {storeSummary.address}</p> : null}
+              {storeSummary.googleMapsUrl ? (
+                <a
+                  className="font-semibold text-primary transition-colors hover:text-primary-dark"
+                  href={storeSummary.googleMapsUrl}
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  Abrir localização no mapa
+                </a>
+              ) : null}
+            </div>
+          </div>
+        ) : null}
+
         <div className="mt-5 grid gap-3 sm:grid-cols-3">
           {[
             ["1", "Itens revisados"],

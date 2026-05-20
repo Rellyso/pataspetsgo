@@ -51,7 +51,19 @@ vi.mock("next/link", () => ({
   ),
 }));
 
-function renderOrderPage() {
+function renderOrderPage(
+  storeSummary: Parameters<typeof OrderPageClient>[0]["storeSummary"] = {
+    description: null,
+    deliveryEnabled: true,
+    pickupEnabled: true,
+    storeName: "Patas Pets",
+    whatsappPhone: "5585999990000",
+    instagramUrl: null,
+    address: null,
+    openingHours: null,
+    googleMapsUrl: null,
+  },
+) {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
@@ -63,15 +75,7 @@ function renderOrderPage() {
 
   return render(
     <QueryClientProvider client={queryClient}>
-      <OrderPageClient
-        storeSummary={{
-          description: null,
-          deliveryEnabled: true,
-          pickupEnabled: true,
-          storeName: "Patas Pets",
-          whatsappPhone: "5585999990000",
-        }}
-      />
+      <OrderPageClient storeSummary={storeSummary} />
     </QueryClientProvider>,
   );
 }
@@ -158,5 +162,42 @@ describe("OrderPageClient", () => {
 
     expect((screen.getByLabelText("CEP") as HTMLInputElement).value).toBe("60125-340");
     expect((screen.getByLabelText("Endereço") as HTMLInputElement).value).toBe("Rua Teste, 123");
+  });
+
+  it("shows only pickup and arrange when delivery is disabled", () => {
+    renderOrderPage({
+      description: null,
+      deliveryEnabled: false,
+      pickupEnabled: true,
+      storeName: "Patas Pets",
+      whatsappPhone: "5585999990000",
+      instagramUrl: null,
+      address: "Rua Silva Paulet, 100",
+      openingHours: "Seg a Sáb",
+      googleMapsUrl: "https://maps.google.com/?q=patas+pets",
+    });
+
+    expect(screen.getByRole("button", { name: /Retirada/ })).toBeTruthy();
+    expect(screen.queryByRole("button", { name: /Entrega/ })).toBeNull();
+    expect(screen.getByRole("button", { name: /Combinar/ })).toBeTruthy();
+    expect(screen.getByText("Retirada: Rua Silva Paulet, 100")).toBeTruthy();
+  });
+
+  it("falls back to arrange when pickup and delivery are disabled", () => {
+    renderOrderPage({
+      description: null,
+      deliveryEnabled: false,
+      pickupEnabled: false,
+      storeName: "Patas Pets",
+      whatsappPhone: "5585999990000",
+      instagramUrl: null,
+      address: null,
+      openingHours: null,
+      googleMapsUrl: null,
+    });
+
+    expect(screen.queryByRole("button", { name: /Retirada/ })).toBeNull();
+    expect(screen.queryByRole("button", { name: /Entrega/ })).toBeNull();
+    expect(screen.getByRole("button", { name: /Combinar/ })).toBeTruthy();
   });
 });
